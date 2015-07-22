@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="statistics"> 
+ 
+ 	<select id="findIdentityNoByMemberNo" resultType="String">
+ 		select identity_no from member where member_no=#{value}
+ 	</select>
+ 
+  	<insert id="registerStatistics" parameterType="stvo">
+		insert into statistics(age, field, applicate_count) values(#{age},#{field},1)
+	</insert>
+	
+	<update id="updateStatistics" >
+		update statistics set applicate_count=applicate_count+1 where age=#{age} and field=#{field}
+	</update>
+ 
+ 	<select id="findStatisticsList" resultType="map"> <!-- 전체 통계 -->
+	<![CDATA[
+		select ranking, field, count from(
+		select field, row_number() over(order by count desc)as ranking, count from(
+		select field, sum(applicate_count)as count	from STATISTICS group by field
+		))
+	]]>
+	</select>
+	
+	<select id="findStatisticsListByAge" resultType="map"><!-- 나이대별 통계 -->
+	<![CDATA[
+		select age, field, ranking, applicate_count from(
+		select age, field, row_number() over(order by applicate_count desc) as ranking, applicate_count from statistics where age =#{value}
+		) where ranking<=3
+	]]>
+	<!-- 3위까지 뽑음 -->
+	</select>
+ 
+ 	<select id="findFieldByRecruitNo" resultType="String">
+ 		select field from recruit where recruit_no=#{value}
+ 	</select>
+ 
+ </mapper> 

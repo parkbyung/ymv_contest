@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- MyBatis DataSource에 대한 설정 및 SQL 정의 xml 에 대한 매핑 spring과 연동시에는 spring 
+	설정에서 DataSource(dbcp) 를 정의한다. -->
+<configuration>
+	<!-- 사용할 클래스에 대한 별칭을 명시한다. -->
+	<typeAliases>
+		<typeAlias type="org.log5j.ymv.model.board.RecruitBoardVO" alias="recruitbvo" />
+		<typeAlias type="org.log5j.ymv.model.board.FieldVO" alias="fieldvo" />
+		<typeAlias type="org.log5j.ymv.model.board.LocationVO" alias="locationvo" />
+		<typeAlias type="org.log5j.ymv.model.board.ReviewBoardVO" alias="rbvo" />
+		<typeAlias type="org.log5j.ymv.model.board.CommentVO" alias="cmvo" />
+		<typeAlias type="org.log5j.ymv.model.voluntary.VoluntaryServiceApplicateVO" alias="vsavo"/>	
+		<typeAlias type="org.log5j.ymv.model.board.NoticeBoardVO" alias="nbvo" />
+		<typeAlias type="org.log5j.ymv.model.member.MemberVO" alias="membervo"/>	
+		<typeAlias type="org.log5j.ymv.model.board.QnABoardVO" alias="qnabvo"/>		
+		<typeAlias type="org.log5j.ymv.model.board.PictureVO" alias="pvo"/>
+		<typeAlias type="org.log5j.ymv.model.board.CompanyVO" alias="cpvo"/>
+		<typeAlias type="org.log5j.ymv.model.scheduler.SearchVO" alias="scvo" />
+		<typeAlias type="org.log5j.ymv.model.statistics.StatisticsVO" alias="stvo"/>
+		<typeAlias type="org.log5j.ymv.model.scheduler.SchedulerVO" alias="sdvo"/>
+		<typeAlias type="org.log5j.ymv.model.voluntary.ApplicantListVO" alias="alvo"/>
+		<typeAlias type="org.log5j.ymv.model.voluntary.ConfirmVO" alias="confirmvo"/>
+		<typeAlias type="org.log5j.ymv.model.voluntary.ConfirmBoardVO" alias="confirmbvo"/>
+		<typeAlias type="org.log5j.ymv.model.voluntary.ConfirmPageVO" alias="confirmpvo"/>
+		<typeAlias type="org.log5j.ymv.model.sponsor.SponsorVO" alias="spvo"/>
+		<typeAlias type="org.log5j.ymv.model.board.AuctionBoardVO" alias="abvo" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/config/recruitboard.xml" />
+		<mapper resource="mybatis/config/reviewBoard.xml" />
+		<mapper resource="mybatis/config/member.xml" />
+		<mapper resource="mybatis/config/noticeBoard.xml" />
+		<mapper resource="mybatis/config/qnaBoard.xml" />
+		<mapper resource="mybatis/config/scheduler.xml" />
+		<mapper resource="mybatis/config/statistics.xml" />
+		<mapper resource="mybatis/config/applicant.xml" />
+		<mapper resource="mybatis/config/search.xml" />
+		<mapper resource="mybatis/config/sponsor.xml" />
+		<mapper resource="mybatis/config/auctionBoard.xml" />
+	</mappers>
+</configuration>

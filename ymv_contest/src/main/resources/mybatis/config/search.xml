@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search">
+	<resultMap type="recruitbvo" id="boardRM">
+		<result property="recruitNo" column="recruit_no" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+		<result property="checkDate" column="check_date"/>
+	</resultMap>
+
+	<resultMap type="rbvo" id="reviewAndNoticeBoardRM">
+		<result property="boardNo" column="board_no" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+		<result property="timePosted" column="time_posted"/>
+	</resultMap>
+	
+	<resultMap type="qnabvo" id="QnABoardRM">
+		<result property="qnaNo" column="qna_no" />
+		<result property="timePosted" column="time_posted"/>
+	</resultMap>
+	
+	
+	<select id="findRecruitBoardList" resultMap="boardRM">
+		select * from(
+		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date,to_char(time_posted,'YYYY-MM-DD') as time_posted, content, hit, ceil(rownum/5)as page
+		from(select recruit_no, title, field, location, age, start_date,end_date, content, time_posted, hit
+		from(select recruit_no, title, field,location, age,start_date, end_date, content, time_posted, hit 
+		from recruit order by recruit_no desc)) 
+		where title like '%${search}%' or content like '%${search}%')
+		where page=#{pageNo}
+		
+	</select>
+	
+	<select id="findNoticeBoardList" resultMap="reviewAndNoticeBoardRM">
+		select * from(
+		select board_no, board_type, title, writer, content, member_no, to_char(time_posted,'YYYY-MM-DD')as time_posted, hit, ceil(rownum/5)as page
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit 
+		from board order by board_no desc) where board_type='notice') 
+		where title like '%${search}%' or writer like '%${search}%' or content like '%${search}%')
+		where page=#{pageNo}
+	</select>
+	
+	<select id="findReviewBoardList" resultMap="reviewAndNoticeBoardRM">
+		select * from(
+		select board_no, board_type, title, writer, content, member_no, to_char(time_posted,'YYYY-MM-DD')as time_posted, hit, ceil(rownum/5) as page
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit 
+		from board order by board_no desc) 
+		where board_type='review') 
+		where title like '%${search}%' or writer like '%${search}%' or content like '%${search}%')
+		where page=#{pageNo}
+	</select>
+	
+	
+	<select id="findQnABoardList" resultMap="QnABoardRM">
+		select * from(
+		select qna_no, title, writer, content, ref, restep, relevel, member_no, time_posted, hit, ceil(rownum/5) as page
+		from(select qna_no, title, writer, content, ref, restep, relevel, member_no, time_posted, hit 
+		from QNA_BOARD order by qna_no asc) 
+		where title like '%${search}%' or writer like '%${search}%' or content like '%${search}%')
+		where page=#{pageNo}
+	</select>
+	
+	<select id="findRecruitTotalContent" parameterType="string" resultType="int">
+		select count(*) from recruit where title like '%${value}%' or content like '%${value}%'
+	</select>
+
+	<select id="findNoticeBoardTotalContent" parameterType="string" resultType="int">
+		select count(*) from(
+		select * from board where board_type = 'notice')
+		where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%'
+	</select>
+	
+	<select id="findReviewBoardTotalContent" parameterType="string" resultType="int">
+		select count(*) from(
+		select * from board where board_type = 'review')
+		where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%'
+	</select>
+
+	<select id="findQnABoardTotalContent" parameterType="string" resultType="int">
+		select count(*) from qna_board where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%'
+	</select>
+	
+	
+	
+	
+	<!-- 안 될 확률이 높음 -->
+	
+	
+	
+	<select id="findThreeRecruitBoardList" resultMap="boardRM" parameterType="String">
+		select * from(
+		select recruit_no, title, field, location, age,to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date,to_char(time_posted,'YYYY-MM-DD') as time_posted, content, hit, ceil(rownum/3)as page
+		from(select recruit_no, title, field, location, age, start_date,end_date, content, time_posted, hit
+		from(select recruit_no, title, field,location, age,start_date, end_date, content, time_posted, hit 
+		from recruit order by recruit_no desc))
+		where title like '%${value}%' or content like '%${value}%')
+		where page='1'
+
+	</select>
+	
+	<select id="findThreeNoticeBoardList" resultMap="reviewAndNoticeBoardRM" parameterType="String">
+		select * from(
+		select board_no, board_type, title, writer, content, member_no, to_char(time_posted,'YYYY-MM-DD')as time_posted, hit, ceil(rownum/3)as page
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit 
+		from board order by board_no desc) where board_type='notice') 
+		where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%')
+		where page='1'
+	</select>
+	
+	<select id="findThreeReviewBoardList" resultMap="reviewAndNoticeBoardRM" parameterType="String">
+		select * from(
+		select board_no, board_type, title, writer, content, member_no, to_char(time_posted,'YYYY-MM-DD')as time_posted, hit, ceil(rownum/3) as page
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit
+		from(select board_no, board_type, title, writer, content, member_no, time_posted, hit 
+		from board order by board_no desc) 
+		where board_type='review')
+		where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%')
+		where page='1'
+	</select>
+	
+	
+	<select id="findThreeQnABoardList" resultMap="QnABoardRM" parameterType="String">
+		select * from(
+		select qna_no, title, writer, content, ref, restep, relevel, member_no, time_posted, hit, ceil(rownum/3) as page
+		from(select qna_no, title, writer, content, ref, restep, relevel, member_no, time_posted, hit 
+		from QNA_BOARD order by qna_no asc)
+		where title like '%${value}%' or writer like '%${value}%' or content like '%${value}%')
+		where page='1'
+	</select>
+	
+</mapper> 

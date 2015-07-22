@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="noticeBoard">
+ 	<resultMap type="nbvo" id="boardRM">      
+      <result property="boardNo" column="board_no"/>         
+      <result property="memberNo" column="member_no"/>
+      <result property="timePosted" column="time_posted"/>
+   </resultMap>
+ 
+    <select id="findByNoticeBoardNo" parameterType="int" resultType="nbvo">
+       select * from board where board_no=#{value}
+    </select>
+    <select id="findNoticeBoardList" resultType="nbvo">
+    	select boardNo, title, writer, content, memberNo, timePosted, hit from(select boardNo, title, writer, content, memberNo, timePosted, hit, CEIL(rownum/5) AS page from(select board_no as boardNo, title, writer, content, member_no as memberNo, time_posted as timePosted, hit from board where board_type='notice' order by boardNo desc)) where page=#{value}
+    </select>
+    <select id="totalContent" resultType="int">
+    	select count(*) from board where board_type='notice'
+    </select>
+    <select id="findNoticeBoardByBoardNo" resultMap="boardRM" resultType="nbvo">   
+		select board_no, title, writer, content, member_no, time_posted,hit from board where board_no=#{value}
+	</select>
+	
+	<update id="noticeBoardUpdate" parameterType="nbvo">
+		update board set title=#{title}, content=#{content} where board_no=#{boardNo}
+	</update>
+	<delete id="noticeBoardDelete" parameterType="int">
+		delete from board where board_no=#{value}
+	</delete>
+	<delete id="deleteNoticeBoardComment" parameterType="int">
+		delete from ymv_comment where board_no=#{boardNo}
+	</delete>
+	<insert id="registerNoticeBoard" parameterType="nbvo">
+		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+			select ymv_seq.nextval from dual
+		</selectKey>  
+  		insert into board(board_no, board_type, title, writer, content, member_no, time_posted)  values(#{boardNo}, 'notice', #{title}, #{writer}, #{content}, 2, sysdate)
+	</insert>
+	<insert id="registerPicture" parameterType="pvo">
+		insert into PICTURE(picture_no, file_path) values(#{pictureNo},#{filePath})
+	</insert>
+	<select id="findPicture" parameterType="int" resultType="pvo">
+		select picture_no as pictureNo, file_path as filePath from picture where picture_no=#{value}
+	</select>
+	<delete id="deletePicture" parameterType="int">
+		delete from picture where picture_no=#{value}
+	</delete>
+	 <update id="updateHit" parameterType="int">
+	 	update board set hit = hit+1 where board_no=#{value}
+	 </update>
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 

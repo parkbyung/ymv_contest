@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="qnaBoard"> 
+   <!-- qna 게시판 파트 -->
+   <resultMap type="qnabvo" id="qnaBoardRM">     
+       <result property="qnaNo" column="qna_no"/>          
+      <result property="memberNo" column="member_no" />       
+      <result property="timePosted" column="time_posted"/>         
+   </resultMap>
+	<select id="totalQnABoardContent" resultType="int">
+		select count(*) from QnA_board
+	</select>	
+	
+	 <select id="findQnABoardList" resultMap="qnaBoardRM" resultType="qnabvo" >   
+select qna_no, title, writer, content, ref, restep, relevel,member_no,time_posted,hit
+	from(select qna_no, title, writer, content, ref,restep,relevel,member_no,time_posted,hit , CEIL(rownum/5) AS page from(select qna_no, title, writer, content, ref,restep,relevel,member_no,time_posted,hit from QNA_BOARD order by ref desc,restep asc)) 
+   where page=#{value}
+   </select>
+   
+   <insert id="registerQnABoard" parameterType="qnabvo">
+ 		<selectKey keyProperty="qnaNo" resultType="int" order="BEFORE">
+ 			select ymv_seq.nextval from dual
+ 		</selectKey>
+ 		insert into QnA_board
+ 		(qna_no ,title,writer ,content ,ref ,restep ,relevel ,member_no,time_posted,hit)
+ 		 values(#{qnaNo},#{title},#{writer},#{content},#{qnaNo},0,0,#{memberNo},sysdate,0)
+	 </insert>
+	 	
+	 <select id="findQnABoardByQnANo"  resultMap="qnaBoardRM" resultType="qnabvo">
+		select qna_no, title, writer, content, ref, restep, relevel,member_no,time_posted,hit
+		from QnA_board
+		where qna_no=#{value}
+	</select>
+	 <update id="updateQnABoard" parameterType="qnabvo">
+   update QnA_board set title=#{title},content=#{content}
+   where qna_no=#{qnaNo}
+   	</update>
+   	<delete id="deleteQnABoard" parameterType="qnabvo">
+   delete QnA_board where qna_no=#{value}
+	</delete>
+   	 <update id="updateRestep" parameterType="hashmap">
+	 UPDATE 	QnA_board
+		  SET 		restep = restep+1
+	 	WHERE     ref=#{ref}
+	 	 AND 		restep > #{restep}
+	 </update>
+   	 <insert id="replyQnABoard" parameterType="qnabvo">
+	 	<selectKey keyProperty="qnaNo" resultType="int" order="BEFORE">
+	 		select ymv_seq.nextval from dual
+	 	</selectKey>
+	 	insert into QnA_board
+	  	(qna_no,title,writer,content,ref,restep,relevel,member_no,time_posted,hit)
+	 	values(#{qnaNo},#{title},#{writer},#{content},#{ref},#{restep},#{relevel},#{memberNo},sysdate,0)
+	 </insert>	 	
+	  <update id="updateHit" parameterType="int">
+	 	update QnA_board set hit = hit+1 where qna_no=#{value}
+	 </update>
+ </mapper> 

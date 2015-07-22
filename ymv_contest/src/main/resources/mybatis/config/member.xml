@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="member"> 
+ 
+ 	<resultMap type="membervo" id="memberRM">      
+      <result property="memberNo" column="member_no"/>         
+      <result property="identityNo" column="identity_no" />       
+      <result property="mailAddress" column="mail_address" />       
+      <result property="memberType" column="member_type" />     
+      <result property="filePath" column="file_path"/>  
+   </resultMap>
+ 
+ 	<select id="login" resultMap="memberRM" resultType="membervo">
+ 			select * from member where id=#{id} and password=#{password}
+ 	</select>
+  
+ 	<insert id="registerVoluntaryApplicant" parameterType="vsavo">
+		insert into voluntary_service_applicate(recruit_no,member_no,motivate) values(#{recruitNo},#{memberNo},#{motivate})
+	</insert>
+	
+	<select id="checkVolunteerApplicant" resultType="int" parameterType="map">
+		select count(*) from voluntary_service_applicate where recruit_no=#{recruitNo} and member_no=#{memberNo}
+	</select>
+	
+	<delete id="deleteVoluntaryServiceApplicateNo" parameterType="int">
+		delete from voluntary_service_applicate where recruit_no=#{recruitNo}
+	</delete>
+	
+	<select id="checkId" resultType="int">
+		select count(*) from member where id=#{value}
+	</select>
+	
+	<insert id="registerMember" parameterType="membervo">
+		<selectKey keyProperty="memberNo" resultType="int" order="BEFORE">
+ 			select ymv_seq.nextval from dual
+ 		</selectKey>
+		insert into member(member_no,id,password,name,address,identity_no,mail_address,member_type)
+		values(#{memberNo},#{id},#{password},#{name},#{address},#{identityNo},#{mailAddress},#{memberType})
+	</insert>
+	
+	<update id="updateProfile" parameterType="membervo">
+		update member set file_path=#{filePath} where member_no=#{memberNo}
+	</update>
+	
+	<update id="updateMember" parameterType="membervo">
+	update member set password=#{password},address=#{address},name=#{name},
+	mail_address=#{mailAddress} where member_no=#{memberNo}
+	</update>
+	
+	<select id="findMemberByMemberNo" resultType="membervo" resultMap="memberRM">
+	 	select * from member where member_no=#{value}
+	</select>
+ </mapper> 

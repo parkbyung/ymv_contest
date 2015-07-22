@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+<!-- 전진한 -->
+<!-- 어노테이션컨트롤러관련 설정
+	   RequestMappingHandlerMapping : 어노테이션 컨트롤러의 HandlerMapping
+	   Ajax Json : @ResponseBody 관련 설정 등 
+ -->
+<mvc:annotation-driven />
+<!-- 백지영 -->
+<context:component-scan base-package="org.log5j.ymv.controller,org.log5j.ymv.aop.controller" />
+<!-- <context:component-scan base-package="org.log5j.ymv.controller" use-default-filters="false">
+	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+</context:component-scan> -->
+<!-- 전진한 -->
+<bean id="viewResolver" 
+class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/views/"  />
+	<property name="suffix" value=".jsp"   />
+	<property name="order" value="2"></property>
+</bean>
+<!-- Tile Framework 연동 설정 -->
+<bean id="tilesConfig" 
+class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+	<property name="definitions">
+		<list>
+			<value>/WEB-INF/spring/appServlet/tiles-*.xml</value>
+		</list>
+	</property>
+</bean>
+<!-- Tiles ViewResolver 설정: order를 0으로 setting -->
+<bean id="tilesViewResolver" 
+class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	<property name="viewClass" 
+	value="org.springframework.web.servlet.view.tiles2.TilesView" />
+	<property name="order" value="1" />
+</bean>
+<!-- 박병준 -->
+<!-- Spring Validation -->
+<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+<property name="basename" value="classpath:messages_ko"/>
+<property name="defaultEncoding" value="utf-8"></property>
+</bean>
+<!-- 임영학 -->
+<!-- 파일 업로드 설정 -->
+<bean id="multipartResolver" 
+class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<property name="defaultEncoding" value="utf-8"></property>
+	<!-- -1은 제한 없음  5*1024*1024 -->
+	<property name="maxUploadSize" value="-1"></property>
+</bean>
+<!-- 	upload path
+		개발시에는 workspace 경로를 주입시키고 
+		운영시에는 실제 서버 경로를 주입시킨다. 
+		운영 업로드 경로 
+		C:\java-kosta\servers\spring2-tomcat\webapps\springmvc28-fileupload-inst\upload
+ -->
+<bean id="uploadPath" class="java.lang.String" >
+	<constructor-arg>
+		<value>C:\\Users\\KOSTA\\git\\ymv_ver2\\ymv_ver2\\src\\main\\webapp\\upload\\</value>
+	</constructor-arg>
+</bean>
+<bean id="uploadNoticePath" class="java.lang.String" >
+	<constructor-arg>
+		<value>C:\\Users\\KOSTA\\git\\ymv_ver2\\ymv_ver2\\src\\main\\webapp\\noticeupload\\</value>
+	</constructor-arg>
+</bean>
+<bean id="uploadProfilePath" class="java.lang.String" >
+	<constructor-arg>
+		<value>C:\\Users\\KOSTA\\git\\ymv_ver2\\ymv_ver2\\src\\main\\webapp\\profileupload\\</value>
+	</constructor-arg>
+</bean>
+
+
+<bean id="beanNameViewResolver" 
+class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<property name="order" value="2"></property>
+</bean>
+<!-- 임영학 -->
+<!-- 인터셉터 -->
+<!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	<property name="order" value="0"/>
+	<property name="interceptors">
+		<list>
+			<ref bean="LoginCheckInterceptor"/>
+		</list>
+	</property>
+</bean> -->
+ <mvc:interceptors>
+ <mvc:interceptor>
+    <mvc:mapping path="/**"/>
+    <bean class="org.log5j.ymv.controller.LoginInterceptor" />
+</mvc:interceptor>
+</mvc:interceptors>
+<mvc:annotation-driven />
+</beans>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="reviewBoard">
+ 	<resultMap type="rbvo" id="boardRM">      
+      <result property="boardNo" column="board_no"/>         
+      <result property="memberNo" column="member_no"/>
+      <result property="timePosted" column="time_posted"/>
+   </resultMap>
+ 
+    <select id="findByReviewNo" parameterType="int" resultType="rbvo">
+       select * from board where board_no=#{value}
+    </select>
+    <select id="findReviewBoardList" resultType="rbvo">
+    	select boardNo, title, writer, content, memberNo, timePosted, hit 
+    	from(select boardNo, title, writer, content, memberNo, timePosted, hit, CEIL(rownum/5) AS page 
+    	from(select board_no as boardNo, title, writer, content, member_no as memberNo, time_posted as timePosted,
+    	 hit from board where board_type='review' order by boardNo desc)) where page=#{value}
+    </select>
+    <select id="totalContent" resultType="int">
+    	select count(*) from board where board_type='review'
+    </select>
+   <select id="findReviewBoardByBoardNo" resultMap="boardRM" resultType="rbvo">   
+		select board_no, title, writer, content, member_no, time_posted, hit from board where board_no=#{value}
+	</select>
+	<insert id="registerReviewComment" parameterType="cmvo">
+		insert into YMV_COMMENT(comment_no, writer, content, time_posted, board_no) values(ymv_seq.nextval,#{writer},#{content},sysdate,#{boardNo})
+	</insert>
+	<resultMap type="cmvo" id="commentRM">
+		<result property="commentNo" column="comment_no"/>
+		<result property="timePosted" column="time_posted"/>
+		<result property="boardNo" column="board_no"/>
+	</resultMap>
+	<select id="findCommentListByBoardNo" resultMap="commentRM">
+		select * from ymv_comment where board_no=#{boardNo} order by comment_no desc
+	</select>
+	<delete id="deleteReviewComment" parameterType="cmvo">
+		delete from ymv_comment where board_no=#{boardNo} and comment_no=#{commentNo}
+	</delete>
+	<update id="updateReviewBoard" parameterType="rbvo">
+		update board set title=#{title}, content=#{content} where board_no=#{boardNo}
+	</update>
+	<delete id="deleteReviewBoard" parameterType="int">
+		delete from board where board_no=#{value}
+	</delete>
+	<delete id="deleteReviewBoardComment" parameterType="int">
+		delete from ymv_comment where board_no=#{boardNo}
+	</delete>
+	<insert id="registerReviewBoard" parameterType="rbvo">
+		<selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
+			select ymv_seq.nextval from dual
+		</selectKey>  
+  		insert into board(board_no, board_type, title, writer, content, member_no, time_posted)  values(#{boardNo}, 'review', #{title}, #{writer}, #{content}, #{memberNo}, sysdate)
+	</insert>
+	<insert id="registerPicture" parameterType="pvo">
+		insert into PICTURE(picture_no, file_path) values(#{pictureNo},#{filePath})
+	</insert>
+	<select id="findPicture" parameterType="int" resultType="pvo">
+		select picture_no as pictureNo, file_path as filePath from picture where picture_no=#{value}
+	</select>
+	<delete id="deletePicture" parameterType="int">
+		delete from picture where picture_no=#{value}
+	</delete>
+	<update id="updateHit" parameterType="int">
+	 	update board set hit = hit+1 where board_no=#{value}
+	 </update>
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
