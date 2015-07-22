@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/main/java/org/log5j/ymv/controller/RecruitBoardController.java=UTF-8
+encoding//src/main/java/org/log5j/ymv/controller/SchedulerController.java=UTF-8
+encoding//src/main/java/org/log5j/ymv/controller/SponsorController.java=UTF-8
+encoding//src/main/java/org/log5j/ymv/model/board/PagingBean.java=utf-8
+encoding//src/main/java/org/log5j/ymv/model/board/RecruitBoardDAOImpl.java=UTF-8
+encoding//src/main/java/org/log5j/ymv/model/board/RecruitBoardServiceImpl.java=UTF-8
+encoding//src/main/java/org/log5j/ymv/model/scheduler/SchedulerServiceImpl.java=UTF-8
+encoding//src/main/webapp/css/home.css=MS949
