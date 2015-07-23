@@ -417,4 +417,3 @@ ALTER TABLE table_name MODIFY column_name datatype
 -- 테이블의 컬럼 삭제
 ALTER TABLE Persons DROP COLUMN DateOfBirth
 
-commit 테스트
