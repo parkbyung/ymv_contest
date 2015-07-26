@@ -9,7 +9,7 @@
 		and Filters -->
 	<context-param>
 		<param-name>root</param-name>
-		<param-value>/ymv_ver2/</param-value>
+		<param-value>/ymv_contest/</param-value>
 	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
