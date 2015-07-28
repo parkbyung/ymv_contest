@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#updateForm").submit(function(){
@@ -17,7 +18,7 @@
 				alert("이메일주소를 입력하세요!");
 				return false;
 			}
-		});
+		});	
 	});
 </script>
 <h3>
@@ -28,7 +29,12 @@
 		<div class="row">
 			<div class="col-sm-6 col-sm-offset-3">
 				<form class="form-horizontal" role="form" action="member_update.ymv"
-					id="updateForm">
+					enctype='multipart/form-data' method='post' id="updateForm">
+					<div class="form-group">
+						<label for="inputProfile" class="control-label">프로필 사진</label> <input
+							type="file" class="form-control btn btn-default btn-xs"
+							id="inputProfile3" name="fileName" accept='.gif, .jpg, .png'">
+					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="control-label">아이디</label> <input
 							type="hidden" name="memberNo"

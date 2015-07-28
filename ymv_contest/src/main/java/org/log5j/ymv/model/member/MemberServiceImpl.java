@@ -1,14 +1,16 @@
 package org.log5j.ymv.model.member;
 
+import java.io.File;
+
 import javax.annotation.Resource;
 
 import org.log5j.ymv.model.board.PictureVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Resource(name="memberDAOImpl")
 	private MemberDAO memberDAO;
-	
 	/**
 	 * 작성자 : 백지영
 	 * 내용 : memberDAO에서 login을 수행한 값을 return 한다.
@@ -61,7 +63,6 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public void updateProfile(MemberVO memberVO) {
-		// TODO Auto-generated method stub
 		memberDAO.updateProfile(memberVO);
 	}
 	
@@ -86,6 +87,40 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO findMemberByMemberNo(int memberNo) {
 		return memberDAO.findMemberByMemberNo(memberNo);
+	}
+
+	@Override
+	public void updateProfilePath(MemberVO mvo, PictureVO pvo,
+			String profilePath) {
+		MultipartFile file=pvo.getFileName();
+		/*
+		 *  파일 얻는 메서드  : list.get(i) 을 호출하면 File이 반환 
+		 *  실제 디렉토리로 전송(업로드) 메서드 : 파일.transferTo(파일객체)
+		 *  ModelAndView 에서 결과 페이지로 업로드한 파일 정보를 문자열배열로
+		 *  할당해 jsp에서 사용하도록 한다. 
+		*/ 
+		/*ArrayList<String> nameList=new ArrayList<String>();
+		for(int i=0;i<list.size();i++){*/
+			//System.out.println(list.get(i).getOriginalFilename().equals(""));
+			String fileName="[memberNo"+mvo.getMemberNo()+"]"+file.getOriginalFilename();			
+			String filePath="profileupload\\"+fileName;
+/*			memberVO.setFilePath(filePath);
+			pvo.setPictureNo(memberVO.getMemberNo());*/
+			if(!fileName.equals("")/*&&(fileName.contains(".jpg")||fileName.contains(".png") )*/){
+				try {
+					mvo.setFilePath(filePath);
+					pvo.setPictureNo(mvo.getMemberNo());
+					file.transferTo(new File(profilePath+fileName));
+					// 픽쳐 디비에 파일정보 저장
+					System.out.println("PictureNo: "+pvo.getPictureNo()+" fileName: "+pvo.getFileName());
+					/*memberService.updateProfile(mvo);*/
+					/*nameList.add(fileName);*/
+					System.out.println("fileupload ok:"+fileName);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+			}
+		
 	}
 	
 }

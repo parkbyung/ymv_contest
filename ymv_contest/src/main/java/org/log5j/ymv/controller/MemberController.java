@@ -30,7 +30,7 @@ public class MemberController {
 	private MemberService memberService;
 
 	@Resource(name="uploadProfilePath")
-	private String path;
+	private String profilePath;
 	/*
 	 * 로그인부분
 	 */
@@ -159,47 +159,6 @@ public class MemberController {
 		mv.setViewName("member_register_result");
 		return mv;// 문제 없으면 결과 페이지로 이동한다.
 	}
-	/**
-	 * 
-	 * 작성자 : 임영학
-	 * 내용 : 
-	 * @param request
-	 * @param pvo
-	 * @return
-	 */
-	@RequestMapping("member_profileUpload.ymv")
-	public ModelAndView profileUpload(HttpServletRequest request, PictureVO pvo){
-		MemberVO memberVO=(MemberVO)request.getSession().getAttribute("mvo");
-		MultipartFile file=pvo.getFileName();
-		/*
-		 *  파일 얻는 메서드  : list.get(i) 을 호출하면 File이 반환 
-		 *  실제 디렉토리로 전송(업로드) 메서드 : 파일.transferTo(파일객체)
-		 *  ModelAndView 에서 결과 페이지로 업로드한 파일 정보를 문자열배열로
-		 *  할당해 jsp에서 사용하도록 한다. 
-		*/ 
-		/*ArrayList<String> nameList=new ArrayList<String>();
-		for(int i=0;i<list.size();i++){*/
-			//System.out.println(list.get(i).getOriginalFilename().equals(""));
-			String fileName="[memberNo"+memberVO.getMemberNo()+"]"+file.getOriginalFilename();			
-			String filePath="profileupload\\"+fileName;
-/*			memberVO.setFilePath(filePath);
-			pvo.setPictureNo(memberVO.getMemberNo());*/
-			if(!fileName.equals("")/*&&(fileName.contains(".jpg")||fileName.contains(".png") )*/){
-				try {
-					memberVO.setFilePath(filePath);
-					pvo.setPictureNo(memberVO.getMemberNo());
-					file.transferTo(new File(path+fileName));
-					// 픽쳐 디비에 파일정보 저장
-					System.out.println("PictureNo: "+pvo.getPictureNo()+" fileName: "+pvo.getFileName());
-					memberService.updateProfile(memberVO);
-					/*nameList.add(fileName);*/
-					System.out.println("fileupload ok:"+fileName);
-				} catch (Exception e) {					
-					e.printStackTrace();
-				}
-			}
-		return new ModelAndView("home");
-	}
 	
 	/**
 	 * 작성자 : 백지영
@@ -221,9 +180,11 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("member_update.ymv")
-	public ModelAndView memberUpdate(HttpServletRequest request, MemberVO mvo){
+	public ModelAndView memberUpdate(HttpServletRequest request, MemberVO mvo, PictureVO pvo){
 		HttpSession session=request.getSession(false);
-		/*MemberVO smvo=(MemberVO)session.getAttribute("mvo");*/
+		String path = profilePath;
+		memberService.updateProfilePath(mvo,pvo,path);
+		memberService.updateProfile(mvo);
 		memberService.updateMember(mvo);
 		mvo=memberService.findMemberByMemberNo(mvo.getMemberNo());
 		session.setAttribute("mvo",mvo);

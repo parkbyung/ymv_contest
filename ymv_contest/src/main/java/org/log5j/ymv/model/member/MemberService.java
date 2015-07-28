@@ -17,4 +17,6 @@ public interface MemberService {
 	public void updateMember(MemberVO memberVO);
 	
 	public MemberVO findMemberByMemberNo(int memberNo);
+
+	public void updateProfilePath(MemberVO mvo, PictureVO pvo, String profilePath);
 }

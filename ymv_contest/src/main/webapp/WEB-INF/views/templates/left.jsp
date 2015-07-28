@@ -14,12 +14,12 @@
 			}
 		});
 		
-$("#profile").click(function(){
+/* $("#profile").click(function(){
 			$("#profileView").html("<form action='member_profileUpload.ymv' enctype='multipart/form-data' method='post'><input type='file' class = 'btn btn-default btn-xs' name='fileName' accept='.gif, .jpg, .png'><input type='submit' class = 'btn btn-default btn-xs' value='프로필사진등록' style='position: relative;margin-left: 5%;'>");
-		});
-$("#profile").click(function(){
+		}); */
+/* $("#profile").click(function(){
 	$("#profileView").html("<form action='member_profileUpload.ymv' enctype='multipart/form-data' method='post'><input type='file' class = 'btn btn-default btn-xs' name='fileName' accept='.gif, .jpg, .png'><input type='submit' class = 'btn btn-default btn-xs' value='프로필사진등록' style='position: relative;margin-left: 5%;'>");
-});
+}); */
 $("#modalBtn").click(function(){
        $.ajax({
             type : "post",
@@ -102,16 +102,14 @@ $("#modalBtn").click(function(){
 					id="profile" style="width: 80%; height: 50%; position: relative; margin-left: 15%;">
 			</c:when>
 			<c:otherwise>
-				
 					<img
 						src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
 						class="center-block img-circle img-responsive" id="profile">
-			
 				<br>
 				<br>
 			</c:otherwise>
 		</c:choose>
-		<div id="profileView"></div>
+		<!-- <div id="profileView"></div> -->
 		<div class="panel panel-default"
 			style="position: relative; margin-left: 5%;">
 			<div class="panel-body">
