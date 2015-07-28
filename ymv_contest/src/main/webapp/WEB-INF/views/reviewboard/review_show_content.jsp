@@ -27,7 +27,7 @@
 		</tr>
 		<tr></tr>
 		<tr>
-			<td colspan="15" align="center"><c:if test="${requestScope.pvo!=null }">
+			<td colspan="15"><c:if test="${requestScope.pvo!=null }">
 					<img src="${initParam.root }${requestScope.pvo.filePath}" >
 					<br>
 				</c:if> <br> <pre>${requestScope.rvo.content}</pre></td>
@@ -66,7 +66,7 @@
 								<form name="commentForm" action="register_review_comment.ymv"
 									method="post">
 									작성자:<input type="text" name="writer"
-										value="${sessionScope.mvo.id }" readonly="readonly" size="10">
+										value="${sessionScope.mvo.name }" readonly="readonly" size="10">
 									내용<input type="text" name="content" size="70"> <input
 										type="hidden" name="boardNo"
 										value="${requestScope.rvo.boardNo}"> <input
@@ -74,9 +74,9 @@
 								</form>
 							</td>
 						</tr>
-						<c:forEach items="${requestScope.commentList}" var="comment">
+						<c:forEach items="${requestScope.commentList}" var="comment" varStatus = "i" >
 							<tr class = "info">
-								<td>${comment.commentNo}</td>
+								<td>${i.count }</td>
 								<td>작성자 : <strong>${comment.writer}</strong></td>
 								<td align="right"><span style="color:#92B3B7">시간 : ${comment.timePosted}</span></td>
 							</tr>
@@ -84,12 +84,12 @@
 							<td></td>
 								<td>${comment.content}</td>
 								<td align="right"><c:choose>
-										<c:when test="${sessionScope.mvo.memberType=='admin' }">
+										<%-- <c:when test="${sessionScope.mvo.memberType=='admin' }">
 											<a
 												href="delete_review_comment.ymv?commentNo=${comment.commentNo}&boardNo=${comment.boardNo}"
 												class="btn btn-default btn-xs">댓글삭제</a>
-										</c:when>
-										<c:when test="${comment.writer==sessionScope.mvo.id }">
+										</c:when> --%>
+										<c:when test="${comment.writer==sessionScope.mvo.name }">
 											<a
 												href="delete_review_comment.ymv?commentNo=${comment.commentNo}&boardNo=${comment.boardNo}"
 												class="btn btn-default btn-xs">댓글삭제</a>

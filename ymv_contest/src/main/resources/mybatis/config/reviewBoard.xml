@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="boardNo" column="board_no"/>
 	</resultMap>
 	<select id="findCommentListByBoardNo" resultMap="commentRM">
-		select * from ymv_comment where board_no=#{boardNo} order by comment_no desc
+		select * from ymv_comment where board_no=#{boardNo} order by comment_no asc
 	</select>
 	<delete id="deleteReviewComment" parameterType="cmvo">
 		delete from ymv_comment where board_no=#{boardNo} and comment_no=#{commentNo}

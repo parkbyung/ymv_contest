@@ -6,10 +6,12 @@ public class CommentVO {
 	private String content;
 	private String timePosted;
 	private int boardNo;
+	
 	public CommentVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public CommentVO(int commentNo, String writer, String content,
 			String timePosted, int boardNo) {
 		super();
@@ -19,6 +21,7 @@ public class CommentVO {
 		this.timePosted = timePosted;
 		this.boardNo = boardNo;
 	}
+
 	public int getCommentNo() {
 		return commentNo;
 	}
@@ -49,12 +52,12 @@ public class CommentVO {
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
 	}
+
 	@Override
 	public String toString() {
 		return "CommentVO [commentNo=" + commentNo + ", writer=" + writer
 				+ ", content=" + content + ", timePosted=" + timePosted
 				+ ", boardNo=" + boardNo + "]";
 	}
-
 
 }
