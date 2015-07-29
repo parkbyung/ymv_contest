@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class SponsorController {
+	
 	@Resource
 	private SponsorService sponsorService;
 	@Resource(name = "uploadPath")

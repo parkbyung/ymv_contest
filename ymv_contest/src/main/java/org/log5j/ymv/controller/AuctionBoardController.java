@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AuctionBoardController {
+	
 	@Resource
 	private AuctionBoardService auctionBoardService;
 	@Resource(name="uploadReviewPath")
