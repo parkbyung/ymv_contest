@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuctionBoardController {
 	@Resource
 	private AuctionBoardService auctionBoardService;
-	@Resource(name="uploadPath")
+	@Resource(name="uploadReviewPath")
 	private String path;
 	@RequestMapping("auctionTiles.ymv")
 	@NoLoginCheck

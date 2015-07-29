@@ -60,9 +60,9 @@ class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		운영 업로드 경로 
 		C:\java-kosta\servers\spring2-tomcat\webapps\springmvc28-fileupload-inst\upload
  -->
-<bean id="uploadPath" class="java.lang.String" >
+<bean id="uploadReviewPath" class="java.lang.String" >
 	<constructor-arg>
-		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\upload\\</value>
+		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\reviewupload\\</value>
 	</constructor-arg>
 </bean>
 <bean id="uploadNoticePath" class="java.lang.String" >

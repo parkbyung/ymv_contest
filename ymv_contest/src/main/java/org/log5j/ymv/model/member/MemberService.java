@@ -1,7 +1,5 @@
 package org.log5j.ymv.model.member;
 
-import org.log5j.ymv.model.board.PictureVO;
-
 
 public interface MemberService {
 	public MemberVO login(MemberVO vo);
@@ -18,5 +16,4 @@ public interface MemberService {
 	
 	public MemberVO findMemberByMemberNo(int memberNo);
 
-	public void updateProfilePath(MemberVO mvo, PictureVO pvo, String profilePath);
 }

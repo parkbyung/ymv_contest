@@ -1,7 +1,5 @@
 package org.log5j.ymv.controller;
 
-import java.io.File;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -28,9 +25,8 @@ public class MemberController {
 	
 	@Resource(name="memberServiceImpl")
 	private MemberService memberService;
-
-	@Resource(name="uploadProfilePath")
-	private String profilePath;
+	
+	
 	/*
 	 * 로그인부분
 	 */
@@ -180,14 +176,20 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("member_update.ymv")
-	public ModelAndView memberUpdate(HttpServletRequest request, MemberVO mvo, PictureVO pvo){
+	public String memberUpdate(HttpServletRequest request, MemberVO mvo, PictureVO pvo, ModelAndView mav){
 		HttpSession session=request.getSession(false);
-		String path = profilePath;
-		memberService.updateProfilePath(mvo,pvo,path);
-		memberService.updateProfile(mvo);
 		memberService.updateMember(mvo);
 		mvo=memberService.findMemberByMemberNo(mvo.getMemberNo());
 		session.setAttribute("mvo",mvo);
+		mav.addObject("pvo",pvo).addObject("mvo",mvo);
+		return "forward:upload_profile_path.ymv";
+	}
+	@RequestMapping("member_update_profile.ymv")
+	public ModelAndView memberProfileUpdate(MemberVO mvo){
+		memberService.updateProfile(mvo);
 		return new ModelAndView("member_update","mvo",mvo);
 	}
+	
+	
+	
 }
