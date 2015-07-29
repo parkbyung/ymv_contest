@@ -1,6 +1,5 @@
 package org.log5j.ymv.controller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,10 +15,8 @@ import org.log5j.ymv.model.board.PictureVO;
 import org.log5j.ymv.model.board.ReviewBoardService;
 import org.log5j.ymv.model.board.ReviewBoardVO;
 import org.log5j.ymv.model.cookie.CookieService;
-import org.log5j.ymv.model.upload.UploadPathService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 /**
  * 후기게시판
@@ -30,8 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReviewBoardController {
 	@Resource
 	private ReviewBoardService reviewBoardService;
-	@Resource
-	private UploadPathService uploadPathService;
 	@Resource
 	private CookieService cookieService;
 
@@ -163,10 +158,17 @@ public class ReviewBoardController {
 	 * @return
 	 */
 	@RequestMapping("review_register.ymv")
-	public ModelAndView reviewRegister(ReviewBoardVO rbvo,PictureVO pvo){
+	public String reviewRegister(ReviewBoardVO rbvo, PictureVO pvo) {
 		reviewBoardService.registerReviewBoard(rbvo);
-		PictureVO pictureVO = uploadPathService.registerReviewFilePath(rbvo,pvo);
-		reviewBoardService.registerPicture(pictureVO);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("rbvo", rbvo).addObject("pvo", pvo);
+		return "forward:upload_review_path.ymv";
+	}
+
+	@RequestMapping("review_register_file.ymv")
+	public ModelAndView noticeRegisterPicture(PictureVO pvo) {
+		reviewBoardService.registerPicture(pvo);
 		return new ModelAndView("redirect:review_board.ymv");
 	}
+	
 }

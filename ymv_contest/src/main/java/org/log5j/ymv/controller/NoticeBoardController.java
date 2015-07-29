@@ -1,26 +1,18 @@
 package org.log5j.ymv.controller;
 
-import java.io.File;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.BoardVO;
-import org.log5j.ymv.model.board.CommentVO;
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.NoticeBoardService;
 import org.log5j.ymv.model.board.NoticeBoardVO;
 import org.log5j.ymv.model.board.PictureVO;
 import org.log5j.ymv.model.cookie.CookieService;
-import org.log5j.ymv.model.member.MemberVO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 /**
  * 
@@ -78,6 +70,11 @@ public class NoticeBoardController {
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("nvo",nvo).addObject("pvo",pvo);
 	   return "forward:upload_notice_path.ymv";
+   }
+   @RequestMapping("notice_register_file.ymv")
+   public ModelAndView noticeRegisterPicture(PictureVO pvo){
+	   noticeBoardService.registerPicture(pvo);
+	   return new ModelAndView("redirect:notice_board.ymv");
    }
    /**
     * 

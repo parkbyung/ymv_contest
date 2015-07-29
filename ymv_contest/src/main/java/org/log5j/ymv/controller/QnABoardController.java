@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.ListVO;
-import org.log5j.ymv.model.board.NoticeBoardVO;
 import org.log5j.ymv.model.board.QnABoardService;
 import org.log5j.ymv.model.board.QnABoardVO;
 import org.log5j.ymv.model.cookie.CookieService;

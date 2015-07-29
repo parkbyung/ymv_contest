@@ -190,6 +190,4 @@ public class MemberController {
 		return new ModelAndView("member_update","mvo",mvo);
 	}
 	
-	
-	
 }

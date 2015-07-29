@@ -96,7 +96,6 @@ public class RecruitBoardController {
 	@RequestMapping("voluntary_show_content_recruit_vol_type.ymv")
 	public ModelAndView showContentRecruitVolType(HttpServletRequest request,
 			HttpServletResponse response) {
-		String mojib = request.getParameter("mojib");
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("mvo");
 		String url = "voluntary_show_content";
@@ -421,7 +420,6 @@ public class RecruitBoardController {
 	   @NoLoginCheck
 	   public ModelAndView voluntaryBoardNormalConfirmList(HttpServletRequest request, CompanyVO cpvo){
 	      MemberVO mvo=(MemberVO) request.getSession().getAttribute("mvo");
-	      String pageNo=request.getParameter("pageNo");
 	      System.out.println("mvo11111:"+mvo);
 	      cpvo.setMemberNo(mvo.getMemberNo());
 	      //멤버넘버로 컨펌을 찾아와서 컨펌에 있는 보드넘버로 그 보드넘버에 해당하는 컨펌보드글들을 불러와야지
