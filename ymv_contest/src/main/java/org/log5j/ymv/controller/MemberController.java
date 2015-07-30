@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -176,14 +177,20 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("member_update.ymv")
-	public String memberUpdate(HttpServletRequest request, PictureVO pvo, ModelAndView mav){
+	public ModelAndView memberUpdate(HttpServletRequest request, PictureVO pvo, ModelAndView mav){
 		HttpSession session=request.getSession(false);
 		MemberVO mvo=(MemberVO)request.getSession().getAttribute("mvo");
 		memberService.updateMember(mvo);
 		mvo=memberService.findMemberByMemberNo(mvo.getMemberNo());
 		session.setAttribute("mvo",mvo);
 		mav.addObject("pvo",pvo).addObject("mvo",mvo);
-		return "forward:upload_profile_path.ymv";
+		MultipartFile file = pvo.getFileName();
+		if(!file.getOriginalFilename().equals("") ){
+			mav.setViewName("forward:upload_profile_path.ymv");
+			return mav;
+		}
+		mav.setViewName("member_update");
+		return mav;
 	}
 	/**
 	 * 
@@ -196,7 +203,7 @@ public class MemberController {
 	public ModelAndView memberProfileUpdate(HttpServletRequest request){
 		MemberVO memberVO=(MemberVO)request.getSession().getAttribute("mvo");
 		memberService.updateProfile(memberVO);
-		return new ModelAndView("home");
+		return new ModelAndView("member_update");
 	}
 	
 }
