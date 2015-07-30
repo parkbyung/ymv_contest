@@ -58,7 +58,6 @@ public class NoticeBoardController {
     * @작성자 : 임영학
     * @내용 : notice_register_view.jsp 에서 전달받은 공지사항 글 정보를 Board DB에 insert한다. 
     * 사진 업로드가 필요할 경우 사진을 지정한 경로에 업로드 시키고 그 경로와  Picture DB에 저장한다. 
-    * 메서드가 여러번 작동하게 되면 무결성 제약조건에 걸리기 때문에 redirect 처리를 해준다.
     *
     * @param vo 
     * @param pvo 
@@ -71,6 +70,13 @@ public class NoticeBoardController {
 	   mav.addObject("nvo",nvo).addObject("pvo",pvo);
 	   return "forward:upload_notice_path.ymv";
    }
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : UploadPathController로 부터 받은 PictureVO 정보를 통해 File을 업로드해준다.
+	 * @param pvo : 업로드하기 위한 기초 정보
+	 * @return
+	 */
    @RequestMapping("notice_register_file.ymv")
    public ModelAndView noticeRegisterPicture(PictureVO pvo){
 	   noticeBoardService.registerPicture(pvo);

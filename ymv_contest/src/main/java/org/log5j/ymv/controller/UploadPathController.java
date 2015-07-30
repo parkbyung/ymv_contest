@@ -3,13 +3,14 @@ package org.log5j.ymv.controller;
 import java.io.File;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import org.log5j.ymv.model.board.NoticeBoardService;
+import org.log5j.ymv.model.board.AuctionBoardVO;
 import org.log5j.ymv.model.board.NoticeBoardVO;
 import org.log5j.ymv.model.board.PictureVO;
 import org.log5j.ymv.model.board.ReviewBoardVO;
-import org.log5j.ymv.model.member.MemberService;
 import org.log5j.ymv.model.member.MemberVO;
+import org.log5j.ymv.model.sponsor.SponsorVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,17 +28,16 @@ public class UploadPathController {
 	@Resource(name = "uploadProfilePath")
 	private String profilePath;
 
-	@Resource(name = "memberServiceImpl")
-	private MemberService memberService;
-
-	@Resource(name = "noticeBoardServiceImpl")
-	private NoticeBoardService noticeBoardService;
+	@Resource(name = "uploadAuctionPath")
+	private String auctionPath;
+	
+	@Resource(name = "uploadSponsorPath")
+	private String sponsorPath;
 
 	@RequestMapping("upload_profile_path.ymv")
-	public String registerProfilePath(MemberVO mvo, PictureVO pvo) {
+	public String registerProfilePath(HttpServletRequest request, PictureVO pvo, ModelAndView mav) {
+		MemberVO mvo=(MemberVO)request.getSession().getAttribute("mvo");
 		MultipartFile file = pvo.getFileName();
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("mvo", mvo);
 		String fileName = "[memberNo" + mvo.getMemberNo() + "]"
 				+ file.getOriginalFilename();
 		String filePath = "profileupload\\" + fileName;
@@ -49,6 +49,8 @@ public class UploadPathController {
 				System.out.println("PictureNo: " + pvo.getPictureNo()
 						+ " fileName: " + pvo.getFileName());
 				System.out.println("fileupload ok:" + fileName);
+				System.out.println(filePath);
+				mav.addObject("mvo", mvo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -82,7 +84,7 @@ public class UploadPathController {
 		ModelAndView mav = new ModelAndView();
 		String fileName = "[" + rbvo.getBoardNo() + "]"
 				+ file.getOriginalFilename();
-		String filePath = "upload\\" + fileName;
+		String filePath = "reviewupload\\" + fileName;
 		pvo.setFilePath(filePath);
 		pvo.setPictureNo(rbvo.getBoardNo());
 		if (!fileName.equals("")) {
@@ -95,5 +97,47 @@ public class UploadPathController {
 			}
 		}
 		return "forward:review_register_file.ymv";
+	}
+	
+	@RequestMapping("upload_auction_path.ymv")
+	public String registerAuctionFilePath(AuctionBoardVO abvo, PictureVO pvo) {
+		MultipartFile file=pvo.getFileName();
+		ModelAndView mav = new ModelAndView();
+		String fileName="["+abvo.getBoardNo()+"]"+file.getOriginalFilename();			
+		String filePath="auctionupload\\"+fileName;
+		pvo.setFilePath(filePath);
+		pvo.setPictureNo(abvo.getBoardNo());
+		if(!fileName.equals("")){
+			try {
+				file.transferTo(new File(auctionPath+fileName));
+				mav.addObject("pvo", pvo);
+				} catch (Exception e) {					
+				e.printStackTrace();
+			}
+		}
+		return "forward:auction_register_file.ymv";
+	}
+	
+	@RequestMapping("upload_sponsor_path.ymv")
+	public String registerSponsorFilePath(SponsorVO spvo, PictureVO pvo) {
+		MultipartFile file = pvo.getFileName();
+		ModelAndView mav = new ModelAndView();
+		String fileName = "[" + spvo.getBoardNo() + "]"
+				+ file.getOriginalFilename();
+		String filePath = "sponsorupload\\" + fileName;
+		pvo.setFilePath(filePath);
+		pvo.setPictureNo(spvo.getBoardNo());
+		if (!fileName.equals("")) {
+			try {
+				file.transferTo(new File(sponsorPath + fileName));
+				System.out.println("PictureNo: " + pvo.getPictureNo()
+						+ " fileName: " + pvo.getFileName());
+				System.out.println("fileupload ok:" + fileName);
+				mav.addObject("pvo", pvo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "forward:sponsor_register_file.ymv";
 	}
 }

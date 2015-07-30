@@ -62,17 +62,27 @@ class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
  -->
 <bean id="uploadReviewPath" class="java.lang.String" >
 	<constructor-arg>
-		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\reviewupload\\</value>
+		<value>C:\\Users\\Park\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\reviewupload\\</value>
 	</constructor-arg>
 </bean>
 <bean id="uploadNoticePath" class="java.lang.String" >
 	<constructor-arg>
-		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\noticeupload\\</value>
+		<value>C:\\Users\\Park\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\noticeupload\\</value>
 	</constructor-arg>
 </bean>
 <bean id="uploadProfilePath" class="java.lang.String" >
 	<constructor-arg>
-		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\profileupload\\</value>
+		<value>C:\\Users\\Park\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\profileupload\\</value>
+	</constructor-arg>
+</bean>
+<bean id="uploadAuctionPath" class="java.lang.String" >
+	<constructor-arg>
+		<value>C:\\Users\\Park\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\auctionupload\\</value>
+	</constructor-arg>
+</bean>
+<bean id="uploadSponsorPath" class="java.lang.String" >
+	<constructor-arg>
+		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\sponsorupload\\</value>
 	</constructor-arg>
 </bean>
 

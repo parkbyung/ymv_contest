@@ -9,8 +9,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.log5j.ymv.aop.model.CommonService;
 import org.log5j.ymv.model.voluntary.VoluntaryServiceApplicateVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 //contrxt-component scan 대상이 되도록 하여 컨테이너가 bean을 생성하도록 한다.
@@ -20,8 +18,6 @@ import org.springframework.stereotype.Component;
 public class AroundAspect {
 	@Resource(name="commonServiceImpl")
 	private CommonService commonService;
-	
-	private Logger log=LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * 작성자 : 백지영

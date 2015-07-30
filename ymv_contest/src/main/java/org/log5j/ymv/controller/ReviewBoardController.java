@@ -30,14 +30,6 @@ public class ReviewBoardController {
 	@Resource
 	private CookieService cookieService;
 
-	@Resource(name="uploadReviewPath")
-	private String reviewPath;
-	
-	@Resource(name="uploadNoticePath")
-	private String noticePath;
-	
-	@Resource(name="uploadProfilePath")
-	private String profilePath;
 	/**
 	 * 
 	 * 작성자 : 전진한
@@ -164,7 +156,13 @@ public class ReviewBoardController {
 		mav.addObject("rbvo", rbvo).addObject("pvo", pvo);
 		return "forward:upload_review_path.ymv";
 	}
-
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : UploadPathController로 부터 받은 PictureVO 정보를 통해 File을 업로드해준다.
+	 * @param pvo : 업로드하기 위한 기초 정보
+	 * @return
+	 */
 	@RequestMapping("review_register_file.ymv")
 	public ModelAndView noticeRegisterPicture(PictureVO pvo) {
 		reviewBoardService.registerPicture(pvo);

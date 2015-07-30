@@ -176,18 +176,27 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("member_update.ymv")
-	public String memberUpdate(HttpServletRequest request, MemberVO mvo, PictureVO pvo, ModelAndView mav){
+	public String memberUpdate(HttpServletRequest request, PictureVO pvo, ModelAndView mav){
 		HttpSession session=request.getSession(false);
+		MemberVO mvo=(MemberVO)request.getSession().getAttribute("mvo");
 		memberService.updateMember(mvo);
 		mvo=memberService.findMemberByMemberNo(mvo.getMemberNo());
 		session.setAttribute("mvo",mvo);
 		mav.addObject("pvo",pvo).addObject("mvo",mvo);
 		return "forward:upload_profile_path.ymv";
 	}
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : UploadPathController로 부터 받은 MemberVO 정보를 통해 File을 업로드해준다.
+	 * @param mvo : 업로드하기 위한 기초 정보
+	 * @return
+	 */
 	@RequestMapping("member_update_profile.ymv")
-	public ModelAndView memberProfileUpdate(MemberVO mvo){
-		memberService.updateProfile(mvo);
-		return new ModelAndView("member_update","mvo",mvo);
+	public ModelAndView memberProfileUpdate(HttpServletRequest request){
+		MemberVO memberVO=(MemberVO)request.getSession().getAttribute("mvo");
+		memberService.updateProfile(memberVO);
+		return new ModelAndView("home");
 	}
 	
 }

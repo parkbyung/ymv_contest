@@ -1,6 +1,5 @@
 package org.log5j.ymv.controller;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.log5j.ymv.model.sponsor.SponsorService;
 import org.log5j.ymv.model.sponsor.SponsorVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 /**
  * 후원할 수 있는 게시판
@@ -25,8 +23,6 @@ public class SponsorController {
 	
 	@Resource
 	private SponsorService sponsorService;
-	@Resource(name = "uploadPath")
-	private String path;
 	/**
 	 * 
 	 * 작성자 : 전진한
@@ -71,26 +67,11 @@ public class SponsorController {
 	 * @return
 	 */
 	@RequestMapping("sponsor_register.ymv")
-	public ModelAndView sponsorRegister(SponsorVO spvo, PictureVO pvo) {
+	public String sponsorRegister(SponsorVO spvo, PictureVO pvo) {
 		sponsorService.registerSponsor(spvo);
-		MultipartFile file = pvo.getFileName();
-		String fileName = "[" + spvo.getBoardNo() + "]"
-				+ file.getOriginalFilename();
-		String filePath = "upload\\" + fileName;
-		pvo.setFilePath(filePath);
-		pvo.setPictureNo(spvo.getBoardNo());
-		if (!fileName.equals("")) {
-			try {
-				file.transferTo(new File(path + fileName));
-				System.out.println("PictureNo: " + pvo.getPictureNo()
-						+ " fileName: " + pvo.getFileName());
-				sponsorService.registerPicture(pvo);
-				System.out.println("fileupload ok:" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return new ModelAndView("redirect:sponsor_board_admin.ymv");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("spvo", spvo).addObject("pvo",pvo);
+		return "forward:upload_sponsor_path.ymv";
 	}
 	/**
 	 * 
@@ -130,32 +111,29 @@ public class SponsorController {
 	}
 	/**
 	 * 
-	 * 작성자 : 전진한
-	 * 내용 : 게시물을 수정한 후 글번호를 이용해 redirect 사용하여 상세글보기로 이동
+	 * 작성자 : 박병준
+	 * 내용 : 게시물을 수정한 후 글번호를 이용해 update하고 업로드할 파일을 uploadpathcontroller로 보내줌
 	 * @param spvo : 후원게시글의 수정된 상세 정보를 받아옴.
 	 * @param pvo : 게시판의 사진정보를 받아온다.
 	 * @return
 	 */
 	@RequestMapping("sponsor_update.ymv")
-	public ModelAndView updateSponsor(SponsorVO spvo, PictureVO pvo) {
+	public String updateSponsor(SponsorVO spvo, PictureVO pvo) {
 		sponsorService.updateSponsorByBoardNo(spvo);
-		MultipartFile file = pvo.getFileName();
-		String fileName = "[" + spvo.getBoardNo() + "]"
-				+ file.getOriginalFilename();
-		String filePath = "upload\\" + fileName;
-		pvo.setFilePath(filePath);
-		pvo.setPictureNo(spvo.getBoardNo());
-		if (!fileName.equals("")) {
-			try {
-				file.transferTo(new File(path + fileName));
-				System.out.println("PictureNo: " + pvo.getPictureNo()
-						+ " fileName: " + pvo.getFileName());
-				sponsorService.registerPicture(pvo);
-				System.out.println("fileupload ok:" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("spvo", spvo).addObject("pvo",pvo);
+		return "forward:upload_sponsor_path.ymv";
+	}
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : 
+	 * @param pvo
+	 * @return
+	 */
+	@RequestMapping("sponsor_register_file.ymv")
+	public ModelAndView memberProfileUpdate(PictureVO pvo) {
+		sponsorService.registerPicture(pvo);
 		return new ModelAndView("redirect:sponsor_board_admin.ymv");
 	}
 	/**

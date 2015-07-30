@@ -59,6 +59,7 @@ public class MemberDAOImpl implements MemberDAO {
 	 */
 	@Override
 	public void updateProfile(MemberVO memberVO) {
+		System.out.println("파일 패쓰랑 맴버넘버 보기"+memberVO);
 		sqlSessionTemplate.update("member.updateProfile",memberVO);
 	}
 	

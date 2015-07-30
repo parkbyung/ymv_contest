@@ -7,13 +7,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.AuctionBoardService;
 import org.log5j.ymv.model.board.AuctionBoardVO;
 import org.log5j.ymv.model.board.BoardVO;
-
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.PictureVO;
+import org.log5j.ymv.model.member.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,8 +26,7 @@ public class AuctionBoardController {
 	
 	@Resource
 	private AuctionBoardService auctionBoardService;
-	@Resource(name="uploadReviewPath")
-	private String path;
+
 	@RequestMapping("auctionTiles.ymv")
 	@NoLoginCheck
 	public String auctionTiles(){
@@ -82,32 +82,41 @@ public class AuctionBoardController {
 	public ModelAndView auctionRegisterView(){		
 		return new ModelAndView("auction_register_view");
 	}
+
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : 
+	 * @param abvo
+	 * @param pvo
+	 * @return
+	 */
 	@RequestMapping("auction_register.ymv")
-	public ModelAndView auctionRegister(AuctionBoardVO abvo,PictureVO pvo){	
+	public String auctionRegister(AuctionBoardVO abvo,PictureVO pvo){	
 		abvo.setEndDate(abvo.getEndDate()+" "+abvo.getEndTime());
-		System.out.println(abvo);
 		auctionBoardService.registerAuctionBoard(abvo);		
-		MultipartFile file=pvo.getFileName();
-			String fileName="["+abvo.getBoardNo()+"]"+file.getOriginalFilename();			
-			String filePath="upload\\"+fileName;
-			pvo.setFilePath(filePath);
-			pvo.setPictureNo(abvo.getBoardNo());
-			if(!fileName.equals("")){
-				try {
-					file.transferTo(new File(path+fileName));
-					// 픽쳐 디비에 파일정보 저장					
-					auctionBoardService.registerPicture(pvo);
-					/*nameList.add(fileName);*/
-					} catch (Exception e) {					
-					e.printStackTrace();
-				}
-			}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("abvo",abvo).addObject("pvo",pvo);
+		return "forward:upload_auction_path.ymv";
+	}
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : 
+	 * @param pvo
+	 * @return
+	 */
+	@RequestMapping("auction_register_file.ymv")
+	public ModelAndView memberProfileUpdate(PictureVO pvo) {
+		auctionBoardService.registerPicture(pvo);
 		return new ModelAndView("redirect:auction_board.ymv");
-}
-		@RequestMapping("auction_update_currentPrice.ymv")
-		public ModelAndView updateCurrentPrice(AuctionBoardVO abvo){
-			auctionBoardService.updateCurrentPrice(abvo);
-			return new ModelAndView("redirect:auction_showContent.ymv?boardNo="+abvo.getBoardNo());
-		}
-	
+	}
+
+	@RequestMapping("auction_update_currentPrice.ymv")
+	public ModelAndView updateCurrentPrice(AuctionBoardVO abvo) {
+		auctionBoardService.updateCurrentPrice(abvo);
+		return new ModelAndView("redirect:auction_showContent.ymv?boardNo="
+				+ abvo.getBoardNo());
+	}
+
 }
