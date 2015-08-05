@@ -40,60 +40,7 @@
 	type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"
 	type="text/javascript"></script>
-  <style type='text/css'>
-    .wrap {
-    width: 100%;
-    overflow: hidden;
-}
 
-ul, ol {
-    list-style: none;
-    float: left;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-}
-
-.colsHead {
-    width: 100%;
-    padding-left: 30px;
-}
-.rowsHead {
-    width: 30px;
-}
-
-li {
-    width: 30px;
-    height: 30px;
-    border: 1px;
-    text-align: center;
-    line-height: 30px;
-}
-
-.seat li {
-    float: left;
-    border: 1px solid skyblue;
-}
-
-.colsHead li {
-    float: left;
-    border: 1px solid white;
-}
-.rowsHead li {
-    border: 1px solid white;
-}
-
-.reserve {
-    background-color: orange;
-}
-
-.seat .ui-selecting {
-    background: #FECA40;
-}
-.seat .ui-selected {
-    background: #F39814; color: white;
-}
-  </style>
 <script type="text/javascript">
 $(document).ready(function () {
     $.datepicker.regional['ko'] = {
@@ -150,103 +97,7 @@ $(document).ready(function () {
 });</script>
 
   
-<script type='text/javascript'>//<![CDATA[ 
-$(window).load(function(){
-	var $cols = $('input[name=cols]'),
-    $rows = $('input[name=rows]'),
-    $result = $('.result'),
-    $seat = $('.wrap .seat'),
-    $colsHead = $('.wrap .colsHead'),
-    $rowsHead = $('.wrap .rowsHead'),
-    colsNum = 0, rowsNum = 0;
 
-var updateView = function() {
-    var makeTag = '', i = 1, leng = 0;
-
-    colsNum = parseInt($cols.val() || 0, 10);
-    rowsNum = parseInt($rows.val() || 0, 10);
-
-    for(i = 1, leng = colsNum * rowsNum; i <= leng; i++) {
-        if( i % colsNum === 1 ) {
-            makeTag += "<li style='clear:both;'></li>";
-        } else {
-            makeTag += "<li></li>";
-        }
-    }
-    $seat.html(makeTag);
-
-    for(makeTag = '', i = 1, leng = colsNum; i <= leng; i++) {
-        if(i>=13){
-        	makeTag += '<li>' + (i - 12) + '</li>';
-        }else{
-        makeTag += '<li>' + i + '</li>';
-        }
-    }
-    $colsHead.html(makeTag);
-
-    for(makeTag = '', i = 65, leng = 65 + rowsNum; i < leng; i++) {
-    	var tempDate= "월";
-    	if(i==65){
-        	makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==66){
-    		tempDate="화";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==67){
-    		tempDate="수";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==68){
-    		tempDate="목";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==69){
-    		tempDate="금";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==70){
-    		tempDate="토";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    	if(i==71){
-    		tempDate="일";
-    		makeTag += '<li>' + tempDate + '</li>';
-    	}
-    }
-    $rowsHead.html(makeTag);
-
-    $result.html('없음');
-};
-
-var getSeatName = function( index ) {
-    var colsIndex = (index % colsNum) + 1,
-        rowsIndex = Math.ceil((index + 1) / colsNum) - 1,
-        rowsName = String.fromCharCode((65 + rowsIndex));
-
-    return rowsName + '열 ' + colsIndex + '번째';
-};
-
-$('fieldset').on('input', 'input', function() {
-    updateView();
-    return false;
-});
-
-$seat.on('click', 'li', function() {
-    var $this = $(this),
-        index = $this.index();
-
-    $this.toggleClass('reserve');
-    $result.html(getSeatName(index));
-    alert( '[' + index + '] ' + getSeatName(index) );
-});
-
-updateView();
-
-
-});//]]>  
-
-</script>
 	<div class="col-md-10 col-sm-offset-1">
 		<h2>봉사 등록</h2>
 		<form id="recruitForm"
@@ -278,8 +129,7 @@ updateView();
 				<tr>
 					<th class="info"><h4 class="text-center">나이</h4></th>
 					<td>
-						<!-- <input type="text" name="age" id="age"> --> <!-- 숫자로 입력 안하면 submit 못하게
-			나이를 select or input text로 둘중에 뭐할지 정하기 --> <input type="radio"
+						<input type="radio"
 						name="age" value="전체">전체 <input type="radio" name="age"
 						value="학생">학생 <input type="radio" name="age" value="성인">성인
 						<!-- 전체, 학생, 성인으로 나눠서 -->
@@ -305,22 +155,6 @@ updateView();
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>
 				<td><textarea rows="10" cols="50" id="content" name="content"></textarea></td>
-			</tr>
-			<tr>
-				<th class="info"><h4 class="text-center">봉사시간 설정</h4></th>
-				<td>
-					<fieldset>
-						<input type="hidden" name="cols" value="24" /> 
-						<input type="hidden" name="rows" value="7" />
-						<p class="result"></p>
-
-					</fieldset>
-					<div class="wrap">
-						<ul class="colsHead"></ul>
-						<ul class="rowsHead"></ul>
-						<ol class="seat"></ol>
-					</div>
-				</td>
 			</tr>
 		</table>
 			<br> <div class = "col-sm-2 col-sm-offset-10">

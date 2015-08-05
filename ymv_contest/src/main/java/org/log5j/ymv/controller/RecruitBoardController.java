@@ -233,7 +233,6 @@ public class RecruitBoardController {
 	@RequestMapping("volunteer_register.ymv")
 	public String RegisterVolunteer_result(HttpServletRequest request,RecruitBoardVO rbvo){
 		//vo가 데이트 타입이여야 하지 않을까?
-		System.out.println("시간아들어와"+request.getParameter("time"));
 		rbvo.setStartDate(rbvo.getStartDate());
 		rbvo.setEndDate(rbvo.getEndDate());
 		rbvo.setPlayStart(request.getParameter("playStart"));
