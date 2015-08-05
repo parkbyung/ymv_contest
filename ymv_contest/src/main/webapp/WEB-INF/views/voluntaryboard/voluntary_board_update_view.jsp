@@ -44,25 +44,61 @@
 	type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"
 	type="text/javascript"></script>
-<script>
-	$(function() {
-		$("#datepicker1, #datepicker2").datepicker(
-				{
-					dateFormat : 'yy-mm-dd',
-					prevText : '이전 달',
-					nextText : '다음 달',
-					monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-							'8월', '9월', '10월', '11월', '12월' ],
-					monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-							'7월', '8월', '9월', '10월', '11월', '12월' ],
-					dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-					showMonthAfterYear : true,
-					yearSuffix : '년'
-				});
-	});
-	
+<script type="text/javascript">
+$(document).ready(function () {
+    $.datepicker.regional['ko'] = {
+        closeText: '닫기',
+        prevText: '이전달',
+        nextText: '다음달',
+        currentText: '오늘',
+        monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+        '7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+        '7월','8월','9월','10월','11월','12월'],
+        dayNames: ['일','월','화','수','목','금','토'],
+        dayNamesShort: ['일','월','화','수','목','금','토'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        weekHeader: 'Wk',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '',
+        showOn: 'both',
+        buttonText: "달력",
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        yearRange: 'c-99:c+99',
+        minDate: "+0D"
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ko']);
+ 
+    $('#datepicker1').datepicker();
+    $('#datepicker1').datepicker("option", "maxDate", $("#datepicker2").val());
+    $('#datepicker1').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#datepicker2").datepicker( "option", "minDate", selectedDate );
+    });
+ 
+    $('#datepicker2').datepicker();
+    $('#datepicker2').datepicker("option", "minDate", $("#datepicker1").val());
+    $('#datepicker2').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#datepicker1").datepicker( "option", "maxDate", selectedDate );
+    });
+    
+    $('#datepicker3').datepicker();
+    $('#datepicker3').datepicker("option", "maxDate", $("#datepicker4").val());
+    $('#datepicker3').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#datepicker4").datepicker( "option", "minDate", selectedDate );
+    });
+ 
+    $('#datepicker4').datepicker();
+    $('#datepicker4').datepicker("option", "minDate", $("#datepicker3").val());
+    $('#datepicker4').datepicker("option", "onClose", function ( selectedDate ) {
+        $("#datepicker3").datepicker( "option", "maxDate", selectedDate );
+    });
+});
+
 </script>
 <div class="col-md-8 col-md-offset-2">
 	<h2>봉사 수정</h2>
@@ -123,61 +159,22 @@
 				</td>
 			</tr>
 			<tr>
-				<th class="info"><h4 class="text-center">시작시간</h4></th>
-				<td><input type="text" id="datepicker1" name="startDate"
-					value="${requestScope.rvo.startDate}"> <select
-					id="startTime" name="startTime">
-						<!-- 한시간 단위로 하기 -->
-						<option value="${requestScope.rvo.startTime}">${requestScope.rvo.startTime}</option>
-						<option value="06:00">06:00</option>
-						<option value="07:00">07:00</option>
-						<option value="08:00">08:00</option>
-						<option value="09:00">09:00</option>
-						<option value="10:00">10:00</option>
-						<option value="11:00">11:00</option>
-						<option value="12:00">12:00</option>
-						<option value="13:00">13:00</option>
-						<option value="14:00">14:00</option>
-						<option value="15:00">15:00</option>
-						<option value="16:00">16:00</option>
-						<option value="17:00">17:00</option>
-						<option value="18:00">18:00</option>
-						<option value="19:00">19:00</option>
-						<option value="20:00">20:00</option>
-						<option value="21:00">21:00</option>
-						<option value="22:00">22:00</option>
-						<option value="23:00">23:00</option>
-						<option value="00:00">00:00</option>
-				</select></td>
-			</tr>
-			<tr>
-				<th class="info"><h4 class="text-center">끝시간</h4></th>
-				<td><input type="text" id="datepicker2" name="endDate"
-					value="${requestScope.rvo.endDate}"> <select id="endTime"
-					name="endTime">
-						<!-- 한시간 단위로 하기 -->
-						<option value="${requestScope.rvo.endTime}">${requestScope.rvo.endTime}</option>
-						<option value="06:00">06:00</option>
-						<option value="07:00">07:00</option>
-						<option value="08:00">08:00</option>
-						<option value="09:00">09:00</option>
-						<option value="10:00">10:00</option>
-						<option value="11:00">11:00</option>
-						<option value="12:00">12:00</option>
-						<option value="13:00">13:00</option>
-						<option value="14:00">14:00</option>
-						<option value="15:00">15:00</option>
-						<option value="16:00">16:00</option>
-						<option value="17:00">17:00</option>
-						<option value="18:00">18:00</option>
-						<option value="19:00">19:00</option>
-						<option value="20:00">20:00</option>
-						<option value="21:00">21:00</option>
-						<option value="22:00">22:00</option>
-						<option value="23:00">23:00</option>
-						<option value="00:00">00:00</option>
-				</select></td>
-			</tr>
+					<th class="info"><h4 class="text-center">모집 시작 시간</h4></th>
+					<td><input type="text" id="datepicker1" name="startDate"
+						placeholder="모집 시작 시간">	</td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">모집 끝 시간</h4></th>
+					<td><input type="text" id="datepicker2" name="endDate" placeholder="모집 종료 시간">						
+					</td></tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>
+					<td><input type="text" id="datepicker3" name="playStart" placeholder="봉사 시작 기간"> </td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 활동 끝</h4></th>
+					<td><input type="text" id="datepicker4" name="playEnd" placeholder="봉사 종료 기간">  </td>
+				</tr>
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>
 				<td><textarea rows="10" cols="80" id="content" name="content" >${requestScope.rvo.content }</textarea></td>

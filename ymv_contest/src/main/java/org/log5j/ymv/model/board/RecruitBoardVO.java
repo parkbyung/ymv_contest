@@ -13,11 +13,50 @@ public class RecruitBoardVO implements BoardVO{
 	private int memberNo;
 	private String postDate;
 	private int hit;
+	//확인하기
 	private String checkDate;
 	private String mojib;
-	private String startTime;
-	private String endTime;
+	private String playStart;
+	private String playEnd;
+
+	public RecruitBoardVO(int recruitNo, String title, String field,
+			String location, String age, String startDate, String endDate,
+			String content, int memberNo, String postDate, int hit,
+			String checkDate, String mojib, String playStart, String playEnd) {
+		super();
+		this.recruitNo = recruitNo;
+		this.title = title;
+		this.field = field;
+		this.location = location;
+		this.age = age;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.content = content;
+		this.memberNo = memberNo;
+		this.postDate = postDate;
+		this.hit = hit;
+		this.checkDate = checkDate;
+		this.mojib = mojib;
+		this.playStart = playStart;
+		this.playEnd = playEnd;
+	}
 	
+	public String getPlayStart() {
+		return playStart;
+	}
+
+	public void setPlayStart(String playStart) {
+		this.playStart = playStart;
+	}
+
+	public String getPlayEnd() {
+		return playEnd;
+	}
+
+	public void setPlayEnd(String playEnd) {
+		this.playEnd = playEnd;
+	}
+
 	public RecruitBoardVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -211,22 +250,6 @@ public class RecruitBoardVO implements BoardVO{
 	public void setMojib(String mojib) {
 		this.mojib = mojib;
 	}
-	
-	public String getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-
-	public String getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
 
 	@Override
 	public String toString() {
@@ -235,12 +258,10 @@ public class RecruitBoardVO implements BoardVO{
 				+ age + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", content=" + content + ", memberNo=" + memberNo
 				+ ", postDate=" + postDate + ", hit=" + hit + ", checkDate="
-				+ checkDate + ", mojib=" + mojib + ", startTime=" + startTime
-				+ ", endTime=" + endTime + "]";
+				+ checkDate + ", mojib=" + mojib + ", playStart=" + playStart
+				+ ", playEnd=" + playEnd + "]";
 	}
 
-	
 
-	
 
 }

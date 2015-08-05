@@ -72,7 +72,9 @@ create table recruit(
    content clob not null,
    member_no number constraint fk_member_no_2 references member(member_no),
    time_posted date not null,
-   hit number default 0
+   hit number default 0,
+   play_start date not null,
+   play_end date not null
 )
 
 alter table recruit modify start_time varchar2(10)
