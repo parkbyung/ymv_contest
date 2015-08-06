@@ -136,21 +136,29 @@ $(document).ready(function () {
 					</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 시작 시간</h4></th>
-					<td><input type="text" id="datepicker1" name="startDate"
-						placeholder="모집 시작 시간">	</td>
+					<th class="info"><h4 class="text-center">모집 시작 기간</h4></th>
+					<td><input type="text" id="datepicker1" name="recruitingStart"
+						placeholder="모집 시작 기간">	</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 끝 시간</h4></th>
-					<td><input type="text" id="datepicker2" name="endDate" placeholder="모집 종료 시간">						
+					<th class="info"><h4 class="text-center">모집 끝 기간</h4></th>
+					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 기간">						
 					</td></tr>
 				<tr>
 					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>
-					<td><input type="text" id="datepicker3" name="playStart" placeholder="봉사 시작 기간"> </td>
+					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간"> </td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">봉사 활동 끝</h4></th>
-					<td><input type="text" id="datepicker4" name="playEnd" placeholder="봉사 종료 기간">  </td>
+					<td><input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간">  </td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 시작 시간</h4></th>
+					<td><input type="text" name="volunteeringStartTime" placeholder="봉사 시작 기간"> </td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 끝 시간</h4></th>
+					<td><input type="text" name="volunteeringEndTime" placeholder="봉사 종료 기간">  </td>
 				</tr>
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>

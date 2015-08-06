@@ -46,8 +46,8 @@
 						</c:choose>
 						<td>${bvo.field }</td>
 						<td>${bvo.location }</td>
-						<td>${bvo.startDate }</td>
-						<td>${bvo.endDate }</td>
+						<td>${bvo.volunteeringStartTime }</td>
+						<td>${bvo.volunteeringEndTime }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -58,12 +58,12 @@
 				<c:when test="${requestScope.lvo.pagingBean.previousPageGroup}">
 					<li class="active"><a
 						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.
-    startPageOfPageGroup-1}&field=${scvo.field }&location=${scvo.location }&startDate=${scvo.startDate }&endDate=${scvo.endDate }">«</a></li>
+    startPageOfPageGroup-1}&field=${scvo.field }&location=${scvo.location }&volunteeringStartTime=${scvo.volunteeringStartTime }&volunteeringEndTime=${scvo.volunteeringEndTime }">«</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a
 						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.
-    startPageOfPageGroup-1}&field=${scvo.field }&location=${scvo.location }&startDate=${scvo.startDate }&endDate=${scvo.endDate }">«</a></li>
+    startPageOfPageGroup-1}&field=${scvo.field }&location=${scvo.location }&volunteeringStartTime=${scvo.volunteeringStartTime }&volunteeringEndTime=${scvo.volunteeringEndTime }">«</a></li>
 				</c:otherwise>
 			</c:choose>
 			<c:forEach var="i"
@@ -71,7 +71,7 @@
 				end="${requestScope.lvo.pagingBean.endPageOfPageGroup}">
 				<c:choose>
 					<c:when test="${requestScope.lvo.pagingBean.nowPage!=i}">
-						<li><a href="search_board.ymv?pageNo=${i}&field=${scvo.field }&location=${scvo.location }&startDate=${scvo.startDate }&endDate=${scvo.endDate }">${i}</a></li>
+						<li><a href="search_board.ymv?pageNo=${i}&field=${scvo.field }&location=${scvo.location }&volunteeringStartTime=${scvo.volunteeringStartTime }&volunteeringEndTime=${scvo.volunteeringEndTime }">${i}</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="active"><a href="#">${i}</a></li>
@@ -81,11 +81,11 @@
 			<c:choose>
 				<c:when test="${requestScope.lvo.pagingBean.nextPageGroup}">
 					<li class="active"><a
-						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&field=${scvo.field }&location=${scvo.location }&startDate=${scvo.startDate }&endDate=${scvo.endDate }">»</a></li>
+						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&field=${scvo.field }&location=${scvo.location }&volunteeringStartTime=${scvo.volunteeringStartTime }&volunteeringEndTime=${scvo.volunteeringEndTime }">»</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a
-						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&field=${scvo.field }&location=${scvo.location }&startDate=${scvo.startDate }&endDate=${scvo.endDate }">»</a></li>
+						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&field=${scvo.field }&location=${scvo.location }&volunteeringStartTime=${scvo.volunteeringStartTime }&volunteeringEndTime=${scvo.volunteeringEndTime }">»</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

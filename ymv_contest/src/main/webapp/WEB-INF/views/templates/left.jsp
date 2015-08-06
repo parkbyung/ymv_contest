@@ -34,7 +34,7 @@ $("#modalBtn").click(function(){
                        type : "post",
                        url : "scheduler_board.ymv",
                        data : "MemberNo="+m.memberNo+"&field="+m.field+"&location="+
-                       m.location+"&startDate="+m.startDate+"&endDate="+m.endDate,
+                       m.location+"&volunteeringStartTime="+m.volunteeringStartTime+"&volunteeringEndTime="+m.volunteeringEndTime,
                        dataType : "json",
                        success : function(data) {
                     	   var modalInfo="";
@@ -45,9 +45,9 @@ $("#modalBtn").click(function(){
                         	  $(data.list).each(function(index,list){
                         		  if(date.DATE_LIST==list.checkDate){
                         			  if(list.mojib=='모집중'){
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.startDate+"</td><td>"+list.endDate+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"</td><td>"+list.volunteeringEndTime+"</td></tr>";
                         			  }else{
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.startDate+"</td><td>"+list.endDate+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"</td><td>"+list.volunteeringEndTime+"</td></tr>";
                         			  }
                         		  }
                         	  });//each2

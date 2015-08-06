@@ -67,14 +67,16 @@ create table recruit(
    field varchar2(100) not null,
    location varchar2(100) not null,
    age varchar2(100) not null,
-   start_date date not null,
-   end_date date not null,
+   recruiting_start varchar2(30) not null,
+   recruiting_end varchar2(30) not null,
    content clob not null,
    member_no number constraint fk_member_no_2 references member(member_no),
    time_posted date not null,
    hit number default 0,
-   play_start date not null,
-   play_end date not null
+   volunteering_start_date varchar2(30) not null,
+   volunteering_end_date varchar2(30) not null,
+   volunteering_start_time varchar2(30) not null,
+   volunteering_end_time varchar2(30) not null
 )
 
 alter table recruit modify start_time varchar2(10)
@@ -90,8 +92,8 @@ create table scheduler(
 member_no number primary key constraint fk_member_no_3 references member(member_no),
 field varchar(50),
 location varchar(50),
-start_date varchar(50),
-end_date varchar(50)
+volunteering_start_time varchar(50),
+volunteering_end_time varchar(50)
 )
 
 select * from scheduler
@@ -420,3 +422,4 @@ ALTER TABLE table_name MODIFY column_name datatype
 ALTER TABLE Persons DROP COLUMN DateOfBirth
 
 test commit
+

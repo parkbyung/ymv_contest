@@ -160,12 +160,12 @@ $(document).ready(function () {
 			</tr>
 			<tr>
 					<th class="info"><h4 class="text-center">모집 시작 시간</h4></th>
-					<td><input type="text" id="datepicker1" name="startDate"
+					<td><input type="text" id="datepicker1" name="recruitingStart"
 						placeholder="모집 시작 시간">	</td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">모집 끝 시간</h4></th>
-					<td><input type="text" id="datepicker2" name="endDate" placeholder="모집 종료 시간">						
+					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 시간">						
 					</td></tr>
 				<tr>
 					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>

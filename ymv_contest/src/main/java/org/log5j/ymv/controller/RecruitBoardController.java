@@ -70,7 +70,7 @@ public class RecruitBoardController {
 		ListVO lvo = recruitBoardService.findBoardList(pageNo);
 		//lvo안에 있는 list들의 모집기한 마지막 날과 현재 날과 비교 함
 		for(int i = 0; i<lvo.getList().size(); i ++){
-			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getEndDate());
+			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getRecruitingEnd());
 			//비교해서 today가 enddate보다 크면 compare가 0보다 크다.
 			if(compare > 0){
 				((RecruitBoardVO)lvo.getList().get(i)).setMojib("모집완료");
@@ -107,7 +107,7 @@ public class RecruitBoardController {
 		RecruitBoardVO rvo = recruitBoardService
 				.findRecruitBoardByRecruitNo(recruitNo);
 		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
-        int compare = today.compareTo(rvo.getEndDate());
+        int compare = today.compareTo(rvo.getRecruitingEnd());
         if(compare > 0){
         	rvo.setMojib("모집완료");
 			}else if(compare < 0){
@@ -181,7 +181,7 @@ public class RecruitBoardController {
          recruitBoardService.updateBoard(rbvo);
          rbvo=recruitBoardService.findRecruitBoardByRecruitNo(rbvo.getRecruitNo());
          String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
-         int compare = today.compareTo(rbvo.getEndDate());
+         int compare = today.compareTo(rbvo.getRecruitingEnd());
          if(compare > 0){
 				rbvo.setMojib("모집완료");
 			}else if(compare < 0){
@@ -222,10 +222,11 @@ public class RecruitBoardController {
 	@RequestMapping("volunteer_register.ymv")
 	public String RegisterVolunteer_result(HttpServletRequest request,RecruitBoardVO rbvo){
 		//vo가 데이트 타입이여야 하지 않을까?
-		rbvo.setStartDate(rbvo.getStartDate());
-		rbvo.setEndDate(rbvo.getEndDate());
+		//필요한지 몰라서 일단 주석처리
+		/*rbvo.setStartDate(rbvo.getRecruitingStart());
+		rbvo.setEndDate(rbvo.getRecruitingEnd());
 		rbvo.setPlayStart(request.getParameter("playStart"));
-		rbvo.setPlayEnd(request.getParameter("playEnd"));
+		rbvo.setPlayEnd(request.getParameter("playEnd"));*/
 		//글 등록
 		recruitBoardService.registerVolunteer(rbvo);
 		System.out.println("등록전에 확인해보자 rbvo"+rbvo);
@@ -267,7 +268,7 @@ public class RecruitBoardController {
 		cpvo.setMemberNo(mvo.getMemberNo());
 		ListVO lvo = recruitBoardService.findCompanyBoardList(cpvo);
 		for(int i = 0; i<lvo.getList().size(); i ++){
-			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getEndDate());
+			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getRecruitingEnd());
 			if(compare > 0){
 				((RecruitBoardVO)lvo.getList().get(i)).setMojib("모집완료");
 			}else if(compare < 0){
@@ -296,7 +297,7 @@ public class RecruitBoardController {
 		cpvo.setMemberNo(mvo.getMemberNo());
 		ListVO lvo = recruitBoardService.findNormalBoardList(cpvo);
 		for(int i = 0; i<lvo.getList().size(); i ++){
-			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getEndDate());
+			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getRecruitingEnd());
 			if(compare > 0){
 				((RecruitBoardVO)lvo.getList().get(i)).setMojib("모집완료");
 			}else if(compare < 0){
@@ -379,8 +380,8 @@ public class RecruitBoardController {
 			confirmbvo.setField(recruitbvo.getField());
 			confirmbvo.setLocation(recruitbvo.getLocation());
 			confirmbvo.setAge(recruitbvo.getAge());
-			confirmbvo.setStartDate(recruitbvo.getStartDate());
-			confirmbvo.setEndDate(recruitbvo.getEndDate());
+			confirmbvo.setStartDate(recruitbvo.getRecruitingStart());
+			confirmbvo.setEndDate(recruitbvo.getRecruitingEnd());
 			confirmbvo.setContent(recruitbvo.getContent());
 			confirmbvo.setMemberNo(recruitbvo.getMemberNo());
 			recruitBoardService.registerConfirmBoard(confirmbvo);

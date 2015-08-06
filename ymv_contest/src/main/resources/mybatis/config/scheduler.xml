@@ -3,15 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="scheduler">
-	<resultMap type="recruitbvo" id="boardRM">
-		<result property="recruitNo" column="recruit_no" />
-		<result property="startDate" column="start_date" />
-		<result property="endDate" column="end_date" />
-		<result property="checkDate" column="check_date"/>
-	</resultMap>
+	<resultMap type="recruitbvo" id="boardRM">      
+      <result property="recruitNo" column="recruit_no"/>         
+      <result property="recruitingStart" column="recruiting_start" />       
+      <result property="recruitingEnd" column="recruiting_end" />     
+      <result property="postDate" column="time_posted"/>  
+      <result property="memberNo" column="member_no"/>
+      <result property="volunteeringStartDate" column="volunteering_start_date"/>
+      <result property="volunteeringEndDate" column="volunteering_end_date"/>
+      <result property="volunteeringStartTime" column="volunteering_start_time"/>
+      <result property="volunteeringEndTime" column="volunteering_end_time"/>
+   </resultMap>
 	<select id="findSchedulerList" resultMap="boardRM" parameterType="sdvo">
-		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date,to_char(start_date,'YYYY-MM-DD') as check_date,start_time,end_time
-		from(select recruit_no, title, field,location, age,start_date, end_date,to_char(start_date,'HH24:MI') as startDate,to_char(end_date,'HH24:MI') as endDate,start_time,end_time from recruit order by recruit_no desc)
+		select recruit_no, title, field, location, age,recruitingStart as checkDate,volunteering_start_time,volunteering_end_time,recruiting_end
+		from(select recruit_no, title, field,location, age,volunteering_start_time, volunteering_end_time,recruiting_start as recruitingStart,recruiting_end from recruit order by recruit_no desc)
 		<where>
 			<if test="field!='' ">
 				AND field=#{field}
@@ -19,26 +24,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="location!='' ">
 				AND location=#{location}
 			</if>
-			<if test="startDate!='' ">
+			<if test="volunteeringStartTime!='' ">
   			<![CDATA[
-   			 AND start_time>=#{startDate} 
+   			 AND volunteering_start_time>=#{volunteeringStartTime} 
     		 ]]>
 			</if>
-			<if test="endDate!='' ">
+			<if test="volunteeringEndTime!='' ">
   			<![CDATA[
-   			 AND end_time<=#{endDate}
+   			 AND volunteering_end_time<=#{volunteeringEndTime}
     		 ]]>
 			</if>
 		</where>
-		
 	</select>
+	
+	
+	
 	<select id="findSearchList" resultMap="boardRM" parameterType="scvo">
-		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date
-		from(select recruit_no, title, field, location, age, start_date,
-		end_date,
-		ceil(rownum/5) as page from(select recruit_no, title, field,
-		location, age,
-		start_date, end_date from recruit
+		select recruit_no, title, field, location, age,volunteering_start_date,volunteering_end_date,recruiting_end as recruitingEnd
+		from(select recruit_no, title, field, location, age, volunteering_start_date,volunteering_end_date,recruiting_end,
+		ceil(rownum/5) as page from(select recruit_no, title, field,	location, age,volunteering_start_date, volunteering_end_date
+		,recruiting_end from recruit
 		<where>
 			<if test="field != ''">
 				AND field=#{field}
@@ -46,14 +51,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="location != ''">
 				AND location=#{location}
 			</if>
-			<if test="startDate != ''">
+			<if test="volunteeringStartDate != ''">
   			<![CDATA[
-   			 AND to_char(start_date,'YYYY-MM-DD')>=#{startDate} 
+   			 AND volunteering_start_date>=#{volunteeringStartDate} 
     		 ]]>
 			</if>
-			<if test="endDate != ''">
+			<if test="volunteeringEndDate != ''">
   			<![CDATA[
-   			 AND to_char(end_date,'YYYY-MM-DD')<=#{endDate}
+   			 AND volunteering_end_date<=#{volunteeringEndDate}
     		 ]]>
 			</if>
 			<if test="title != ''">
@@ -72,14 +77,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="location != ''">
 				AND location=#{location}
 			</if>
-			<if test="startDate != ''">
+			<if test="volunteeringStartDate != ''">
   			<![CDATA[
-   			 AND start_date>=#{startDate} 
+   			 AND volunteering_start_date>=#{volunteeringStartDate} 
     		 ]]>
 			</if>
-			<if test="endDate != ''">
+			<if test="volunteeringEndDate != ''">
   			<![CDATA[
-   			 AND end_date<=#{endDate}
+   			 AND volunteering_end_date<=#{volunteeringEndDate}
     		 ]]>
 			</if>
 			<if test="title != ''">
@@ -87,9 +92,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</select>
+	
+	
+	
 	<select id="findDateList" parameterType="sdvo" resultType="hashMap">
-		select distinct(to_char(start_date,'YYYY-MM-DD')) as date_list from (
-		select start_date,to_char(start_date,'HH24:MI') as startDate,to_char(end_date,'HH24:MI') as endDate,field,location from recruit)
+		select distinct(recruiting_start) as date_list from (
+		select volunteering_start_time,volunteering_end_time,recruiting_start,field,location from recruit)
 		<where>
 			<if test="field !='' ">
 				AND field=#{field}
@@ -97,14 +105,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="location !='' ">
 				AND location=#{location}
 			</if>
-			<if test="startDate != '' ">
+			<if test="volunteeringStartTime != '' ">
   			<![CDATA[
-   			 AND startDate>=#{startDate} 
+   			 AND volunteering_start_time>=#{volunteeringStartTime} 
     		 ]]>
 			</if>
-			<if test="endDate != '' ">
+			<if test="volunteeringEndTime != '' ">
   			<![CDATA[
-   			 AND endDate<=#{endDate}
+   			 AND volunteering_end_time<=#{volunteeringEndTime}
     		 ]]>
 			</if>
 		</where>
@@ -112,16 +120,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<resultMap type="sdvo" id="schedulerRM">
 		<result property="memberNo" column="member_no"/>
-		<result property="startDate" column="start_date"/>
-		<result property="endDate" column="end_date"/>
+		<result property="volunteeringStartTime" column="volunteering_start_time"/>
+		<result property="volunteeringEndTime" column="volunteering_end_time"/>
 	</resultMap>
 	<select id="checkScheduler" resultMap="schedulerRM" parameterType="String">
 		select * from scheduler where member_no=#{value}
 	</select>
 	<insert id="registerScheduler" parameterType="sdvo">
-		insert into scheduler(member_no,field,location,start_date,end_date) values(#{memberNo},#{field},#{location},#{startDate},#{endDate})
+		insert into scheduler(member_no,field,location,volunteering_start_time,volunteering_end_time) values(#{memberNo},#{field},#{location},#{volunteeringStartTime},#{volunteeringEndTime})
 	</insert>
 	<update id="updateScheduler" parameterType="sdvo">
-		update scheduler set field=#{field},location=#{location},start_date=#{startDate},end_date=#{endDate} where member_no=#{memberNo}
+		update scheduler set field=#{field},location=#{location},volunteering_start_time=#{volunteeringStartTime},volunteering_end_time=#{volunteeringEndTime} where member_no=#{memberNo}
 	</update>
 </mapper> 

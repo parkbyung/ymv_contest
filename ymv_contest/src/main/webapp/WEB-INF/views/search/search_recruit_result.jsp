@@ -35,20 +35,20 @@
 						<c:when test="${bvo.mojib=='모집중'}">
 						<td><img src="${initParam.root}img/recruiting.jpg"></td>
 						<td>
-							<a href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }">${bvo.title }</a>
+							<a href="${initParam.root}voluntary_show_content.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }">${bvo.title }</a>
 						</td>
 						</c:when>
 						<c:otherwise>
 							<td><img src="${initParam.root}img/recruitfin.jpg"></td>						
 							<td>
-								<a href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
+								<a href="${initParam.root}voluntary_show_content.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
 							</td>
 						</c:otherwise>
 						</c:choose>
 					<td>${bvo.field }</td>
 					<td>${bvo.location }</td>
-					<td>${bvo.startDate }</td>
-					<td>${bvo.endDate }</td>
+					<td>${bvo.volunteeringStartDate }</td>
+					<td>${bvo.volunteeringEndDate }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -74,7 +74,7 @@
 			<c:choose>
 				<c:when test="${requestScope.lvo.pagingBean.previousPageGroup}">
 					<li class="active"><a
-						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.startPageOfPageGroup-1}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&startDate=${scvo.startDate}&endDate=${scvo.endDate}">«</a></li>
+						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.startPageOfPageGroup-1}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&volunteeringStartDate=${scvo.volunteeringStartDate}&volunteeringEndDate=${scvo.volunteeringEndDate}">«</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a
@@ -86,7 +86,7 @@
 				end="${requestScope.lvo.pagingBean.endPageOfPageGroup}">
 				<c:choose>
 					<c:when test="${requestScope.lvo.pagingBean.nowPage!=i}">
-						<li><a href="search_board.ymv?pageNo=${i}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&startDate=${scvo.startDate}&endDate=${scvo.endDate}">${i}</a></li>
+						<li><a href="search_board.ymv?pageNo=${i}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&volunteeringStartDate=${scvo.volunteeringStartDate}&volunteeringEndDate=${scvo.volunteeringEndDate}">${i}</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="active"><a href="#">${i}</a></li>
@@ -96,7 +96,7 @@
 			<c:choose>
 				<c:when test="${requestScope.lvo.pagingBean.nextPageGroup}">
 					<li class="active"><a
-						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&startDate=${scvo.startDate}&endDate=${scvo.endDate}">»</a></li>
+						href="search_board.ymv?pageNo=${requestScope.lvo.pagingBean.endPageOfPageGroup+1}&title=${scvo.title}&field=${scvo.field}&location=${scvo.location}&volunteeringStartDate=${scvo.volunteeringStartDate}&volunteeringEndDate=${scvo.volunteeringEndDate}">»</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a

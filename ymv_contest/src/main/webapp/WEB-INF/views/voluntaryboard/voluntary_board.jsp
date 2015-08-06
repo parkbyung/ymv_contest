@@ -46,8 +46,8 @@
 						</c:choose>
 					<td>${bvo.field }</td>
 					<td>${bvo.location }</td>
-					<td>${bvo.startDate }</td>
-					<td>${bvo.endDate }</td>
+					<td>${bvo.recruitingStart }</td>
+					<td>${bvo.recruitingEnd }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -4,20 +4,19 @@ public class SchedulerVO {
 	private int memberNo;
 	private String field;
 	private String location;
-	private String startDate;
-	private String endDate;
+	private String volunteeringStartTime;
+	private String volunteeringEndTime;
 	public SchedulerVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public SchedulerVO(int memberNo, String field, String location,
-			String startDate, String endDate) {
+			String volunteeringStartTime, String volunteeringEndTime) {
 		super();
 		this.memberNo = memberNo;
 		this.field = field;
 		this.location = location;
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.volunteeringStartTime = volunteeringStartTime;
+		this.volunteeringEndTime = volunteeringEndTime;
 	}
 	public int getMemberNo() {
 		return memberNo;
@@ -37,23 +36,26 @@ public class SchedulerVO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getStartDate() {
-		return startDate;
+	public String getVolunteeringStartTime() {
+		return volunteeringStartTime;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setVolunteeringStartTime(String volunteeringStartTime) {
+		this.volunteeringStartTime = volunteeringStartTime;
 	}
-	public String getEndDate() {
-		return endDate;
+	public String getVolunteeringEndTime() {
+		return volunteeringEndTime;
 	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setVolunteeringEndTime(String volunteeringEndTime) {
+		this.volunteeringEndTime = volunteeringEndTime;
 	}
 	@Override
 	public String toString() {
 		return "SchedulerVO [memberNo=" + memberNo + ", field=" + field
-				+ ", location=" + location + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+				+ ", location=" + location + ", volunteeringStartTime="
+				+ volunteeringStartTime + ", volunteeringEndTime="
+				+ volunteeringEndTime + "]";
 	}
+	
+	
 	
 }

@@ -58,12 +58,12 @@
 			</tr>
 			<tr>
 				<th class="info">시작시간</th>
-				<td><input type="text" id="datepicker1" name="startDate"
+				<td><input type="text" id="datepicker1" name="volunteeringStartDate"
 					placeholder="시작날짜">
 			</tr>
 			<tr>
 				<th class="info">끝시간</th>
-				<td><input type="text" id="datepicker2" name="endDate"
+				<td><input type="text" id="datepicker2" name="volunteeringEndDate"
 					placeholder="종료날짜"></td>
 			</tr>
 		</table>

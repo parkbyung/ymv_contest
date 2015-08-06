@@ -94,8 +94,8 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<td colspan="3" align="center" ><p>시작시간 : 
-					${requestScope.rvo.startDate} &nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 종료시간 : 
-					${requestScope.rvo.endDate}</p></td>
+					${requestScope.rvo.recruitingStart} &nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 종료시간 : 
+					${requestScope.rvo.recruitingEnd}</p></td>
 			</tr>
 
 			<tr>

@@ -41,8 +41,8 @@
 		</tr>
 		<tr>
 			<th colspan="1" style="text-align: center;">활동일시</th>
-			<td align="center" colspan="4">${requestScope.cbvo.startDate} ~
-				${requestScope.cbvo.endDate}</td>
+			<td align="center" colspan="4">${requestScope.cbvo.recruitingStart} ~
+				${requestScope.cbvo.recruitingEnd}</td>
 		</tr>
 		<tr>
 			<th style="text-align: center;" >확인기관명</th>

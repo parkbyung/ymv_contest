@@ -6,12 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <resultMap type="recruitbvo" id="boardRM">      
       <result property="recruitNo" column="recruit_no"/>         
-      <result property="startDate" column="start_date" />       
-      <result property="endDate" column="end_date" />     
+      <result property="recruitingStart" column="recruiting_start" />       
+      <result property="recruitingEnd" column="recruiting_end" />     
       <result property="postDate" column="time_posted"/>  
       <result property="memberNo" column="member_no"/>
-      <result property="playStart" column="play_start"/>
-      <result property="playEnd" column="play_end"/>
+      <result property="volunteeringStartDate" column="volunteering_start_date"/>
+      <result property="volunteeringEndDate" column="volunteering_end_date"/>
+      <result property="volunteeringStartTime" column="volunteering_start_time"/>
+      <result property="volunteeringEndTime" column="volunteering_end_time"/>
    </resultMap>
    
    <select id="findFieldList" resultType="fieldvo">
@@ -23,19 +25,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
    
    <select id="findBoardList" resultMap="boardRM" resultType="recruitbvo">   
-   select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date 
-   from(select recruit_no, title, field, location, age, start_date, end_date, CEIL(rownum/5) AS page from(select recruit_no, title, field, location, age, start_date, end_date from recruit order by recruit_no desc) ) 
+   select recruit_no, title, field, location, age, recruiting_start,recruiting_end 
+   from(select recruit_no, title, field, location, age, recruiting_start, recruiting_end, CEIL(rownum/5) AS page from(select recruit_no, title, field, location, age, recruiting_start, recruiting_end from recruit order by recruit_no desc) ) 
    where page=#{pageNo}
    </select>
 
    <select id="findRecruitBoardByRecruitNo" resultMap="boardRM" resultType="recruitbvo">   
-    select r.recruit_no, r.title, r.field, r.location, r.age, to_char(r.start_date,'YYYY-MM-DD HH24:MI') as start_date, to_char(r.end_date,'YYYY-MM-DD HH24:MI') as end_date,r.content, r.member_no, to_char(r.time_posted,'YYYY-MM-DD HH24:MI') as time_posted,m.name,r.hit
+    select r.recruit_no, r.title, r.field, r.location, r.age,recruiting_start,recruiting_end,r.content, r.member_no, to_char(r.time_posted,'YYYY-MM-DD HH24:MI') as time_posted,m.name,r.hit
   	from recruit r, member m
    where r.recruit_no=#{value} and r.member_no=m.member_no
    </select>
 
    <select id="showContent"  resultMap="boardRM" resultType="recruitbvo">
-      select recruit_no ,title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date, to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date ,content
+      select recruit_no ,title, field, location, age, recruiting_start, recruiting_end ,content
    from recruit
    where recruit_no=#{value}
    </select>
@@ -44,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <selectKey keyProperty="recruitNo" resultType="int" order="BEFORE">
           select ymv_seq.nextval from dual
        </selectKey>
-       insert into recruit(recruit_no,title,field,location,age,start_date,end_date,content,member_no,time_posted,hit,play_start,play_end) values(#{recruitNo},#{title},#{field},#{location},#{age},to_date(#{startDate},'YYYY-MM-DD'),to_date(#{endDate},'YYYY-MM-DD'),#{content},#{memberNo}, sysdate ,0,to_date(#{playStart},'YYYY-MM-DD HH24:MI'),to_date(#{playEnd},'YYYY-MM-DD HH24:MI'))
+       insert into recruit(recruit_no,title,field,location,age,recruiting_start,recruiting_end,content,member_no,time_posted,hit,volunteering_start_date,volunteering_end_date,volunteering_start_time,volunteering_end_time) 
+       values(#{recruitNo},#{title},#{field},#{location},#{age},#{recruitingStart},#{recruitingEnd},#{content},#{memberNo}, sysdate ,0,#{volunteeringStartDate},#{volunteeringEndDate},#{volunteeringStartTime},#{volunteeringEndTime})
     </insert>
 	<select id="totalContent" resultType="int">
 		select count(*) from recruit
@@ -59,12 +62,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
 	
    <update id="updateBoard" parameterType="recruitbvo">
-   update recruit set title=#{title},content=#{content},start_date=to_date(#{startDate},'YYYY-MM-DD HH24:MI'),end_date=to_date(#{endDate},'YYYY-MM-DD HH24:MI'),field=#{field} ,location=#{location} ,age=#{age} 
+   update recruit set title=#{title},content=#{content},recruiting_start=to_date(#{startDate},'YYYY-MM-DD HH24:MI'),recruiting_end=to_date(#{endDate},'YYYY-MM-DD HH24:MI'),field=#{field} ,location=#{location} ,age=#{age} 
    where recruit_no=#{recruitNo}
    </update>
 	<select id="findCompanyBoardList" resultMap="boardRM" parameterType="cpvo" resultType="recruitbvo">
-		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date
-   	from(select recruit_no, title, field, location, age, start_date, end_date, CEIL(rownum/5) AS page from(select recruit_no, title, field, location, age, start_date, end_date from recruit where member_no=#{memberNo} order by recruit_no desc) ) 
+		select recruit_no, title, field, location, age, recruiting_start,recruiting_end
+   	from(select recruit_no, title, field, location, age, recruiting_start, recruiting_end, CEIL(rownum/5) AS page from(select recruit_no, title, field, location, age, recruiting_start, recruiting_end from recruit where member_no=#{memberNo} order by recruit_no desc) ) 
    	where page=#{pageNo}
 	</select>
 	<select id="totalCompanyContent" parameterType="int" resultType="int">
@@ -74,8 +77,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from picture where picture_no=#{value}
 	</delete>
 	<select id="findNormalBoardList" resultMap="boardRM" parameterType="cpvo" resultType="recruitbvo">
-		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date 
-   	from(select recruit_no, title, field, location, age, start_date, end_date, CEIL(rownum/5) AS page from(select r.recruit_no, r.title, r.field, r.location, r.age, r.start_date, r.end_date
+		select recruit_no, title, field, location, age, recruiting_start,recruiting_end 
+   	from(select recruit_no, title, field, location, age, recruiting_start, recruiting_end, CEIL(rownum/5) AS page from(select r.recruit_no, r.title, r.field, r.location, r.age, r.recruiting_start, r.recruiting_end
    	from recruit r , voluntary_service_applicate vsa
    	where r.recruit_no=vsa.recruit_no and vsa.member_no=#{memberNo} order by recruit_no desc) ) 
    	where page=#{pageNo}
