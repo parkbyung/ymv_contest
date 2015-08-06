@@ -35,13 +35,13 @@
 						<c:when test="${bvo.mojib=='모집중'}">
 						<td><img src="${initParam.root}img/recruiting.jpg"></td>						
 						<td>
-							<a href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
+							<a href="${initParam.root}voluntary_show_content.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
 						</td>
 						</c:when>
 						<c:otherwise>
 						<td><img src="${initParam.root}img/recruitfin.jpg"></td>						
 							<td>
-								<a href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
+								<a href="${initParam.root}voluntary_show_content.ymv?memberNo=${sessionScope.mvo.memberNo }&recruitNo=${bvo.recruitNo}&mojib=${bvo.mojib }"> ${bvo.title }</a>
 							</td>
 						</c:otherwise>
 						</c:choose>

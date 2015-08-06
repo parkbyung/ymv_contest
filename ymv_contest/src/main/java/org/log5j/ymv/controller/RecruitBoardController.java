@@ -93,18 +93,13 @@ public class RecruitBoardController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("voluntary_show_content_recruit_vol_type.ymv")
+	@RequestMapping("voluntary_show_content.ymv")
 	public ModelAndView showContentRecruitVolType(HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		MemberVO mvo = (MemberVO) session.getAttribute("mvo");
+		session.getAttribute("mvo");
 		String url = "voluntary_show_content";
 		int recruitNo = Integer.parseInt(request.getParameter("recruitNo"));
-		if (mvo.getMemberType().equals("normal")) {
-			url = "voluntary_show_content_normal";
-		} else if (mvo.getMemberType().equals("company")) {
-			url = "voluntary_show_content_company";
-		}
 		Cookie[] cookies = request.getCookies();
 		Cookie cookie = cookieService.cookieSerivce(cookies, recruitNo,
 				new NoticeBoardVO());
@@ -180,7 +175,9 @@ public class RecruitBoardController {
  */
 	@RequestMapping("voluntary_board_update.ymv")
 	   public ModelAndView voluntary_board_update(HttpServletRequest request, RecruitBoardVO rbvo) {
-	      ModelAndView mv=new ModelAndView();
+		HttpSession session=request.getSession();
+		MemberVO mvo=(MemberVO)session.getAttribute("mvo"); 
+		ModelAndView mv=new ModelAndView();
          recruitBoardService.updateBoard(rbvo);
          rbvo=recruitBoardService.findRecruitBoardByRecruitNo(rbvo.getRecruitNo());
          String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
@@ -192,15 +189,7 @@ public class RecruitBoardController {
 			}else{
 				rbvo.setMojib("모집중");
 			}
-	      String command=request.getParameter("command");
-	      if(command.equals("company")){
-	    	  mv.setViewName("voluntary_show_content_company");
-	      }else if(command.equals("normal")){
-	    	  mv.setViewName("voluntary_show_content_normal");
-	      }else{
-	    	  mv.setViewName("voluntary_show_content");
-	      }
-	      mv.addObject("rvo",rbvo);
+	      mv.addObject("rvo",rbvo).addObject("mvo",mvo);
 	      return mv;
 	   }
 	/**
@@ -240,7 +229,7 @@ public class RecruitBoardController {
 		//글 등록
 		recruitBoardService.registerVolunteer(rbvo);
 		System.out.println("등록전에 확인해보자 rbvo"+rbvo);
-		return "redirect:voluntary_show_content_recruit_vol_type.ymv?recruitNo=" + rbvo.getRecruitNo();
+		return "redirect:voluntary_show_content.ymv?recruitNo=" + rbvo.getRecruitNo();
 	}
 	/**
 	 * 
