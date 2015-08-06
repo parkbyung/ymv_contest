@@ -49,20 +49,21 @@ public class SchedulerController {
 		if(sdvo.getLocation().equals("null")){
 			sdvo.setLocation("");
 		}
-		if(sdvo.getStartDate().equals("null")){
-			sdvo.setStartDate("");
+		if(sdvo.getVolunteeringStartTime().equals("null")){
+			sdvo.setVolunteeringStartTime("");
 		}
-		if(sdvo.getEndDate().equals("null")){
-			sdvo.setEndDate("");
+		if(sdvo.getVolunteeringEndTime().equals("null")){
+			sdvo.setVolunteeringEndTime("");
 		}
 		List<BoardVO> list= schedulerService.findSchedulerList(sdvo);
 		List<HashMap> dateList=schedulerService.findDateList(sdvo);
+		System.out.println("SchedulerController List,dateList"+list+"\n"+dateList);
 		HashMap schedulerMap=new HashMap();
 		schedulerMap.put("list", list);
 		schedulerMap.put("dateList", dateList);
 		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		for(int i = 0; i<list.size(); i ++){
-			int compare = today.compareTo(((RecruitBoardVO) list.get(i)).getEndDate());
+			int compare = today.compareTo(((RecruitBoardVO) list.get(i)).getRecruitingEnd());
 			if(compare > 0){
 				((RecruitBoardVO)list.get(i)).setMojib("모집완료");
 			}else if(compare < 0){
@@ -71,6 +72,7 @@ public class SchedulerController {
 				((RecruitBoardVO)list.get(i)).setMojib("모집중");
 			}
 		}
+		System.out.println("SchedulerController 종료전");
 		return schedulerMap;
 	}
 	/**
@@ -87,7 +89,7 @@ public class SchedulerController {
 		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		ListVO lvo = schedulerService.findSearchList(scvo);
 		for(int i = 0; i<lvo.getList().size(); i ++){
-			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getEndDate());
+			int compare = today.compareTo(((RecruitBoardVO) lvo.getList().get(i)).getRecruitingEnd());
 			if(compare > 0){
 				((RecruitBoardVO)lvo.getList().get(i)).setMojib("모집완료");
 			}else if(compare < 0){
