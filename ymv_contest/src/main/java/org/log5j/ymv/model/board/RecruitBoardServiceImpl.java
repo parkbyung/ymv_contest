@@ -159,17 +159,5 @@ public class RecruitBoardServiceImpl implements RecruitBoardService {
 	public ConfirmBoardVO findConfirmBoardByConfirm(ConfirmVO cvo){
 		return recruitBoardDAO.findConfirmBoardByConfirm(cvo);
 	}
-	/**
-	 * StartDate랑 EndDate 쪼개서 타입에 맞추어 대입시켜주는 메소드
-	 */
-	@Override
-	public RecruitBoardVO setDate(RecruitBoardVO recruitbvo) {
-		String StartDate[] = recruitbvo.getStartDate().split(" ");
-		recruitbvo.setStartDate(StartDate[0]);
-		recruitbvo.setStartTime(StartDate[1]);
-		String EndDate[] = recruitbvo.getEndDate().split(" ");
-		recruitbvo.setEndDate(EndDate[0]);
-		recruitbvo.setEndTime(EndDate[1]);
-		return recruitbvo;
-	}
+
 }

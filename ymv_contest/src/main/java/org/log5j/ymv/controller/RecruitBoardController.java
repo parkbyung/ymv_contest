@@ -157,10 +157,8 @@ public class RecruitBoardController {
 	public ModelAndView updateView(int recruitNo, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		// recruitNo를 가지고 RecruitBoard 정보를 불러옴
-		RecruitBoardVO recruitbvo = (RecruitBoardVO) recruitBoardService
+		RecruitBoardVO rvo = (RecruitBoardVO) recruitBoardService
 				.findRecruitBoardByRecruitNo(recruitNo);
-		// StartDate랑 EndDate 쪼개서 타입에 맞추어 대입시켜주는 메소드
-		RecruitBoardVO rvo = recruitBoardService.setDate(recruitbvo);
 		// 분야 리스트
 		List<FieldVO> Flist = recruitBoardService.findFieldList();
 		// 지역 리스트
@@ -183,8 +181,6 @@ public class RecruitBoardController {
 	@RequestMapping("voluntary_board_update.ymv")
 	   public ModelAndView voluntary_board_update(HttpServletRequest request, RecruitBoardVO rbvo) {
 	      ModelAndView mv=new ModelAndView();
-		rbvo.setStartDate(rbvo.getStartDate()+" "+rbvo.getStartTime());
-        rbvo.setEndDate(rbvo.getEndDate()+" "+rbvo.getEndTime());
          recruitBoardService.updateBoard(rbvo);
          rbvo=recruitBoardService.findRecruitBoardByRecruitNo(rbvo.getRecruitNo());
          String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
@@ -236,10 +232,14 @@ public class RecruitBoardController {
 	 */
 	@RequestMapping("volunteer_register.ymv")
 	public String RegisterVolunteer_result(HttpServletRequest request,RecruitBoardVO rbvo){
-		rbvo.setStartDate(rbvo.getStartDate()+" "+request.getParameter("startTime"));
-		rbvo.setEndDate(rbvo.getEndDate()+" "+request.getParameter("endTime"));
+		//vo가 데이트 타입이여야 하지 않을까?
+		rbvo.setStartDate(rbvo.getStartDate());
+		rbvo.setEndDate(rbvo.getEndDate());
+		rbvo.setPlayStart(request.getParameter("playStart"));
+		rbvo.setPlayEnd(request.getParameter("playEnd"));
 		//글 등록
 		recruitBoardService.registerVolunteer(rbvo);
+		System.out.println("등록전에 확인해보자 rbvo"+rbvo);
 		return "redirect:voluntary_show_content_recruit_vol_type.ymv?recruitNo=" + rbvo.getRecruitNo();
 	}
 	/**

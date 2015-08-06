@@ -31,5 +31,4 @@ public interface RecruitBoardService {
 	public void deleteVoluntaryServiceApplicateByRecruitNo(int recruitNo);
 	public ListVO findConfirmBoardListByMemberNo(ConfirmPageVO confirmPageVO);
 	public ConfirmBoardVO findConfirmBoardByConfirm(ConfirmVO cvo);
-	public RecruitBoardVO setDate(RecruitBoardVO recruitbvo);
 }

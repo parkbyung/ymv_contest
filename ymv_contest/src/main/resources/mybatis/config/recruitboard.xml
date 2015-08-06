@@ -10,6 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result property="endDate" column="end_date" />     
       <result property="postDate" column="time_posted"/>  
       <result property="memberNo" column="member_no"/>
+      <result property="playStart" column="play_start"/>
+      <result property="playEnd" column="play_end"/>
    </resultMap>
    
    <select id="findFieldList" resultType="fieldvo">
@@ -42,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <selectKey keyProperty="recruitNo" resultType="int" order="BEFORE">
           select ymv_seq.nextval from dual
        </selectKey>
-       insert into recruit(recruit_no,title,field,location,age,start_date,end_date,content,member_no,time_posted,hit) values(#{recruitNo},#{title},#{field},#{location},#{age},to_date(#{startDate},'YYYY-MM-DD HH24:MI'),to_date(#{endDate},'YYYY-MM-DD HH24:MI'),#{content},#{memberNo}, sysdate ,0)
+       insert into recruit(recruit_no,title,field,location,age,start_date,end_date,content,member_no,time_posted,hit,play_start,play_end) values(#{recruitNo},#{title},#{field},#{location},#{age},to_date(#{startDate},'YYYY-MM-DD'),to_date(#{endDate},'YYYY-MM-DD'),#{content},#{memberNo}, sysdate ,0,to_date(#{playStart},'YYYY-MM-DD HH24:MI'),to_date(#{playEnd},'YYYY-MM-DD HH24:MI'))
     </insert>
 	<select id="totalContent" resultType="int">
 		select count(*) from recruit
