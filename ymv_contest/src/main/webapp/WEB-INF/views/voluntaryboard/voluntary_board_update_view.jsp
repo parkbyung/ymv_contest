@@ -160,20 +160,73 @@ $(document).ready(function () {
 			</tr>
 			<tr>
 					<th class="info"><h4 class="text-center">모집 시작 시간</h4></th>
-					<td><input type="text" id="datepicker1" name="recruitingStart"
-						placeholder="모집 시작 시간">	</td>
+					<td><input type="text" id="datepicker1" name="recruitingStart" placeholder="모집 시작 시간"  value="${requestScope.rvo.recruitingStart }">	</td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">모집 끝 시간</h4></th>
-					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 시간">						
+					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 시간" value="${requestScope.rvo.recruitingEnd }">						
 					</td></tr>
 				<tr>
 					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>
-					<td><input type="text" id="datepicker3" name="playStart" placeholder="봉사 시작 기간"> </td>
+					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간" value="${requestScope.rvo.volunteeringStartDate }"> </td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">봉사 활동 끝</h4></th>
-					<td><input type="text" id="datepicker4" name="playEnd" placeholder="봉사 종료 기간">  </td>
+					<td><input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간" value="${requestScope.rvo.volunteeringEndDate }">  </td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 시작 시간</h4></th>
+					<td> 
+						<select id="volunteeringStartTime" name="volunteeringStartTime">
+							<!-- 한시간 단위로 하기 -->
+							<option value="">-시작시간-</option>
+							<option value="06:00">06:00</option>
+							<option value="07:00">07:00</option>
+							<option value="08:00">08:00</option>
+							<option value="09:00">09:00</option>
+							<option value="10:00">10:00</option>
+							<option value="11:00">11:00</option>
+							<option value="12:00">12:00</option>
+							<option value="13:00">13:00</option>
+							<option value="14:00">14:00</option>
+							<option value="15:00">15:00</option>
+							<option value="16:00">16:00</option>
+							<option value="17:00">17:00</option>
+							<option value="18:00">18:00</option>
+							<option value="19:00">19:00</option>
+							<option value="20:00">20:00</option>
+							<option value="21:00">21:00</option>
+							<option value="22:00">22:00</option>
+							<option value="23:00">23:00</option>
+							<option value="00:00">00:00</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th class="info"><h4 class="text-center">봉사 끝 시간</h4></th>
+					<td>
+						<select id="volunteeringEndTime" name="volunteeringEndTime">
+							<!-- 한시간 단위로 하기 -->
+							<option value="">-끝시간-</option>
+							<option value="06:00">06:00</option>
+							<option value="07:00">07:00</option>
+							<option value="08:00">08:00</option>
+							<option value="09:00">09:00</option>
+							<option value="10:00">10:00</option>
+							<option value="11:00">11:00</option>
+							<option value="12:00">12:00</option>
+							<option value="13:00">13:00</option>
+							<option value="14:00">14:00</option>
+							<option value="15:00">15:00</option>
+							<option value="16:00">16:00</option>
+							<option value="17:00">17:00</option>
+							<option value="18:00">18:00</option>
+							<option value="19:00">19:00</option>
+							<option value="20:00">20:00</option>
+							<option value="21:00">21:00</option>
+							<option value="22:00">22:00</option>
+							<option value="23:00">23:00</option>
+							<option value="00:00">00:00</option>
+					</select></td>
 				</tr>
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>

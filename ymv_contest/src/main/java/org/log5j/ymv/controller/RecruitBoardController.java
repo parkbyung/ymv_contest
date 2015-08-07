@@ -174,7 +174,7 @@ public class RecruitBoardController {
  * @return
  */
 	@RequestMapping("voluntary_board_update.ymv")
-	   public ModelAndView voluntary_board_update(HttpServletRequest request, RecruitBoardVO rbvo) {
+	   public String voluntary_board_update(HttpServletRequest request, RecruitBoardVO rbvo) {
 		HttpSession session=request.getSession();
 		MemberVO mvo=(MemberVO)session.getAttribute("mvo"); 
 		ModelAndView mv=new ModelAndView();
@@ -190,7 +190,7 @@ public class RecruitBoardController {
 				rbvo.setMojib("모집중");
 			}
 	      mv.addObject("rvo",rbvo).addObject("mvo",mvo);
-	      return mv;
+	      return "redirect:voluntary_show_content.ymv?recruitNo=" + rbvo.getRecruitNo();
 	   }
 	/**
 	 * 

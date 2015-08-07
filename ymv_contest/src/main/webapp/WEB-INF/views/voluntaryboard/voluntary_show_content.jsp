@@ -93,9 +93,17 @@ $(document).ready(function(){
 				<td><p>지역 : ${requestScope.rvo.location}</p></td>
 			</tr>
 			<tr>
-				<td colspan="3" align="center" ><p>시작시간 : 
-					${requestScope.rvo.recruitingStart} &nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 종료시간 : 
-					${requestScope.rvo.recruitingEnd}</p></td>
+				<td colspan="3" >
+					<p>모집기간 : ${requestScope.rvo.recruitingStart} &nbsp;~&nbsp;	${requestScope.rvo.recruitingEnd}</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" >
+					<p>봉사기간 : ${requestScope.rvo.volunteeringStartDate} &nbsp;~&nbsp;	${requestScope.rvo.volunteeringEndDate}</p>
+				</td>
+				<td colspan="1" >
+					<p>봉사시간 : ${requestScope.rvo.volunteeringStartTime} &nbsp;~&nbsp;	${requestScope.rvo.volunteeringEndTime}</p>
+				</td>
 			</tr>
 
 			<tr>

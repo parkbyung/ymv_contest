@@ -31,13 +31,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
 
    <select id="findRecruitBoardByRecruitNo" resultMap="boardRM" resultType="recruitbvo">   
-    select r.recruit_no, r.title, r.field, r.location, r.age,recruiting_start,recruiting_end,r.content, r.member_no, to_char(r.time_posted,'YYYY-MM-DD HH24:MI') as time_posted,m.name,r.hit
+    select r.recruit_no, r.title, r.field, r.location, r.age,recruiting_start,recruiting_end,r.content, r.member_no, to_char(r.time_posted,'YYYY-MM-DD HH24:MI') as time_posted,m.name,r.hit,r.volunteering_start_date,r.volunteering_end_date,r.volunteering_start_time,r.volunteering_end_time
   	from recruit r, member m
    where r.recruit_no=#{value} and r.member_no=m.member_no
    </select>
 
    <select id="showContent"  resultMap="boardRM" resultType="recruitbvo">
-      select recruit_no ,title, field, location, age, recruiting_start, recruiting_end ,content
+      select recruit_no ,title, field, location, age, recruiting_start, recruiting_end ,content,volunteering_start_date,volunteering_end_date,volunteering_start_time,volunteering_end_time
    from recruit
    where recruit_no=#{value}
    </select>
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
 	
    <update id="updateBoard" parameterType="recruitbvo">
-   update recruit set title=#{title},content=#{content},recruiting_start=to_date(#{startDate},'YYYY-MM-DD HH24:MI'),recruiting_end=to_date(#{endDate},'YYYY-MM-DD HH24:MI'),field=#{field} ,location=#{location} ,age=#{age} 
+   update recruit set title=#{title},content=#{content},recruiting_start=#{recruitingStart},recruiting_end=#{recruitingEnd},field=#{field} ,location=#{location} ,age=#{age},volunteering_start_date=#{volunteeringStartDate},volunteering_end_date=#{volunteeringEndDate},volunteering_start_time=#{volunteeringStartTime},volunteering_end_time=#{volunteeringEndTime} 
    where recruit_no=#{recruitNo}
    </update>
 	<select id="findCompanyBoardList" resultMap="boardRM" parameterType="cpvo" resultType="recruitbvo">
