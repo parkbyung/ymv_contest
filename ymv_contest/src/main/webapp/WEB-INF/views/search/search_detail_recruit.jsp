@@ -31,12 +31,12 @@
 					<tr>
 						<td>${rvo.recruitNo }</td>
 						<td><a
-							href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo=${rvo.recruitNo}">
+							href="${initParam.root}voluntary_show_content.ymv?recruitNo=${rvo.recruitNo}">
 								${rvo.title }</a></td>
 						<td>${rvo.field }</td>
 						<td>${rvo.location }</td>
-						<td>${rvo.startDate }</td>
-						<td>${rvo.endDate }</td>
+						<td>${rvo.volunteeringStartDate }</td>
+						<td>${rvo.volunteeringEndDate }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
