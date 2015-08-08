@@ -16,11 +16,11 @@
 									}); // normal click
 						$("#inputType").on("click",":button[name=checkBtn]",function() {
 											if ($("#identityNo").val() == "") {
-												alert("값을 입력해주세요");
+												alert("번호를 정확히 입력해주세요");
 												return;
 											}
 											if (isNaN($("#identityNo").val())) {
-												alert("숫자입력해주세요");
+												alert("숫자로 입력해주세요");
 												return;
 											} else {
 												location.href = "${initParam.root}member_check_identityNo.ymv?identityNo="
