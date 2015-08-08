@@ -16,4 +16,6 @@ public interface MemberService {
 	
 	public MemberVO findMemberByMemberNo(int memberNo);
 
+	public int checkIdentityNo(String identityNo);
+
 }
