@@ -39,7 +39,15 @@ $(document).ready(function(){
                 </div>
 			</c:if>
 			</c:forEach>
-			<h3>${sponsor.title}<br></h3>
+			<c:choose>
+				<c:when test="${sponsor.hoowon=='후원중'}">
+					<h3><img src="${initParam.root}img/hj1.jpg"> ${sponsor.title}<br></h3>
+				</c:when>
+				<c:when test="${sponsor.hoowon=='후원완료'}">
+					<h3><img src="${initParam.root}img/hw1.jpg"> ${sponsor.title}<br></h3>
+				</c:when>
+				
+			</c:choose>
 		</div>
 			<div style="height: 25%">
 				<div>
