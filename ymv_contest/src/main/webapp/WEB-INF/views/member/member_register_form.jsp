@@ -23,17 +23,9 @@
 												alert("숫자입력해주세요");
 												return;
 											} else {
-												if (confirm("중복처리되었습니다.") == false) {
-													$("#inputType").html("");
-													return;
-												}
-												if (type == 'company') {
-													location.href = "${initParam.root}member_register.ymv?identityNo="
-															+ $("#identityNo").val()+ "&memberType="+ type;
-												}
-												location.href = "${initParam.root}member_register.ymv?identityNo="
-														+ $("#identityNo").val()+ "&memberType=" + type;
-											}
+												location.href = "${initParam.root}member_check_identityNo.ymv?identityNo="
+													+ $("#identityNo").val()+ "&memberType="+ type;
+											  }
 										});
 					});//documentready
 	$(document)
@@ -69,12 +61,12 @@
 				src="${initParam.root }/img/normal1.jpg" id="normal">
 		</div>
 		<div class="row">
-		<div class="col-sm-4 col-sm-offset-3">
+			<div class="col-sm-4 col-sm-offset-3">
 				<span id="inputType"></span>
 			</div>
 		</div>
-		</div>
 	</div>
+</div>
 <br>
 <br>
 
