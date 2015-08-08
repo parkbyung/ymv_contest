@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="search">
 	<resultMap type="recruitbvo" id="boardRM">
 		<result property="recruitNo" column="recruit_no" />
-		<result property="startDate" column="start_date" />
-		<result property="endDate" column="end_date" />
+		<result property="volunteeringStartDate" column="volunteering_start_date" />
+		<result property="volunteeringEndDate" column="volunteering_end_date" />
 		<result property="checkDate" column="check_date"/>
 	</resultMap>
 
@@ -25,9 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findRecruitBoardList" resultMap="boardRM">
 		select * from(
-		select recruit_no, title, field, location, age, to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date,to_char(time_posted,'YYYY-MM-DD') as time_posted, content, hit, ceil(rownum/5)as page
-		from(select recruit_no, title, field, location, age, start_date,end_date, content, time_posted, hit
-		from(select recruit_no, title, field,location, age,start_date, end_date, content, time_posted, hit 
+		select recruit_no, title, field, location, age, volunteering_start_date, volunteering_end_date, content, hit, ceil(rownum/5)as page
+		from(select recruit_no, title, field, location, age, volunteering_start_date, volunteering_end_date, content, time_posted, hit
+		from(select recruit_no, title, field,location, age,volunteering_start_date, volunteering_end_date, content, time_posted, hit 
 		from recruit order by recruit_no desc)) 
 		where title like '%${search}%' or content like '%${search}%')
 		where page=#{pageNo}
@@ -86,21 +86,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	
-	
-	<!-- 안 될 확률이 높음 -->
-	
-	
-	
 	<select id="findThreeRecruitBoardList" resultMap="boardRM" parameterType="String">
 		select * from(
-		select recruit_no, title, field, location, age,to_char(start_date,'YYYY-MM-DD HH24:MI') as start_date,to_char(end_date,'YYYY-MM-DD HH24:MI') as end_date,to_char(time_posted,'YYYY-MM-DD') as time_posted, content, hit, ceil(rownum/3)as page
-		from(select recruit_no, title, field, location, age, start_date,end_date, content, time_posted, hit
-		from(select recruit_no, title, field,location, age,start_date, end_date, content, time_posted, hit 
+		select recruit_no, title, field, location, age, volunteering_start_date, volunteering_end_date, content, hit, ceil(rownum/3)as page
+		from(select recruit_no, title, field, location, age, volunteering_start_date, volunteering_end_date, content, time_posted, hit
+		from(select recruit_no, title, field,location, age, volunteering_start_date, volunteering_end_date, content, time_posted, hit 
 		from recruit order by recruit_no desc))
 		where title like '%${value}%' or content like '%${value}%')
 		where page='1'
-
 	</select>
 	
 	<select id="findThreeNoticeBoardList" resultMap="reviewAndNoticeBoardRM" parameterType="String">
