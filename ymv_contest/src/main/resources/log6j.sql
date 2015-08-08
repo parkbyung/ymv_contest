@@ -382,6 +382,7 @@ insert into field values('상담');
 insert into field values('인권/공익');
 insert into field values('재난/재해/응급');
 insert into field values('농어촌봉사');
+insert into field values('기타');
 
 -- LYH - insert location
 
