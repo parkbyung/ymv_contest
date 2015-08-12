@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result property="volunteeringEndTime" column="volunteering_end_time"/>
    </resultMap>
 	<select id="findSchedulerList" resultMap="boardRM" parameterType="sdvo">
-		select recruit_no, title, field, location, age,recruitingStart as checkDate,volunteering_start_time,volunteering_end_time,recruiting_end
-		from(select recruit_no, title, field,location, age,volunteering_start_time, volunteering_end_time,recruiting_start as recruitingStart,recruiting_end from recruit order by recruit_no desc)
+		select recruit_no, title, field, location, age,recruitingStart as checkDate,volunteering_start_time,volunteering_end_time,recruiting_end,volunteering_start_date,volunteering_end_date
+		from(select recruit_no, title, field,location, age,volunteering_start_time, volunteering_end_time,recruiting_start as recruitingStart,recruiting_end,volunteering_start_date,volunteering_end_date from recruit order by recruit_no desc)
 		<where>
 			<if test="field!='' ">
 				AND field=#{field}

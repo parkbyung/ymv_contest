@@ -40,14 +40,14 @@ $("#modalBtn").click(function(){
                     	   var modalInfo="";
                           $(data.dateList).each(function(index,date){
                         	  modalInfo+="<table class='table'><caption>"+date.DATE_LIST+"<hr></caption>";
-                        	  modalInfo += "<colgroup><col style='width: 6%;' /><col style='width: 10%;' /><col style='width: 19%;' /><col style='width: 15%;' /><col style='width: 10%;' /><col style='width: 20%;' /><col style='width: 20%;' /></colgroup> <thead><tr><th scope='col' >NO</th><th scope='col'>모집상태</th><th scope='col' >제목</th><th scope='col'>분야</th><th scope='col'>지역</th><th scope='col'>시작일</th><th scope='col'>완료일</th></tr></thead>";
+                        	  modalInfo += "<colgroup><col style='width: 6%;' /><col style='width: 10%;' /><col style='width: 19%;' /><col style='width: 10%;' /><col style='width: 5%;' /><col style='width: 20%;' /><col style='width: 15%;' /><col style='width: 15%;' /></colgroup> <thead><tr><th scope='col' >NO</th><th scope='col'>모집상태</th><th scope='col' >제목</th><th scope='col'>분야</th><th scope='col'>지역</th><th scope='col'>시작시간~종료시간</th><th scope='col'>시작일</th><th scope='col'>종료일</th></tr></thead>";
                         	  modalInfo += "<tbody>";
                         	  $(data.list).each(function(index,list){
                         		  if(date.DATE_LIST==list.checkDate){
                         			  if(list.mojib=='모집중'){
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"</td><td>"+list.volunteeringEndTime+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
                         			  }else{
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"</td><td>"+list.volunteeringEndTime+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
                         			  }
                         		  }
                         	  });//each2
