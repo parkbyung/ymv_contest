@@ -17,4 +17,6 @@ public interface MemberDAO {
 	public void updateMember(MemberVO memberVO);
 	
 	public MemberVO findMemberByMemberNo(int memberNo);
+	
+	public int checkIdentityNo(String identityNo);
 }

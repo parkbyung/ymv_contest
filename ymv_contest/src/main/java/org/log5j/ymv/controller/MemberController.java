@@ -93,7 +93,25 @@ public class MemberController {
 		}
 		return flag;
 	}
-	
+	@RequestMapping(value="member_check_identityNo.ymv")
+	@NoLoginCheck
+	public ModelAndView memberCheckIdentityNo(String identityNo, String memberType){
+		ModelAndView mv = new ModelAndView();
+		System.out.println("12345");
+		System.out.println("identityNo는!"+identityNo);
+		int check=memberService.checkIdentityNo(identityNo);
+
+		System.out.println("check는!"+check);
+		if(check==1){
+			mv.addObject("check","NO");
+		}else{
+			mv.addObject("check","YES");
+		}
+		mv.addObject("identityNo", identityNo);
+		mv.addObject("memberType", memberType);
+		mv.setViewName("member_check_identityNo");
+		return mv;
+	}
 	/**
 	 * 작성자 : 백지영
 	 * 내용 : 회원가입 폼이 있는 페이지로 넘겨준다.

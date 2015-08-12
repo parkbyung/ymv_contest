@@ -16,8 +16,17 @@
         <div class="row">
 			<div class="col-sm-6 col-sm-offset-3">
    <h3>회원가입</h3>
+   <br><br>
             <form:form method = "post" action="${initParam.root}member_register_validation.ymv?identityNo=${requestScope.memberVO.identityNo }&memberType=${requestScope.memberVO.memberType }"
              commandName="memberVO"	class="form-horizontal" role="form">
+                    <div class="form-group">
+                <div class="col-sm-2">
+                  <label for="id" class="control-label">등록번호</label>
+                </div>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" value="${requestScope.memberVO.identityNo }" readonly/>
+                </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-2">
                   <label for="id" class="control-label">아이디</label>

@@ -35,12 +35,12 @@
 					<tr>
 						<td>${rvo.recruitNo }</td>
 						<td><a
-							href="${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo=${rvo.recruitNo}">
+							href="${initParam.root}voluntary_show_content.ymv?recruitNo=${rvo.recruitNo}">
 								${rvo.title }</a></td>
 						<td>${rvo.field }</td>
 						<td>${rvo.location }</td>
-						<td>${rvo.startDate }</td>
-						<td>${rvo.endDate }</td>
+						<td>${rvo.volunteeringStartDate }</td>
+						<td>${rvo.volunteeringEndDate }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -80,7 +80,8 @@
 				<col style="width: 17%;" />
 			</colgroup>
 			<thead>
-				공지사항 검색 결과
+			<h5 style="border-width: thick;">공지사항 검색 결과</h5><br>
+				
 				<tr>
 					<th class="boardNo col">NO</th>
 					<th class="title col">제목</th>
@@ -138,7 +139,8 @@
 					<col style="width: 17%;" />
 				</colgroup>
 				<thead>
-					후기 검색 결과
+				<h5 style="border-width: thick;">후기 검색 결과</h5><br>
+					
 					<tr>
 						<th scope="col">NO</th>
 						<th scope="col">제목</th>
@@ -194,7 +196,8 @@
 						<col style="width: 17%;" />
 					</colgroup>
 					<thead>
-						QnA 검색 목록
+					<h5 style="border-width: thick;">QnA 검색 목록</h5><br>
+						
 						<tr>
 							<th class="qnaNo col">NO</th>
 							<th class="title col">제목</th>

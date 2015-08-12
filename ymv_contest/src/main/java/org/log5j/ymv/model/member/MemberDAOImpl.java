@@ -83,4 +83,8 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO findMemberByMemberNo(int memberNo) {
 		return sqlSessionTemplate.selectOne("member.findMemberByMemberNo",memberNo);
 	}
+	@Override
+	public int checkIdentityNo(String identityNo){
+		return sqlSessionTemplate.selectOne("member.checkIdentityNo",identityNo);
+	}
 }
