@@ -4,6 +4,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	var memberNoList="";
 	$("#delete").click(function(){
 		  if(!confirm("글을 삭제하시겠습니까?")){
 	          return false;
