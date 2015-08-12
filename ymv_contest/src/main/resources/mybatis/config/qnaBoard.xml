@@ -58,4 +58,8 @@ select qna_no, title, writer, content, ref, restep, relevel,member_no,time_poste
 	  <update id="updateHit" parameterType="int">
 	 	update QnA_board set hit = hit+1 where qna_no=#{value}
 	 </update>
+	<select id="checkReply" resultType="int">
+		select count(*) from QnA_board where restep=1 and ref=#{value}
+	</select> 
+	
  </mapper> 
