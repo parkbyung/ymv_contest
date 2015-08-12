@@ -34,7 +34,6 @@ $(document).ready(function(){
 				<img src="${initParam.root }${picture.filePath}" style="width: 100%; height: 300px"><br>
                     <div class="mask">
                         <p class = "text-center">${sponsor.content}</p>
-                        <!-- <a href="#" class="info">Read More</a> -->
                     </div>
                 </div>
 			</c:if>
@@ -67,10 +66,18 @@ $(document).ready(function(){
 									<option value="125">125$</option>
 									<option value="150">150$</option>
 									<option value="175">175$</option>
-									<option value="200">200$</option>							
+									<option value="200">200$</option>
 				</select>
 				<input type="submit" id="sponsorBtn" value="후원하기" class="btn btn-default btn-xs">
 				</c:otherwise>
+					
+				</c:choose>
+				<c:choose>
+				<c:when test="${sessionScope.mvo.memberType=='admin' }">
+					<div>
+					<input type="submit" id="sponsorBtn" value="후원글 관리" class="btn btn-default btn-xs">
+				</div>
+					</c:when>
 				</c:choose>
 				</div>
 			</div>

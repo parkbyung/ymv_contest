@@ -76,30 +76,6 @@ public class SponsorController {
 	/**
 	 * 
 	 * 작성자 : 전진한
-	 * 내용 : 페이지번호에 해당하는 관리자용 후원게시판 정보를 받아 반환한다.
-	 * @param pageNo : 페이지 번호를 받아온다
-	 * @return
-	 */
-	@RequestMapping("sponsor_board_admin.ymv")
-	public ModelAndView findSponsorListAdmin(String pageNo) {
-		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
-		ListVO lvo = sponsorService.findSponsorList(pageNo);
-		List<PictureVO> pvo = sponsorService.findPictureList(pageNo);
-		for(int i = 0; i<lvo.getList().size(); i ++){
-			int compare = today.compareTo(((SponsorVO) lvo.getList().get(i)).getEndDate());
-			if(compare > 0){
-				((SponsorVO) lvo.getList().get(i)).setHoowon("후원완료");
-			}else if(compare < 0){
-				((SponsorVO) lvo.getList().get(i)).setHoowon("후원중");
-			}else{
-				((SponsorVO) lvo.getList().get(i)).setHoowon("후원중");
-			}
-		}
-		return new ModelAndView("sponsor_board_admin").addObject("lvo", lvo).addObject("pvo", pvo);
-	}
-	/**
-	 * 
-	 * 작성자 : 전진한
 	 * 내용 : 게시글 번호로 조회하고 게시글의 정보를 수정페이지(sponsor_update_view.jsp)으로 반환한다.
 	 * @param spvo : 해당 게시글의 글번호를 받아오기 위해 사용
 	 * @return
@@ -134,7 +110,7 @@ public class SponsorController {
 	@RequestMapping("sponsor_register_file.ymv")
 	public ModelAndView memberProfileUpdate(PictureVO pvo) {
 		sponsorService.registerPicture(pvo);
-		return new ModelAndView("redirect:sponsor_board_admin.ymv");
+		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
 	/**
 	 * 
@@ -156,7 +132,7 @@ public class SponsorController {
 	 * @param spvo : 해당 게시글의 글번호와 현재 모집액을 받아오기 위해 사용
 	 * @return
 	 */
-	@RequestMapping("sponsor_update_currentPrice")
+	@RequestMapping("sponsor_update_currentPrice.ymv")
 	public ModelAndView updateSponsorCurrentPrice(SponsorVO spvo) {
 		sponsorService.updateSponsorCurrentPrice(spvo);
 		return new ModelAndView("redirect:sponsor_board.ymv");
