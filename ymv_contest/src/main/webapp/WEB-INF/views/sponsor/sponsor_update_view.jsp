@@ -11,13 +11,20 @@
 	
 	$(document).ready(function() {
 		$("#sponsorForm").submit(function() {
-
 			if ($("#datepicker1").val() == "") {
 				alert("시작날짜를 정해주세요.");
 				return false;
 			}
 			if ($("#datepicker2").val() == "") {
 				alert("종료날짜를 정해주세요.");
+				return false;
+			}
+			if ($("#targetPrice").val() == "") {
+				alert("목표금액을 설정해주세요.");
+				return false;
+			}
+			if (isNaN($("#targetPrice"))==true ) {
+				alert("숫자로 입력해주세요.");
 				return false;
 			}
 			if ($("#fileName").val() == "") {
@@ -30,12 +37,6 @@
 			}
 		});
 	});
-	/* if (confirm("파일을 첨부하지 않으십니까?") == true) {
-		alert("예누름");
-		location.href = "sponsor_update.ymv?fileName=${requestScope.spvo.boardNo}&ispicture=1";
-	} else {
-		alert("그냥전송");
-	} */
 </script>
 <script>
 $(document).ready(function () {
@@ -86,7 +87,7 @@ $(document).ready(function () {
 		<table class="table table-striped table-hover">
 			<tr>
 				<th class="info"><h4 class="text-center">제목</h4></th>
-				<td><input type="text" name="title"
+				<td><input type="text" name="title" id ="title"
 					value="${requestScope.spvo.title}"></td>
 			</tr>
 			<tr>
@@ -109,7 +110,7 @@ $(document).ready(function () {
 			</tr>
 			<tr>
 				<th class="info"><h4 class="text-center">목표금액</h4></th>
-				<td><input type="text" name="targetPrice"
+				<td><input type="text" name="targetPrice" id = "targetPrice"
 					value="${requestScope.spvo.targetPrice }"></td>
 			</tr>
 		</table>

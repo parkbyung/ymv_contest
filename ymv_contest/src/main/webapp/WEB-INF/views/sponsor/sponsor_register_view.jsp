@@ -43,12 +43,47 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#sponsorForm").submit(function() {
+			if ($("#title").val() == "") {
+				alert("제목을 입력해주세요.");
+				return false;
+			}
+			else if ($("#fileName").val() == "") {
+				alert("파일을 첨부해주세요.");
+				return false;
+			}
+			else if ($("#datepicker1").val() == "") {
+				alert("시작날짜를 정해주세요.");
+				return false;
+			}
+			else if ($("#datepicker2").val() == "") {
+				alert("종료날짜를 정해주세요.");
+				return false;
+			}
+			else if ($("#content").val() == "") {
+				alert("상세 정보를 입력해주세요.");
+				return false;
+			}
+			else if ($("#targetPrice").val() == "") {
+				alert("목표금액을 설정해주세요.");
+				return false;
+			}
+			else if (isNaN($("#targetPrice").val()) == true ) {
+				alert("목표금액을 숫자로 입력해주세요.");
+				return false;
+			}
+		});
+	});
+	
+</script>
     <h3>
 		<p class="text-center">후원등록</p>
 		<br>
 	</h3>
 <div class="col-md-6 col-sm-offset-3">
-<form action="sponsor_register.ymv" enctype="multipart/form-data" method="post">
+<form action="sponsor_register.ymv" enctype="multipart/form-data" method="post" id ="sponsorForm">
 	<table class="table table-striped table-hover">
 				<tr>
 					<th class="info"><h4 class="text-center">제목</h4></th>
@@ -56,7 +91,7 @@ $(document).ready(function () {
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">파일업로드</h4></th>
-					<td><input type="file" name="fileName"></td>
+					<td><input type="file" name="fileName" id ="fileName"></td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">시작날짜</h4></th>
@@ -74,7 +109,7 @@ $(document).ready(function () {
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">목표금액</h4></th>
-					<td>$<input type="text" name="targetPrice"></td>
+					<td>$<input type="text" name="targetPrice" id="targetPrice"></td>
 				</tr>
 			</table>
 <div align="right">
