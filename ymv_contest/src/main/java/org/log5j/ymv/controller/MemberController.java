@@ -77,41 +77,7 @@ public class MemberController {
 	
 	//지윤 끝
 	
-	/**
-	 * 작성자 : 백지영
-	 * 내용 : checkVolunteerApplicant를 수행해 회원번호와 글번호에 해당하는 사람이 있다면 true를 없다면 false를 반환한다.
-	 * 				만약 false를 반환할 경우 registerVolunteerApplicant를 수행해 신청자리스트에 insert한다.
-	 * @param vsavo : 글번호와 회원번호를 같이 담아오기 위해 사용
-	 * @return boolean
-	 */
-	@RequestMapping("voluntary_register_applicant.ymv")
-	@ResponseBody
-	public boolean voluntaryRegisterApplicant(VoluntaryServiceApplicateVO vsavo){
-		boolean flag =  voluntaryServiceApplicateService.checkVolunteerApplicant(vsavo.getRecruitNo(), vsavo.getMemberNo());
-		if(flag==false){
-			voluntaryServiceApplicateService.registerVolunteerApplicant(vsavo);
-		}
-		return flag;
-	}
-	@RequestMapping(value="member_check_identityNo.ymv")
-	@NoLoginCheck
-	public ModelAndView memberCheckIdentityNo(String identityNo, String memberType){
-		ModelAndView mv = new ModelAndView();
-		System.out.println("12345");
-		System.out.println("identityNo는!"+identityNo);
-		int check=memberService.checkIdentityNo(identityNo);
-
-		System.out.println("check는!"+check);
-		if(check==1){
-			mv.addObject("check","NO");
-		}else{
-			mv.addObject("check","YES");
-		}
-		mv.addObject("identityNo", identityNo);
-		mv.addObject("memberType", memberType);
-		mv.setViewName("member_check_identityNo");
-		return mv;
-	}
+	
 	/**
 	 * 작성자 : 백지영
 	 * 내용 : 회원가입 폼이 있는 페이지로 넘겨준다.
