@@ -76,7 +76,7 @@ $(document).ready(function(){
 <div class="col-sm-8 col-sm-offset-2" align="center">
 <div class="panel panel-default">
   <div class="panel-body">
-		<table class="col-sm-8" style="width: 700px;">
+		<table class="col-sm-8" style="width: 650px;">
 		<tbody>
 			<tr>
 				<td ><p>NO : ${requestScope.rvo.recruitNo }</p></td>
@@ -107,7 +107,7 @@ $(document).ready(function(){
 			</tr>
 
 			<tr>
-				<td colspan="15"><pre>${requestScope.rvo.content}</pre></td>
+				<td colspan="10"><pre>${requestScope.rvo.content}</pre></td>
 			</tr>
 					<tr>
 						<td valign="middle" align="center" colspan="3"><a

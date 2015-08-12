@@ -106,7 +106,7 @@ $(document).ready(function () {
 			<table class="table table-striped table-hover">
 				<tr>
 					<th class="info"><h4 class="text-center">제목</h4></th>
-					<td><input type="text" name="title" id="title" size="40"></td>
+					<td><input type="text" name="title" id="title" size="70"></td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">분야</h4></th>
@@ -136,24 +136,19 @@ $(document).ready(function () {
 					</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 시작 기간</h4></th>
+					<th class="info"><h4 class="text-center">모집 시작/끝 기간</h4></th>
 					<td><input type="text" id="datepicker1" name="recruitingStart"
-						placeholder="모집 시작 기간">	</td>
+						placeholder="모집 시작 기간">&nbsp;&nbsp;  ~	&nbsp; &nbsp; <input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 기간">	</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 끝 기간</h4></th>
-					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 기간">						
-					</td></tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>
-					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간"> </td>
+					<th class="info"><h4 class="text-center">봉사 활동 시작/끝 기간</h4></th>
+					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간"> 
+					&nbsp;&nbsp;  ~	&nbsp; &nbsp;<input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간"> 
+					</td>
 				</tr>
+	
 				<tr>
-					<th class="info"><h4 class="text-center">봉사 활동 끝</h4></th>
-					<td><input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간">  </td>
-				</tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 시작 시간</h4></th>
+					<th class="info"><h4 class="text-center">봉사 시작/끝 시간</h4></th>
 					<td> 
 						<select id="volunteeringStartTime" name="volunteeringStartTime">
 							<!-- 한시간 단위로 하기 -->
@@ -177,12 +172,9 @@ $(document).ready(function () {
 							<option value="22:00">22:00</option>
 							<option value="23:00">23:00</option>
 							<option value="00:00">00:00</option>
-					</select></td>
-				</tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 끝 시간</h4></th>
-					<td>
-						<select id="volunteeringEndTime" name="volunteeringEndTime">
+					</select>
+					&nbsp;&nbsp;  ~	&nbsp; &nbsp; 
+					<select id="volunteeringEndTime" name="volunteeringEndTime">
 							<!-- 한시간 단위로 하기 -->
 							<option value="">-끝시간-</option>
 							<option value="06:00">06:00</option>
@@ -204,12 +196,12 @@ $(document).ready(function () {
 							<option value="22:00">22:00</option>
 							<option value="23:00">23:00</option>
 							<option value="00:00">00:00</option>
-					</select></td>
-				</tr>
-				
+					</select>
+					</td>
+				</tr>				
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>
-				<td><textarea rows="10" cols="50" id="content" name="content"></textarea></td>
+				<td><textarea rows="10" cols="80" id="content" name="content"></textarea></td>
 			</tr>
 		</table>
 			<br> <div class = "col-sm-2 col-sm-offset-10">
