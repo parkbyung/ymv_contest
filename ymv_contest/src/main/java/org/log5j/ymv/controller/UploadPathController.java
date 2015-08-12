@@ -3,7 +3,9 @@ package org.log5j.ymv.controller;
 import java.io.File;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.AuctionBoardVO;
 import org.log5j.ymv.model.board.NoticeBoardVO;
@@ -119,16 +121,25 @@ public class UploadPathController {
 	}
 	
 	@RequestMapping("upload_sponsor_path.ymv")
-	public String registerSponsorFilePath(SponsorVO spvo, PictureVO pvo) {
+	public String registerSponsorFilePath(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		PictureVO pvo=(PictureVO)request.getSession().getAttribute("pvo");
+		SponsorVO spvo=(SponsorVO)request.getSession().getAttribute("spvo");
+		String hidden = (String) request.getSession().getAttribute("hidden");
 		MultipartFile file = pvo.getFileName();
+		System.out.println("파일업로드 패쓰컨트롤ㄹ러");
+		System.out.println(spvo);
+		System.out.println(pvo);
 		ModelAndView mav = new ModelAndView();
 		String fileName = "[" + spvo.getBoardNo() + "]"
 				+ file.getOriginalFilename();
 		String filePath = "sponsorupload\\" + fileName;
 		pvo.setFilePath(filePath);
 		pvo.setPictureNo(spvo.getBoardNo());
+		System.out.println("다 잘되니? : "+pvo);
 		if (!fileName.equals("")) {
 			try {
+				System.out.println("file trnafer전");
 				file.transferTo(new File(sponsorPath + fileName));
 				System.out.println("PictureNo: " + pvo.getPictureNo()
 						+ " fileName: " + pvo.getFileName());
@@ -138,6 +149,10 @@ public class UploadPathController {
 				e.printStackTrace();
 			}
 		}
-		return "forward:sponsor_register_file.ymv";
+		System.out.println("if문 밖");
+		session.setAttribute("pvo", pvo);
+		if(hidden.equals("") || hidden=="" || hidden==null)
+			return "forward:sponsor_register_file.ymv";
+		return "forward:sponsor_update_file.ymv";
 	}
 }

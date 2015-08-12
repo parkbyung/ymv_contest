@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.PictureVO;
@@ -38,6 +40,8 @@ public class SponsorController {
 		List<PictureVO> pvo = sponsorService.findPictureList(pageNo);
 		for(int i = 0; i<lvo.getList().size(); i ++){
 			int compare = today.compareTo(((SponsorVO) lvo.getList().get(i)).getEndDate());
+			System.out.println(compare);
+			System.out.println(today);
 			if(compare > 0){
 				((SponsorVO) lvo.getList().get(i)).setHoowon("후원완료");
 			}else if(compare < 0){
@@ -67,10 +71,12 @@ public class SponsorController {
 	 * @return
 	 */
 	@RequestMapping("sponsor_register.ymv")
-	public String sponsorRegister(SponsorVO spvo, PictureVO pvo) {
+	public String sponsorRegister(SponsorVO spvo, PictureVO pvo, HttpServletRequest request) {
 		sponsorService.registerSponsor(spvo);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("spvo", spvo).addObject("pvo",pvo);
+		spvo = sponsorService.findSponsorByBoardNo(spvo.getBoardNo());
+		HttpSession session=request.getSession(false);
+		session.setAttribute("spvo", spvo);
+		session.setAttribute("pvo", pvo);
 		return "forward:upload_sponsor_path.ymv";
 	}
 	/**
@@ -94,11 +100,31 @@ public class SponsorController {
 	 * @return
 	 */
 	@RequestMapping("sponsor_update.ymv")
-	public String updateSponsor(SponsorVO spvo, PictureVO pvo) {
+	public String updateSponsor(SponsorVO spvo, PictureVO pvo,HttpServletRequest request) {
 		sponsorService.updateSponsorByBoardNo(spvo);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("spvo", spvo).addObject("pvo",pvo);
+		spvo = sponsorService.findSponsorByBoardNo(spvo.getBoardNo());
+		HttpSession session=request.getSession(false);
+		session.setAttribute("spvo", spvo);
+		session.setAttribute("pvo", pvo);
+		session.setAttribute("hidden", "update");
+		//String ispicture =request.getParameter("ispicture");
+		//System.out.println(ispicture+"널일까요?");
+		//System.out.println(pvo.getFileName());
 		return "forward:upload_sponsor_path.ymv";
+	}
+	/**
+	 * 
+	 * 작성자 : 박병준
+	 * 내용 : 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("sponsor_update_file.ymv")
+	public ModelAndView sponsorUpdate(HttpServletRequest request) {
+		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
+		System.out.println("사진등록"+pvo);
+		sponsorService.updatePicture(pvo);
+		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
 	/**
 	 * 
@@ -108,7 +134,9 @@ public class SponsorController {
 	 * @return
 	 */
 	@RequestMapping("sponsor_register_file.ymv")
-	public ModelAndView memberProfileUpdate(PictureVO pvo) {
+	public ModelAndView sponsorRegister(HttpServletRequest request) {
+		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
+		System.out.println("사진등록"+pvo);
 		sponsorService.registerPicture(pvo);
 		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
@@ -121,9 +149,10 @@ public class SponsorController {
 	 */
 	@RequestMapping("sponsor_delete.ymv")
 	public ModelAndView deleteSponsorByBoardNo(SponsorVO spvo) {
+		System.out.println(spvo);
 		sponsorService.deleteSponsorByBoardNo(spvo.getBoardNo());
 		sponsorService.deletePicture(spvo.getBoardNo());
-		return new ModelAndView("redirect:sponsor_board_admin.ymv");
+		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
 	/**
 	 * 
