@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.QnABoardService;
 import org.log5j.ymv.model.board.QnABoardVO;
+import org.log5j.ymv.model.board.RecruitBoardVO;
 import org.log5j.ymv.model.cookie.CookieService;
 import org.log5j.ymv.model.member.MemberVO;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,15 @@ public class QnABoardController {
 	@NoLoginCheck
 	public ModelAndView qnaBoard(String pageNo) {	
 		ListVO lvo=qnABoardService.findQnABoardList(pageNo);
+		for(int i = 0; i<lvo.getList().size(); i ++){
+		QnABoardVO qnABoardVO=(QnABoardVO) lvo.getList().get(i);
+		int compare=qnABoardService.checkReply(qnABoardVO.getQnaNo());
+		if(compare==1){
+			((QnABoardVO)lvo.getList().get(i)).setAnswer("답변완료");
+		}else{
+			((QnABoardVO)lvo.getList().get(i)).setAnswer("답변중");
+			}
+		 }
 		return new ModelAndView("qna_board","lvo",lvo);
 	}
 /**
