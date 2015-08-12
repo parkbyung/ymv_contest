@@ -45,9 +45,9 @@ $("#modalBtn").click(function(){
                         	  $(data.list).each(function(index,list){
                         		  if(date.DATE_LIST==list.checkDate){
                         			  if(list.mojib=='모집중'){
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruiting.jpg'></td><td><a href='${initParam.root}voluntary_show_content.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
                         			  }else{
-                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content_recruit_vol_type.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
+                            			  modalInfo +="<tr><td>"+list.recruitNo+"</td><td><img src='${initParam.root}img/recruitfin.jpg'></td><td><a href='${initParam.root}voluntary_show_content.ymv?recruitNo="+list.recruitNo+"'>"+list.title+"</a></td><td>"+list.field+"</td><td>"+list.location+"</td><td>"+list.volunteeringStartTime+"&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;"+list.volunteeringEndTime+"</td><td>"+list.volunteeringStartDate+"</td><td>"+list.volunteeringEndDate+"</td></tr>";
                         			  }
                         		  }
                         	  });//each2
