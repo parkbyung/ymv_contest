@@ -21,8 +21,12 @@
 				return false;
 			}
 			if ($("#fileName").val() == "") {
-				alert("사진을 첨부해주세요.");
-				return false;
+				if (confirm("파일을 첨부하지 않으십니까?") == true) {
+					$("#hidden").val("2");
+					location.href = "sponsor_update.ymv";
+				} else {
+					return false;			
+				}
 			}
 		});
 	});
@@ -112,5 +116,6 @@ $(document).ready(function () {
 			<input type="submit" class="btn btn-primary" value="수정">
 			<input type="button" class="btn btn-primary" value="삭제" id="deleteBtn">
 			<input type="hidden" name="boardNo" value="${requestScope.spvo.boardNo}">
+			<input type="hidden" name = "hidden" id = "hidden" value = "1">
 	</form>
 </div>

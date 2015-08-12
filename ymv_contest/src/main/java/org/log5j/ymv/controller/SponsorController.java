@@ -100,16 +100,21 @@ public class SponsorController {
 	 * @return
 	 */
 	@RequestMapping("sponsor_update.ymv")
-	public String updateSponsor(SponsorVO spvo, PictureVO pvo,HttpServletRequest request) {
+	public String updateSponsor(SponsorVO spvo, PictureVO pvo,HttpServletRequest request,String hidden) {
 		sponsorService.updateSponsorByBoardNo(spvo);
 		spvo = sponsorService.findSponsorByBoardNo(spvo.getBoardNo());
 		HttpSession session=request.getSession(false);
+		System.out.println(hidden);
+		int hid = Integer.parseInt(hidden);
 		session.setAttribute("spvo", spvo);
 		session.setAttribute("pvo", pvo);
 		session.setAttribute("hidden", "update");
 		//String ispicture =request.getParameter("ispicture");
 		//System.out.println(ispicture+"널일까요?");
 		//System.out.println(pvo.getFileName());
+		if(hid==2){
+			return "redirect:sponsor_board.ymv";
+		}
 		return "forward:upload_sponsor_path.ymv";
 	}
 	/**
