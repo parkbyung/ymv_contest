@@ -38,10 +38,9 @@ public class SponsorController {
 		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		ListVO lvo = sponsorService.findSponsorList(pageNo);
 		List<PictureVO> pvo = sponsorService.findPictureList(pageNo);
+		System.out.println(pvo);
 		for(int i = 0; i<lvo.getList().size(); i ++){
 			int compare = today.compareTo(((SponsorVO) lvo.getList().get(i)).getEndDate());
-			System.out.println(compare);
-			System.out.println(today);
 			if(compare > 0){
 				((SponsorVO) lvo.getList().get(i)).setHoowon("후원완료");
 			}else if(compare < 0){
@@ -77,6 +76,7 @@ public class SponsorController {
 		HttpSession session=request.getSession(false);
 		session.setAttribute("spvo", spvo);
 		session.setAttribute("pvo", pvo);
+		session.setAttribute("hidden", "register");
 		return "forward:upload_sponsor_path.ymv";
 	}
 	/**
@@ -104,7 +104,6 @@ public class SponsorController {
 		sponsorService.updateSponsorByBoardNo(spvo);
 		spvo = sponsorService.findSponsorByBoardNo(spvo.getBoardNo());
 		HttpSession session=request.getSession(false);
-		System.out.println(hidden);
 		int hid = Integer.parseInt(hidden);
 		session.setAttribute("spvo", spvo);
 		session.setAttribute("pvo", pvo);
@@ -127,7 +126,6 @@ public class SponsorController {
 	@RequestMapping("sponsor_update_file.ymv")
 	public ModelAndView sponsorUpdate(HttpServletRequest request) {
 		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
-		System.out.println("사진등록"+pvo);
 		sponsorService.updatePicture(pvo);
 		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
@@ -141,7 +139,6 @@ public class SponsorController {
 	@RequestMapping("sponsor_register_file.ymv")
 	public ModelAndView sponsorRegister(HttpServletRequest request) {
 		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
-		System.out.println("사진등록"+pvo);
 		sponsorService.registerPicture(pvo);
 		return new ModelAndView("redirect:sponsor_board.ymv");
 	}
@@ -154,7 +151,6 @@ public class SponsorController {
 	 */
 	@RequestMapping("sponsor_delete.ymv")
 	public ModelAndView deleteSponsorByBoardNo(SponsorVO spvo) {
-		System.out.println(spvo);
 		sponsorService.deleteSponsorByBoardNo(spvo.getBoardNo());
 		sponsorService.deletePicture(spvo.getBoardNo());
 		return new ModelAndView("redirect:sponsor_board.ymv");

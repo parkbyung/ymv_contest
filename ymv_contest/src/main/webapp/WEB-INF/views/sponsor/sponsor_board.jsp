@@ -44,11 +44,6 @@ $(document).ready(function(){
 								</c:if>
 							</c:forEach>
 							<c:choose>
-							<c:when test="${sponsor.hoowon=='후원예정'}">
-									<h3>
-										후원예정${sponsor.title}<br>
-									</h3>
-								</c:when>
 								<c:when test="${sponsor.hoowon=='후원중'}">
 									<h3>
 										<img src="${initParam.root}img/hj1.jpg">
@@ -76,16 +71,6 @@ $(document).ready(function(){
 									${sponsor.percentage}%</div>
 							</div>
 							<div>
-								<c:choose>
-									<c:when test="${sponsor.hoowon=='후원완료'}">
-
-									</c:when>
-									<c:otherwise>
-										
-									</c:otherwise>
-
-								</c:choose>
-
 							</div>
 						</div>
 					</div>
@@ -112,11 +97,6 @@ $(document).ready(function(){
 								</c:if>
 							</c:forEach>
 							<c:choose>
-								<c:when test="${sponsor.hoowon=='후원예정'}">
-									<h3>
-										후원예정<br>
-									</h3>
-									</c:when>
 								<c:when test="${sponsor.hoowon=='후원중'}">
 									<h3>
 										<img src="${initParam.root}img/hj1.jpg">
