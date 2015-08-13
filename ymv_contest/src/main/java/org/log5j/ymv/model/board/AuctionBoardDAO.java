@@ -26,4 +26,7 @@ public interface AuctionBoardDAO {
 	void updateHit(int boardNo);
 
 	void updateCurrentPrice(AuctionBoardVO abvo);
+
+	void updatePrice(int boardNo);
+
 }

@@ -1,6 +1,5 @@
 package org.log5j.ymv.model.board;
 
-import java.util.List;
 
 public interface AuctionBoardService {
 	AuctionBoardVO findByAuctionNO(AuctionBoardVO vo);
@@ -15,5 +14,6 @@ public interface AuctionBoardService {
 	AuctionBoardVO getPostingByNoticeBoardNoUpdateHit(int boardNo);
 	void updateCurrentPrice(AuctionBoardVO abvo);
 	AuctionBoardVO setDate(AuctionBoardVO abvo);
+	int updatePrice(AuctionBoardVO auvo);
 	
 }

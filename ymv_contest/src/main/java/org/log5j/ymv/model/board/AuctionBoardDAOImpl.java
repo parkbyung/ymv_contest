@@ -85,6 +85,13 @@ public void updateCurrentPrice(AuctionBoardVO abvo) {
 	sqlSessionTemplate.update("auctionBoard.updateCurrentPrice",abvo);
 }
 
+@Override
+public void updatePrice(int boardNo) {
+	sqlSessionTemplate.update("auctionBoard.updatePrice",boardNo);
+	
+}
+
+
 }
 
 

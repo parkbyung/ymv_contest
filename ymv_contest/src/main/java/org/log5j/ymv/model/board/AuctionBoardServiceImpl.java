@@ -85,6 +85,18 @@ public AuctionBoardVO setDate(AuctionBoardVO abvo) {
       return abvo;
    }
 
+@Override
+public int updatePrice(AuctionBoardVO auvo) {
+	auctionBoardDAO.updateCurrentPrice(auvo);
+	auctionBoardDAO.findAuctionBoardByBoardNo(auvo.getBoardNo());
+	int NewPrice = auvo.getCurrentPrice();
+	return NewPrice;
+}
+
+
+
+
+
 }
 
 

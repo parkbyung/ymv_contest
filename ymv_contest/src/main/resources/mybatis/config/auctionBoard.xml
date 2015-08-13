@@ -4,60 +4,70 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="auctionBoard">
+ 
     <resultMap type="abvo" id="boardRM">      
       <result property="boardNo" column="board_no"/> 
       <result property="timePosted" column="time_posted"/>
       <result property="firstPrice" column="first_price"/>
       <result property="currentPrice" column="current_price"/>
       <result property="endDate" column="end_date"/>
-      <result property="endTime" column="end_time"/>
-   </resultMap>
+    </resultMap>
  
     <select id="findByAuctionNo" parameterType="int" resultType="abvo">
        select * from Auction_board where board_no=#{value}
     </select>
+    
     <select id="findBoardList" resultMap="boardRM" parameterType="int">
- select board_no, title, content,article, to_char(time_posted,'YYYY-MM-DD') as time_posted,first_price,current_price,end_date, hit 
+ 		select board_no, title, content,article, to_char(time_posted,'YYYY-MM-DD') as time_posted,first_price,current_price,end_date, hit 
        from(select board_no,title,content,article,time_posted,first_price,current_price,end_date,hit, CEIL(rownum/5) AS page 
        from(select board_no, title, content,article, time_posted ,first_price ,current_price , end_date,hit from Auction_board order by board_no desc))
-       where page=#{value} </select>
-           <select id="totalContent" resultType="int">
+       where page=#{value} 
+     </select>
+     
+     <select id="totalContent" resultType="int">
        select count(*) from Auction_board
-    </select>
+     </select>
+    
    <select id="findAuctionBoardByBoardNo" resultMap="boardRM" resultType="abvo">   
       select board_no, title, content, article, to_char(time_posted,'YYYY-MM-DD') as time_posted, first_price, current_price, end_date, hit from auction_board where board_no=#{value}
    </select>
-   <resultMap type="cmvo" id="commentRM">
-      <result property="timePosted" column="time_posted"/>
-      <result property="boardNo" column="board_no"/>
-   </resultMap>
+   
+   
    <update id="auctionBoardUpdate" parameterType="abvo">
       update auction_board set title=#{title}, content=#{content}, article=#{article},first_price=#{firstPrice},end_date=#{endDate} where board_no=#{boardNo}
    </update>
+   
    <delete id="auctionBoardDelete" parameterType="int">
       delete from auction_board where board_no=#{value}
    </delete>
+   
    <insert id="registerAuctionBoard" parameterType="abvo">
       <selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
          select ymv_seq.nextval from dual
       </selectKey>  
-        insert into Auction_board(board_no,title,content,article,time_posted,first_price,current_price,end_date)  values(#{boardNo}, #{title}, #{content}, #{article},sysdate, #{firstPrice}, #{firstPrice}, #{endDate})
+        insert into Auction_board(board_no,title,content,article,time_posted,first_price,current_price,end_date) values(#{boardNo}, #{title}, #{content}, #{article}, sysdate, #{firstPrice}, 0, #{endDate})
    </insert>
+   
    <insert id="registerPicture" parameterType="pvo">
       insert into PICTURE(picture_no, file_path) values(#{pictureNo},#{filePath})
    </insert>
+   
    <select id="findPicture" parameterType="int" resultType="pvo">
       select picture_no as pictureNo, file_path as filePath from picture where picture_no=#{value}
    </select>
+   
    <delete id="deletePicture" parameterType="int">
       delete from picture where picture_no=#{value}
    </delete>
-   <update id="updateHit" parameterType="int">
+   
+    <update id="updateHit" parameterType="int">
        update board set hit = hit+1 where board_no=#{value}
     </update>
+    
     <update id="updateCurrentPrice">
     	update auction_board set current_price=#{currentPrice} where board_no=#{boardNo}
     </update>
+    
  </mapper>
  
  
