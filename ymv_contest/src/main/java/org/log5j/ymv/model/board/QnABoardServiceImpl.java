@@ -59,4 +59,9 @@ public class QnABoardServiceImpl implements QnABoardService {
 		qnABoardDAO.updateHit(qnaNo);
 		return qnABoardDAO.findQnABoardByQnANo(qnaNo);
 	}
+	
+	@Override
+	public int checkReply(int qnaNo){
+		return qnABoardDAO.checkReply(qnaNo);
+	}
 }

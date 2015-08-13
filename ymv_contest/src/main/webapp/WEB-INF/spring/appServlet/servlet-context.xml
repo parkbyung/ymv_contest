@@ -82,7 +82,7 @@ class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 </bean>
 <bean id="uploadSponsorPath" class="java.lang.String" >
 	<constructor-arg>
-		<value>C:\\Users\\Park_BJ\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\sponsorupload\\</value>
+		<value>C:\\Users\\Park\\git\\ymv_contest\\ymv_contest\\src\\main\\webapp\\sponsorupload\\</value>
 	</constructor-arg>
 </bean>
 

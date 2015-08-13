@@ -3,7 +3,9 @@ package org.log5j.ymv.controller;
 import java.io.File;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.AuctionBoardVO;
 import org.log5j.ymv.model.board.NoticeBoardVO;
@@ -119,7 +121,11 @@ public class UploadPathController {
 	}
 	
 	@RequestMapping("upload_sponsor_path.ymv")
-	public String registerSponsorFilePath(SponsorVO spvo, PictureVO pvo) {
+	public String registerSponsorFilePath(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		PictureVO pvo=(PictureVO)request.getSession().getAttribute("pvo");
+		SponsorVO spvo=(SponsorVO)request.getSession().getAttribute("spvo");
+		String hidden = (String) request.getSession().getAttribute("hidden");
 		MultipartFile file = pvo.getFileName();
 		ModelAndView mav = new ModelAndView();
 		String fileName = "[" + spvo.getBoardNo() + "]"
@@ -130,14 +136,15 @@ public class UploadPathController {
 		if (!fileName.equals("")) {
 			try {
 				file.transferTo(new File(sponsorPath + fileName));
-				System.out.println("PictureNo: " + pvo.getPictureNo()
-						+ " fileName: " + pvo.getFileName());
-				System.out.println("fileupload ok:" + fileName);
 				mav.addObject("pvo", pvo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return "forward:sponsor_register_file.ymv";
+		session.setAttribute("pvo", pvo);
+		if(hidden.equals("register")){
+			return "forward:sponsor_register_file.ymv";
+		}
+		return "forward:sponsor_update_file.ymv";
 	}
 }

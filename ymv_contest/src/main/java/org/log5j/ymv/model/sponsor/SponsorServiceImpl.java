@@ -68,4 +68,9 @@ public class SponsorServiceImpl implements SponsorService {
 		List<PictureVO> pvo=sponsorDAO.findPictureList(Integer.parseInt(pageNo));
 		return pvo;
 	}
+
+	@Override
+	public void updatePicture(PictureVO pvo) {
+		sponsorDAO.updatePicture(pvo);
+	}
 }

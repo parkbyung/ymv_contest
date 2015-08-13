@@ -85,6 +85,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.findMemberByMemberNo(memberNo);
 	}
 
-	
+	@Override
+	public int checkIdentityNo(String identityNo){
+		return memberDAO.checkIdentityNo(identityNo);
+	}
 	
 }

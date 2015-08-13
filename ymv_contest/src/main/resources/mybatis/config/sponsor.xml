@@ -39,6 +39,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <insert id="registerPicture" parameterType="pvo">
 	insert into PICTURE(picture_no, file_path) values(#{pictureNo},#{filePath})
 </insert>
+ <update id="updatePicture" parameterType="pvo">
+ 	update PICTURE set file_path=#{filePath} where picture_no=#{pictureNo}
+ </update>
 <select id="findPictureList" parameterType="int" resultType="pvo">
 	select picture_no as pictureNo, file_path as filePath 
 	from picture p,(select board_no,ceil(rownum/3) as page from(select * from sponsor order by board_no desc)) s

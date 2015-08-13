@@ -27,6 +27,8 @@ public interface SponsorDAO {
 
 	public abstract List<PictureVO> findPictureList(int parseInt);
 
+	public abstract void updatePicture(PictureVO pvo);
+
 
 
 }

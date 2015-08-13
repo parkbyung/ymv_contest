@@ -26,4 +26,6 @@ public interface SponsorService {
 
 	public abstract List<PictureVO> findPictureList(String pageNo);
 
+	public abstract void updatePicture(PictureVO pvo);
+
 }

@@ -94,4 +94,9 @@ public class QnABoardDAOImpl implements QnABoardDAO {
 		sqlSessionTemplate.update("qnaBoard.updateHit",qnaNo);
 		
 	}
+	
+	@Override
+	public int checkReply(int qnaNo){
+		return sqlSessionTemplate.selectOne("qnaBoard.checkReply",qnaNo);
+	}
 }

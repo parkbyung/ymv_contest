@@ -106,7 +106,7 @@ $(document).ready(function () {
 			<table class="table table-striped table-hover">
 				<tr>
 					<th class="info"><h4 class="text-center">제목</h4></th>
-					<td><input type="text" name="title" id="title" size="40"></td>
+					<td><input type="text" name="title" id="title" size="70"></td>
 				</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">분야</h4></th>
@@ -136,33 +136,72 @@ $(document).ready(function () {
 					</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 시작 기간</h4></th>
+					<th class="info"><h4 class="text-center">모집 시작/끝 기간</h4></th>
 					<td><input type="text" id="datepicker1" name="recruitingStart"
-						placeholder="모집 시작 기간">	</td>
+						placeholder="모집 시작 기간">&nbsp;&nbsp;  ~	&nbsp; &nbsp; <input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 기간">	</td>
 				</tr>
 				<tr>
-					<th class="info"><h4 class="text-center">모집 끝 기간</h4></th>
-					<td><input type="text" id="datepicker2" name="recruitingEnd" placeholder="모집 종료 기간">						
-					</td></tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 활동 시작</h4></th>
-					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간"> </td>
+					<th class="info"><h4 class="text-center">봉사 활동 시작/끝 기간</h4></th>
+					<td><input type="text" id="datepicker3" name="volunteeringStartDate" placeholder="봉사 시작 기간"> 
+					&nbsp;&nbsp;  ~	&nbsp; &nbsp;<input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간"> 
+					</td>
 				</tr>
+	
 				<tr>
-					<th class="info"><h4 class="text-center">봉사 활동 끝</h4></th>
-					<td><input type="text" id="datepicker4" name="volunteeringEndDate" placeholder="봉사 종료 기간">  </td>
-				</tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 시작 시간</h4></th>
-					<td><input type="text" name="volunteeringStartTime" placeholder="봉사 시작 기간"> </td>
-				</tr>
-				<tr>
-					<th class="info"><h4 class="text-center">봉사 끝 시간</h4></th>
-					<td><input type="text" name="volunteeringEndTime" placeholder="봉사 종료 기간">  </td>
-				</tr>
+					<th class="info"><h4 class="text-center">봉사 시작/끝 시간</h4></th>
+					<td> 
+						<select id="volunteeringStartTime" name="volunteeringStartTime">
+							<!-- 한시간 단위로 하기 -->
+							<option value="">-시작시간-</option>
+							<option value="06:00">06:00</option>
+							<option value="07:00">07:00</option>
+							<option value="08:00">08:00</option>
+							<option value="09:00">09:00</option>
+							<option value="10:00">10:00</option>
+							<option value="11:00">11:00</option>
+							<option value="12:00">12:00</option>
+							<option value="13:00">13:00</option>
+							<option value="14:00">14:00</option>
+							<option value="15:00">15:00</option>
+							<option value="16:00">16:00</option>
+							<option value="17:00">17:00</option>
+							<option value="18:00">18:00</option>
+							<option value="19:00">19:00</option>
+							<option value="20:00">20:00</option>
+							<option value="21:00">21:00</option>
+							<option value="22:00">22:00</option>
+							<option value="23:00">23:00</option>
+							<option value="00:00">00:00</option>
+					</select>
+					&nbsp;&nbsp;  ~	&nbsp; &nbsp; 
+					<select id="volunteeringEndTime" name="volunteeringEndTime">
+							<!-- 한시간 단위로 하기 -->
+							<option value="">-끝시간-</option>
+							<option value="06:00">06:00</option>
+							<option value="07:00">07:00</option>
+							<option value="08:00">08:00</option>
+							<option value="09:00">09:00</option>
+							<option value="10:00">10:00</option>
+							<option value="11:00">11:00</option>
+							<option value="12:00">12:00</option>
+							<option value="13:00">13:00</option>
+							<option value="14:00">14:00</option>
+							<option value="15:00">15:00</option>
+							<option value="16:00">16:00</option>
+							<option value="17:00">17:00</option>
+							<option value="18:00">18:00</option>
+							<option value="19:00">19:00</option>
+							<option value="20:00">20:00</option>
+							<option value="21:00">21:00</option>
+							<option value="22:00">22:00</option>
+							<option value="23:00">23:00</option>
+							<option value="00:00">00:00</option>
+					</select>
+					</td>
+				</tr>				
 			<tr>
 				<th class="info"><h4 class="text-center">상세정보</h4></th>
-				<td><textarea rows="10" cols="50" id="content" name="content"></textarea></td>
+				<td><textarea rows="10" cols="80" id="content" name="content"></textarea></td>
 			</tr>
 		</table>
 			<br> <div class = "col-sm-2 col-sm-offset-10">

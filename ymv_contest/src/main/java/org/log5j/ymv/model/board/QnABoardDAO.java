@@ -23,4 +23,6 @@ public interface QnABoardDAO {
 	public void findQnABoardByQnaNoNotHit(int qnaNo);
 
 	public void updateHit(int qnaNo);
+	
+	public int checkReply(int qnaNo);
 }

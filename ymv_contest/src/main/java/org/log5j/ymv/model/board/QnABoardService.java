@@ -18,4 +18,6 @@ public interface QnABoardService {
 
 	public QnABoardVO findQnABoardByQnaNoUpdateHit(int qnaNo);
 
+	public int checkReply(int qnaNo);
+
 }

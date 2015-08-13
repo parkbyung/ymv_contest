@@ -67,7 +67,7 @@
             <li><a href="${initParam.root }review_board.ymv">봉사 후기</a></li>
             <li><a href="${initParam.root }notice_board.ymv">공지 사항</a></li>
             <li><a href="${initParam.root }qna_board.ymv">Q & A</a></li>
-            <li><a href="${initParam.root }sponsor_board_admin.ymv">후원 게시판</a></li>
+            <li><a href="${initParam.root }sponsor_board.ymv">후원 게시판</a></li>
             <li><a href="${initParam.root }sponsor_register_view.ymv">후원 등록하기</a></li>
             <li><a href="${initParam.root }auction_board.ymv">나눔 활동</a></li>  
           </ul>

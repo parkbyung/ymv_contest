@@ -64,4 +64,9 @@ public class SponsorDAOImpl implements SponsorDAO {
 	public List<PictureVO> findPictureList(int pageNo) {
 		return sqlSessionTemplate.selectList("sponsor.findPictureList",pageNo);
 	}
+
+	@Override
+	public void updatePicture(PictureVO pvo) {
+		sqlSessionTemplate.update("sponsor.updatePicture",pvo);
+	}
 }

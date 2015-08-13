@@ -52,4 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findMemberByMemberNo" resultType="membervo" resultMap="memberRM">
 	 	select * from member where member_no=#{value}
 	</select>
+	
+	<select id="checkIdentityNo" resultType="int">
+		select count(*) from member where identity_no=#{value}
+	</select>
  </mapper> 

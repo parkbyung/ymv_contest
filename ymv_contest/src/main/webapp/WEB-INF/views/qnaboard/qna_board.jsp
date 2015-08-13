@@ -6,16 +6,18 @@
 		<p class="text-center">Q & A</p>
 	</h3>
 	<table class="table table-striped table-hover">
-		<%-- <colgroup>
+		<colgroup>
 			<col style="width: 5%;" />
-			<col style="width: 35%;" />
 			<col style="width: 10%;" />
-			<col style="width: 25%;" />
-			<col style="width: 5%;" />
-		</colgroup> --%>
+			<col style="width: 30%;" />
+			<col style="width: 10%;" />
+			<col style="width: 15%;" />
+			<col style="width: 10%;" />
+		</colgroup>
 		<thead>
 			<tr>
 				<th class="qnaNo">NO</th>
+				<th scope="col">답변상태</th>
 				<th class="title">제목</th>
 				<th class="writer">작성자</th>
 				<th class="timePosted">작성일</th>
@@ -26,10 +28,25 @@
 			<c:forEach var="lvo" items="${requestScope.lvo.list}">
 				<tr>
 					<td>${lvo.qnaNo }</td>
+					<c:choose>
+							<c:when test="${lvo.relevel==0}">
+							<c:choose>
+								<c:when test="${lvo.answer=='답변중'}">
+									<td><img src="${initParam.root}img/answer_not.jpg"></td>
+								</c:when>
+								<c:otherwise>
+									<td><img src="${initParam.root}img/answer_ok.jpg"></td>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<td>&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;</td>
+						</c:otherwise>
+					</c:choose>
+					
 					<%-- lvo에 relevel이 0이 아니면 답변글이므로 relevel만큼 공백으로 제목을 밀어준다  --%>
 					<td class="titleView">
-						<%--admin일때만 답변하는 버튼이 나오게 하기!!@아직안함! --%> <c:if
-							test="${lvo.relevel!=0}">
+					<c:if	test="${lvo.relevel!=0}">
 							<c:forEach begin="0" end="${lvo.relevel}" step="1">&nbsp;&nbsp;</c:forEach>
 							<img src="${initParam.root }/img/reply.jpg">
 						</c:if> <a href="${initParam.root}qna_showContent.ymv?qnaNo=${lvo.qnaNo}">
