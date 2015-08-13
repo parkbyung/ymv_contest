@@ -3,13 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 $(document).ready(function(){      
-    $("#updateCancelBtn").click(function() {
-    	if(confirm("취소하시겠습니까?")==true){
-			location.href="auction_board.ymv";
-		}else{
-			return;
-		}
-	});    
 		$("#auctionForm").submit(function() {
 			if ($("#title").val() == "") {
 				alert("제목을 입력해주세요");
@@ -63,8 +56,7 @@ $(document).ready(function(){
 
 <div class="col-md-6 col-sm-offset-3">
 		<h2>글 수정</h2>
-		<form id="auctionForm"
-			action="auction_board_update.ymv?memberNo=${sessionScope.mvo.memberNo }" method="post">
+		<form id="auctionForm" action="auction_board_update.ymv?memberNo=${sessionScope.mvo.memberNo }" method="post">
 			<table class="table table-striped table-hover">
 				 <tr>
                <th class="info"><h4 class="text-center">제목</h4></th>
@@ -79,43 +71,20 @@ $(document).ready(function(){
                <td><input type="text" name="article" id="article" value="${requestScope.abvo.article }"></td>
                </tr>
 				<tr>
-					<th class="info"><h4 class="text-center">입찰시작가</h4></th>
+					<th class="info"><h4 class="text-center">시작가격</h4></th>
 					<td><input type="text" name="firstPrice" id="firstPrice" value="${requestScope.abvo.firstPrice}"></td>
 					</tr>
 				<tr>
-					<th class="info"><h4 class="text-center" >끝시간</h4></th>
-					<td><input type="text" id="datepicker2" name="endDate" placeholder="종료날짜"  value="${requestScope.abvo.endDate}">
-						<select id="endTime" name="endTime">
-							<!-- 한시간 단위로 하기 -->
-							<option value="">-끝시간-</option>
-							<option value="06:00">06:00</option>
-							<option value="07:00">07:00</option>
-							<option value="08:00">08:00</option>
-							<option value="09:00">09:00</option>
-							<option value="10:00">10:00</option>
-							<option value="11:00">11:00</option>
-							<option value="12:00">12:00</option>
-							<option value="13:00">13:00</option>
-							<option value="14:00">14:00</option>
-							<option value="15:00">15:00</option>
-							<option value="16:00">16:00</option>
-							<option value="17:00">17:00</option>
-							<option value="18:00">18:00</option>
-							<option value="19:00">19:00</option>
-							<option value="20:00">20:00</option>
-							<option value="21:00">21:00</option>
-							<option value="22:00">22:00</option>
-							<option value="23:00">23:00</option>
-							<option value="00:00">00:00</option>
-					</select></td>
-				</tr>
+               		<th class="info"><h4 class="text-center">마감일</h4></th>
+               		<td><input type="text" id="datepicker2" name="endDate" value="${requestScope.abvo.endDate}"></td>
+            	</tr>
 				<tr>
 					<th class="info"><h4 class="text-center">상세정보</h4></th>
 					<td><textarea rows="10" cols="50" id="content" name="content">${requestScope.abvo.content }</textarea></td>
 				</tr>
 			</table>
 			<br> <div class = "col-sm-2 col-sm-offset-10">
-			<input type="submit" class = "btn btn-primary"value="글 등록"><br><br></div>		
+			<input type="submit" class = "btn btn-primary"value="글 수정"><br><br></div>		
 			<input type="hidden" name="boardNo" value="${requestScope.abvo.boardNo }">
 		</form>
 	</div>

@@ -5,16 +5,19 @@
    $(document).ready(function() {
       $("#auctionForm").submit(function() {
          if ($("#title").val() == "") {
-            alert("제목을 입력해주세요");
+            alert("제목을 입력해 주세요");
             return false;
-         } else if ($("#article").val() == "") {
+         }else if ($("#article").val() == "") {
             alert("물품명을 입력해 주세요");
             return false;
          } else if ($("#firstPrice ").val() == "") {
-            alert("시작가를 입력해 주세요");
+            alert("시작가격을 입력해 주세요");
             return false;
-         } else if ($("#endTime").val() == "") {
-            alert("끝시간을 입력해 주세요");
+         } else if (isNaN($("#firstPrice ").val())) {
+             alert("가격은 숫자만 입력해 주세요");
+             return false;
+         } else if ($("#datepicker2").val() == "") {
+            alert("마감일을 입력해 주세요");
             return false;
          } else if ($("#content").val() == "") {
             alert("상세정보를 입력해 주세요");
@@ -59,44 +62,21 @@
                <th class="info"><h4 class="text-center">제목</h4></th>
                <td><input type="text" name="title" id="title"></td>
             </tr>
-         <tr>
-               <th class="info"><h4 class="text-center">파일업로드</h4></th>
-               <td><input type="file" name="fileName"></td>
+         	<tr>
+               <th class="info"><h4 class="text-center">사진 업로드</h4></th>
+               <td><input type="file" name="fileName" ></td>
             </tr>
                <tr>
                <th class="info"><h4 class="text-center">물품명</h4></th>
                <td><input type="text" name="article" id="article"></td>
                </tr>
             <tr>
-               <th class="info"><h4 class="text-center">입찰시작가</h4></th>
+               <th class="info"><h4 class="text-center">시작가격</h4></th>
                <td><input type="text" name="firstPrice" id="firstPrice"></td>
                </tr>
             <tr>
-               <th class="info"><h4 class="text-center">끝시간</h4></th>
-               <td><input type="text" id="datepicker2" name="endDate" placeholder="종료날짜">
-                  <select id="endTime" name="endTime">
-                     <!-- 한시간 단위로 하기 -->
-                     <option value="">-끝시간-</option>
-                     <option value="06:00">06:00</option>
-                     <option value="07:00">07:00</option>
-                     <option value="08:00">08:00</option>
-                     <option value="09:00">09:00</option>
-                     <option value="10:00">10:00</option>
-                     <option value="11:00">11:00</option>
-                     <option value="12:00">12:00</option>
-                     <option value="13:00">13:00</option>
-                     <option value="14:00">14:00</option>
-                     <option value="15:00">15:00</option>
-                     <option value="16:00">16:00</option>
-                     <option value="17:00">17:00</option>
-                     <option value="18:00">18:00</option>
-                     <option value="19:00">19:00</option>
-                     <option value="20:00">20:00</option>
-                     <option value="21:00">21:00</option>
-                     <option value="22:00">22:00</option>
-                     <option value="23:00">23:00</option>
-                     <option value="00:00">00:00</option>
-               </select></td>
+               <th class="info"><h4 class="text-center">마감일</h4></th>
+               <td><input type="text" id="datepicker2" name="endDate" placeholder="종료날짜"></td>
             </tr>
             <tr>
                <th class="info"><h4 class="text-center">상세정보</h4></th>
@@ -104,6 +84,6 @@
             </tr>
          </table>
          <br> <div class = "col-sm-2 col-sm-offset-10">
-         <input type="submit" class = "btn btn-primary"value="글 등록"><br><br></div>
+         <input type="submit" class = "btn btn-primary" value="글 등록"><br><br></div>
       </form>
    </div>

@@ -2,9 +2,10 @@
 	isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="col-md-10 col-sm-offset-1">
-<h3 class="text-center">나눔활동</h3>
+	<h3>
+		<p class="text-center">나눔 활동</p>
+	</h3>
 	<table class="table table-striped table-hover">
-		<%--table 시작할때 colgroup으로 사이즈 조절  하단에서는 scope로 col 찍으면됨--%>
 		<colgroup>
 			<col style="width: 10%;" />
 			<col style="width: 40%;" />
@@ -22,14 +23,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="AuctionBoard" items="${requestScope.lvo.list}">
+			<c:forEach var="auvo" items="${requestScope.auvo.list}">
 				<tr>
-					<td>${AuctionBoard.boardNo}</td>
+					<td>${auvo.boardNo}</td>
 					<td><a
-						href="${initParam.root}auction_showContent.ymv?boardNo=${AuctionBoard.boardNo}">${AuctionBoard.title }</a></td>
-					<td>${AuctionBoard.timePosted }</td>
-					<td>${AuctionBoard.endDate }</td>
-					<td>${AuctionBoard.hit }</td>
+						href="${initParam.root}auction_showContent.ymv?boardNo=${auvo.boardNo}">${auvo.title }</a></td>
+					<td>${auvo.timePosted }</td>
+					<td>${auvo.endDate }</td>
+					<td>${auvo.hit }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -50,22 +51,22 @@
 	<div class="text-center">
 		<ul class="pagination">
 			<c:choose>
-				<c:when test="${requestScope.lvo.pagingBean.previousPageGroup}">
+				<c:when test="${requestScope.auvo.pagingBean.previousPageGroup}">
 					<li class="active"><a
-						href="auction_board.ymv?pageNo=${requestScope.lvo.pagingBean.
+						href="auction_board.ymv?pageNo=${requestScope.auvo.pagingBean.
     startPageOfPageGroup-1}">«</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a
-						href="auction_board.ymv?pageNo=${requestScope.lvo.pagingBean.
+						href="auction_board.ymv?pageNo=${requestScope.auvo.pagingBean.
     startPageOfPageGroup-1}">«</a></li>
 				</c:otherwise>
 			</c:choose>
 			<c:forEach var="i"
-				begin="${requestScope.lvo.pagingBean.startPageOfPageGroup}"
-				end="${requestScope.lvo.pagingBean.endPageOfPageGroup}">
+				begin="${requestScope.auvo.pagingBean.startPageOfPageGroup}"
+				end="${requestScope.auvo.pagingBean.endPageOfPageGroup}">
 				<c:choose>
-					<c:when test="${requestScope.lvo.pagingBean.nowPage!=i}">
+					<c:when test="${requestScope.auvo.pagingBean.nowPage!=i}">
 						<li><a href="auction_board.ymv?pageNo=${i}">${i}</a></li>
 					</c:when>
 					<c:otherwise>
@@ -74,24 +75,17 @@
 				</c:choose>
 			</c:forEach>
 			<c:choose>
-				<c:when test="${requestScope.lvo.pagingBean.nextPageGroup}">
+				<c:when test="${requestScope.auvo.pagingBean.nextPageGroup}">
 					<li class="active"><a
-						href="auction_board.ymv?pageNo=${requestScope.lvo.pagingBean.
+						href="auction_board.ymv?pageNo=${requestScope.auvo.pagingBean.
     endPageOfPageGroup+1}">»</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="disabled"><a
-						href="auction_board.ymv?pageNo=${requestScope.lvo.pagingBean.
+						href="auction_board.ymv?pageNo=${requestScope.auvo.pagingBean.
     endPageOfPageGroup+1}">»</a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>
 	</div>
 </div>
-
-
-
-
-
-
-

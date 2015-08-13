@@ -1,101 +1,124 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
-$(document).ready(function(){      
-      $("#deleteBtn").click(function() {
-         if (confirm("삭제하시겠습니까?")) {
-            location.href = "auction_board_delete.ymv?boardNo=" + ${requestScope.abvo.boardNo};
-         } else {
-            return;
-         }//if
-      });      //click 
-      $("#modifyBtn").click(function() {
-          if (confirm("수정하시겠습니까?")) {
-             location.href = "auction_board_update_view.ymv?boardNo=" + ${requestScope.abvo.boardNo};
-          } else {
-             return;
-          }//if
-       }); 
-      $("#auctionForm").submit(function() {
-         if ($("#currentPrice").val() == "") {
-            alert("금액을 입력해 주세요");
-            return false;
-         }else if (isNaN($("#currentPrice").val())) {
-            alert("금액을 숫자로 입력하세요");
-            return false;
-         }else   if (parseInt($("#currentPrice").val()) < parseInt("${requestScope.AuctionBoard.currentPrice}")) {
-                  alert("현재가보다 금액이 작습니다.");
-               return false;   
-            }        
-         }); //submit
-}); //ready
+	$(document).ready(function(){
+		
+		$("#auctionBtn").click(function(){
+			var auctionTable="";
+			if($("#auctionNewPrice").val()==null || $("#auctionNewPrice").val()=="" ){
+				alert("거래 금액을 입력해 주세요");
+				return;
+			}else if(isNaN($("#auctionNewPrice ").val())){
+				alert("가격은 숫자만 입력하실 수 있습니다.");
+				return;
+			}else if(parseFloat($("#auctionNewPrice ").val()) < parseFloat("${requestScope.auvo.currentPrice}")){
+				alert("현재가격보다 큰 금액을 입력해주세요.");
+				return;
+			}else{
+			$.ajax({
+				type:"get",
+				url:"auction_update_price.ymv",				
+				data:"boardNo=${requestScope.auvo.boardNo }&currentPrice="+$("#auctionNewPrice").val(),
+				dataType:"json", 
+				success:function(data){
+					alert("거래에 참여하셨습니다.");
+					$("#auctionNewPrice").val("");
+					auctionTable="<p>현재가격 : " + data  + " </p>";
+					$("#priceView1").html(auctionTable);
+					$("#priceView2").html(auctionTable);
+				}//success
+			});//ajax
+		
+			}
+		});//click
+		
+		$("#auctionReset").click(function(){
+			$("#auctionNewPrice").val("");
+		});//click
+		
+		$("#deleteBtn").click(function(){
+			if(confirm("삭제 하시겠습니까?")){
+				location.href="${initParam.root}auction_board_delete.ymv?boardNo=${requestScope.auvo.boardNo }";
+			}else{
+				
+			}
+		})
+		
+	});//document
+
+
 </script>
-<form id="auctionForm"  action="auction_update_currentPrice.ymv">
+
+
+<h3 align="center">나눔 활동 상세 글보기</h3>
    <div class="col-sm-8 col-sm-offset-2" align="center">
       <div class="panel panel-default">
          <div class="panel-body">
-            <table class="col-sm-8">
-               <tbody>
-                  <tr>
-                     <td>NO : ${requestScope.AuctionBoard.boardNo }</td>
-                     <td colspan="2">${requestScope.AuctionBoard.title}</td>
-                  </tr>
-                  <tr>
-                     <td>제목 : ${requestScope.AuctionBoard.title}</td>
-                     <td>등록시간: ${requestScope.AuctionBoard.timePosted}</td>
-                     <td>조회수 : ${requestScope.abvo.hit }</td>
-                  </tr>
-                  <tr>
-                     <td colspan="15"><c:if test="${requestScope.pvo!=null }">
+         	<table class="col-sm-8" style="width: 700px;">
+         		<tbody>
+         			<tr>
+         				<td><p>NO : ${requestScope.auvo.boardNo }</p></td>
+         				<td><p>조회수 : ${requestScope.abvo.hit }</p></td>
+         			</tr>
+         			<tr>
+         				<td colspan="2" style="font-weight: bold;"><p>제목 : ${requestScope.auvo.title }</p></td>
+         			</tr>
+         			<tr>
+         				<td><p>시작일 : ${requestScope.auvo.timePosted} 
+         				&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 마감일 : ${requestScope.auvo.endDate}</p></td>
+         			</tr>
+         			<tr>
+         				<td>물품명 : ${requestScope.auvo.article }</td>
+         			</tr>
+         			<tr>
+                    <td colspan="15">
+                    	<c:if test="${requestScope.pvo!=null }">
                            <img src="${initParam.root }${requestScope.pvo.filePath}">
-                        </c:if> <pre>${requestScope.AuctionBoard.content}</pre></td>
-                  </tr>
-                  <tr>
-                     <td>물품명:${requestScope.AuctionBoard.article }</td>
-                  </tr>
-                  <tr>
-                     <td>시작가:${requestScope.AuctionBoard.firstPrice }</td>
-                  </tr>
-                  <tr>
-                     <td>현재가:${requestScope.AuctionBoard.currentPrice}</td>
-                  </tr>
-                  <tr>
-                     <td><br> 금액 : <input type="text" size=5 id="currentPrice" name="currentPrice">
-                        <input type="submit" value="거래하기" id="auctionBtn"> <input
-                        type="reset" id="reset" value=reset></td>
-
-                  </tr>
-                  <tr>
-                     <td colspan="3" align="center"><p>시작시간 :
-                           ${requestScope.AuctionBoard.timePosted}
-                           &nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 종료시간 :
-                           ${requestScope.AuctionBoard.endDate}</p></td>
-                  </tr>
-                  <tr>
-                     <td valign="middle" align="center" colspan="3"><a
-                        href="${initParam.root}auction_board.ymv"> <img
-                           class="action" src="${initParam.root}img/list_btn.jpg"
-                           onclick="sendList()"></a><c:choose>
-						<c:when test="${sessionScope.mvo.memberType=='admin' }">
-                             <a
-							href="${initParam.root}auction_board_update_view.ymv?boardNo=${requestScope.AuctionBoard.boardNo }">
-										 <img id="modifyBtn" src="${initParam.root}img/modify_btn.jpg">
-                              </a>
-                              <a
-                                 href="${initParam.root}auction_board_delete.ymv?boardNo=${requestScope.AuctionBoard.boardNo }">
-                              <img id="deleteBtn" src="${initParam.root}img/delete_btn.jpg">
-                              </a>
-                           </c:when>
-				</c:choose>
-                         </td>
-                  </tr>
-            </table>
-           
+                        </c:if> 
+                        <pre>${requestScope.auvo.content}</pre></td>
+                  	</tr>
+         			<tr>
+         				<td>시작가격 : ${requestScope.auvo.firstPrice }</td>
+         			</tr>
+         			<tr>
+         				<c:choose>
+         					<c:when test="${requestScope.auvo.currentPrice == 0}">
+         						<td><div id="priceView1"><p>현재가격 : ${requestScope.auvo.firstPrice }</p></div></td>
+         					</c:when>
+         					<c:otherwise>
+		         				<td><div id="priceView2"><p>현재가격 : ${requestScope.auvo.currentPrice}</p></div></td>
+         					</c:otherwise>
+         				</c:choose>
+         			</tr>
+         			
+         			<tr>
+         				<td>
+	         				<p>금액 : <input type="text" id="auctionNewPrice">
+	         				<input type="button" class="btn btn-default btn-xs"  value="거래하기" id="auctionBtn">
+	         				<input type="reset"  class="btn btn-default btn-xs" id="auctionReset" value="취소"></p>
+                      		<!-- 마감날짜 되면 알아서 마감시키기 -->
+         				</td>
+         			</tr>
+         			
+         			<!-- 버튼 -->
+         			<tr>
+         				<td valign="middle" align="center" colspan="2">
+         					<a	href="${initParam.root}auction_board.ymv"><img src="${initParam.root}img/list_btn.jpg" ></a>
+         					<c:choose>
+								<c:when test="${sessionScope.mvo.memberType=='admin' }">
+									<a href="${initParam.root}auction_update_view.ymv?boardNo=${requestScope.auvo.boardNo }">
+										<img id="modifyBtn" src="${initParam.root}img/modify_btn.jpg"></a>
+									<%-- <a href="${initParam.root}auction_board_delete.ymv?boardNo=${requestScope.auvo.boardNo }">
+                              			<img id="deleteBtn" src="${initParam.root}img/delete_btn.jpg"></a> --%>
+                              			<img id="deleteBtn" src="${initParam.root}img/delete_btn.jpg">
+								</c:when>
+							</c:choose>
+         					
+         				</td>
+         			</tr>
+         		</tbody>
+         	</table>
          </div>
-      </div>     
-      <br>
+      </div>
    </div>
-   <input type="hidden" name="boardNo" value="${requestScope.AuctionBoard.boardNo}">
-   
-</form>
