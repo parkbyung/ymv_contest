@@ -8,7 +8,7 @@ public class HomeController {
 	@RequestMapping("home.ymv")
 	@NoLoginCheck
 	public String test(){
-		return "index";
+		return "home";
 	}
 	/**
 	 * 
@@ -20,10 +20,5 @@ public class HomeController {
 	@NoLoginCheck
 	public String loginCheck(){
 		return "loginCheck";
-	}
-	@RequestMapping("testTiles.ymv")
-	@NoLoginCheck
-	public String testTiles(){
-		return "home";
 	}
 }

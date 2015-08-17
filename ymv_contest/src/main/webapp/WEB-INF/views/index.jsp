@@ -8,7 +8,7 @@
 </head>
 <body>
 <script type="text/javascript">
-location.href="testTiles.ymv";
+location.href="home.ymv";
 	</script>
 </body>
 </html>
