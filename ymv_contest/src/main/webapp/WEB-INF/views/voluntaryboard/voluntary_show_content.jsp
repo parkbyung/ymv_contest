@@ -17,9 +17,9 @@ $(document).ready(function(){
 		var motivate = "";
 		motivate +="<hr><h2>봉사 신청 이유</h2>";
 		motivate += " <br><textarea rows='10' cols='80' id='motivate' name='motivate' placeholder='봉사신청 동기를 입력해주세요.'></textarea>";
-		motivate += "<br><br><input type='button' value='신청하기' id='VolunteerApplicant'class='btn btn-default btn-xs'>";
+		motivate += "<br><br><input type='button' value='신청하기' id='volunteerApplicant'class='btn btn-default btn-xs'>";
 		$("#motivateForm").html(motivate);
-		$("#VolunteerApplicant").click(function(){
+		$("#volunteerApplicant").click(function(){
 			if($("#motivate").val()=="" || $("#motivate").val()==null){
 				alert("신청 동기를 입력해주세요");
 				return;
@@ -166,7 +166,7 @@ $(document).ready(function(){
 		</table>
 		</div></div>
 		<br>
-		<br> <span id="motivateForm"></span>
+		<br> <span id="motivateForm"></span><br><br>
 	</div>
  <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-content">
@@ -176,13 +176,14 @@ $(document).ready(function(){
         <h4 class="modal-title">신청자 리스트</h4>
       </div>
       <div class="modal-body">
-      	<form action="voluntary_applicantOK.ymv" id="checkForm" method="get">
-        <p id = "applicant_modal"></p>
-        <input type="hidden" id="memberList" name="memberList" value="">
-        <input type="hidden" name="title" value="${requestScope.rvo.title}">
-        <button type="button" class="btn btn-primary"  id="memberBtn" >신청자 뽑기</button>
-        </form>
-      </div>
+				<form action="voluntary_applicantOK.ymv" id="checkForm" method="get">
+					<p id="applicant_modal"></p>
+					<input type="hidden" id="memberList" name="memberList" value="">
+					<input type="hidden" name="title" value="${requestScope.rvo.title}">
+					<button type="button" class="btn btn-primary" id="memberBtn">신청자
+						뽑기</button>
+				</form>
+		</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
