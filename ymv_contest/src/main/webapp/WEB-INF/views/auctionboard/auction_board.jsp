@@ -27,7 +27,7 @@
 				<tr>
 					<td>${auvo.boardNo}</td>
 					<td><a
-						href="${initParam.root}auction_showContent.ymv?boardNo=${auvo.boardNo}">${auvo.title }</a></td>
+						href="${initParam.root}auction_show_content.ymv?boardNo=${auvo.boardNo}">${auvo.title }</a></td>
 					<td>${auvo.timePosted }</td>
 					<td>${auvo.endDate }</td>
 					<td>${auvo.hit }</td>

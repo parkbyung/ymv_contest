@@ -29,4 +29,6 @@ public interface AuctionBoardDAO {
 
 	void updatePrice(int boardNo);
 
+	void updatePicture(PictureVO pvo);
+
 }

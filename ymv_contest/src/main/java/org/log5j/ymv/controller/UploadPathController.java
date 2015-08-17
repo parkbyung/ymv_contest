@@ -102,22 +102,30 @@ public class UploadPathController {
 	}
 	
 	@RequestMapping("upload_auction_path.ymv")
-	public String registerAuctionFilePath(AuctionBoardVO abvo, PictureVO pvo) {
+	public String registerAuctionFilePath(HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		PictureVO pvo=(PictureVO)request.getSession().getAttribute("pvo");
+		AuctionBoardVO abvo=(AuctionBoardVO)request.getSession().getAttribute("abvo");
+		String hidden = (String) request.getSession().getAttribute("hidden");
 		MultipartFile file=pvo.getFileName();
 		ModelAndView mav = new ModelAndView();
 		String fileName="["+abvo.getBoardNo()+"]"+file.getOriginalFilename();			
 		String filePath="auctionupload\\"+fileName;
 		pvo.setFilePath(filePath);
 		pvo.setPictureNo(abvo.getBoardNo());
-		if(!fileName.equals("")){
+		if (!fileName.equals("")) {
 			try {
-				file.transferTo(new File(auctionPath+fileName));
+				file.transferTo(new File(auctionPath + fileName));
 				mav.addObject("pvo", pvo);
-				} catch (Exception e) {					
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return "forward:auction_register_file.ymv";
+		session.setAttribute("pvo", pvo);
+		if(hidden.equals("register")){
+			return "forward:auction_register_file.ymv";
+		}
+		return "forward:auction_update_file.ymv";
 	}
 	
 	@RequestMapping("upload_sponsor_path.ymv")

@@ -20,6 +20,16 @@ $(document).ready(function(){
 				alert("상세정보를 입력해 주세요");
 				return false;
 			}
+			else if ($("#fileName").val() == "") {
+				if (confirm("파일을 첨부하지 않으십니까?") == true) {
+					$("#hidden").val("2");
+					alert($("#hidden").val());
+					location.href = "auction_update.ymv";
+				} else {
+					alert($("#hidden").val());
+					return false;			
+				}
+			}
 		});
 	});
 	
@@ -56,7 +66,7 @@ $(document).ready(function(){
 
 <div class="col-md-6 col-sm-offset-3">
 		<h2>글 수정</h2>
-		<form id="auctionForm" action="auction_board_update.ymv?memberNo=${sessionScope.mvo.memberNo }" method="post">
+		<form id="auctionForm" action="auction_board_update.ymv?memberNo=${sessionScope.mvo.memberNo }" enctype="multipart/form-data" method="post">
 			<table class="table table-striped table-hover">
 				 <tr>
                <th class="info"><h4 class="text-center">제목</h4></th>
@@ -64,7 +74,7 @@ $(document).ready(function(){
             </tr>
          <tr>
                <th class="info"><h4 class="text-center">파일업로드</h4></th>
-               <td><input type="file" name="fileName"></td>
+               <td><input type="file" name="fileName" id = "fileName"></td>
             </tr>
                <tr>
                <th class="info"><h4 class="text-center">물품명</h4></th>
@@ -86,6 +96,7 @@ $(document).ready(function(){
 			<br> <div class = "col-sm-2 col-sm-offset-10">
 			<input type="submit" class = "btn btn-primary"value="글 수정"><br><br></div>		
 			<input type="hidden" name="boardNo" value="${requestScope.abvo.boardNo }">
+			<input type="hidden" name = "hidden" id = "hidden" value = "1">
 		</form>
 	</div>
 

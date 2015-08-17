@@ -15,5 +15,6 @@ public interface AuctionBoardService {
 	void updateCurrentPrice(AuctionBoardVO abvo);
 	AuctionBoardVO setDate(AuctionBoardVO abvo);
 	int updatePrice(AuctionBoardVO auvo);
+	void updatePicture(PictureVO pvo);
 	
 }

@@ -23,7 +23,7 @@
 				alert("목표금액을 설정해주세요.");
 				return false;
 			}
-			if (isNaN($("#targetPrice"))==true ) {
+			if (isNaN($("#targetPrice"))==false ) {
 				alert("숫자로 입력해주세요.");
 				return false;
 			}

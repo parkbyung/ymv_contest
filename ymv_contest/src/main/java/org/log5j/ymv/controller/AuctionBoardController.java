@@ -3,12 +3,14 @@ package org.log5j.ymv.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.AuctionBoardService;
 import org.log5j.ymv.model.board.AuctionBoardVO;
 import org.log5j.ymv.model.board.BoardVO;
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.PictureVO;
+import org.log5j.ymv.model.member.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,11 +23,6 @@ public class AuctionBoardController {
 	@Resource
 	private AuctionBoardService auctionBoardService;
 
-/*	@RequestMapping("auctionTiles.ymv")
-	@NoLoginCheck
-	public String auctionTiles(){
-		return "home";
-	}*/
 	@RequestMapping("auction_board.ymv")
 	@NoLoginCheck
 	public ModelAndView auctionBoard(String pageNo) {	
@@ -34,7 +31,7 @@ public class AuctionBoardController {
 		return new ModelAndView("auction_board","auvo",auvo);
 	}
 
-	@RequestMapping("auction_showContent.ymv")
+	@RequestMapping("auction_show_content.ymv")
 	@NoLoginCheck
 	 public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mv=new ModelAndView("auction_show_content");
@@ -58,9 +55,25 @@ public class AuctionBoardController {
 	}
 
 	@RequestMapping("auction_board_update.ymv")
-	public ModelAndView auctionBoardUpdate(AuctionBoardVO abvo){
+	public String auctionBoardUpdate(AuctionBoardVO abvo, PictureVO pvo, HttpServletRequest request,String hidden){
 		auctionBoardService.updateAuctionBoard(abvo);
-		return new ModelAndView("redirect:auction_showContent.ymv?boardNo="+abvo.getBoardNo(),"abvo",abvo);
+		abvo = (AuctionBoardVO) auctionBoardService.findAuctionBoardByBoardNo(abvo.getBoardNo());
+		HttpSession session=request.getSession(false);
+		System.out.println(pvo);
+		int hid = Integer.parseInt(hidden);
+		session.setAttribute("abvo", abvo);
+		session.setAttribute("pvo", pvo);
+		session.setAttribute("hidden", "update");
+		if(hid==2){
+			return "redirect:auction_show_content.ymv?boardNo="+abvo.getBoardNo();
+		}
+		return "forward:upload_auction_path.ymv";
+	}
+	@RequestMapping("auction_update_file.ymv")
+	public ModelAndView sponsorUpdate(HttpServletRequest request) {
+		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
+		auctionBoardService.updatePicture(pvo);
+		return new ModelAndView("redirect:auction_show_content.ymv?boardNo="+pvo.getPictureNo());
 	}
 	
 	@RequestMapping("auction_board_delete.ymv")
@@ -86,12 +99,15 @@ public class AuctionBoardController {
 	 * @return
 	 */
 	@RequestMapping("auction_register.ymv")
-	public String auctionRegister(AuctionBoardVO abvo,PictureVO pvo){
+	public String auctionRegister(AuctionBoardVO abvo,PictureVO pvo,HttpServletRequest request){
 		System.out.println("등록할 정보 입니다. " + abvo +"pvo 입니다  " + pvo);
 		abvo.setEndDate(abvo.getEndDate());
-		auctionBoardService.registerAuctionBoard(abvo);		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("abvo",abvo).addObject("pvo",pvo);
+		auctionBoardService.registerAuctionBoard(abvo);
+		AuctionBoardVO avo = (AuctionBoardVO) auctionBoardService.findAuctionBoardByBoardNo(abvo.getBoardNo());
+		HttpSession session=request.getSession(false);
+		session.setAttribute("abvo", avo);
+		session.setAttribute("pvo", pvo);
+		session.setAttribute("hidden", "register");
 		return "forward:upload_auction_path.ymv";
 	}
 	/**
@@ -102,15 +118,17 @@ public class AuctionBoardController {
 	 * @return
 	 */
 	@RequestMapping("auction_register_file.ymv")
-	public ModelAndView memberProfileUpdate(AuctionBoardVO abvo, PictureVO pvo) {
+	public ModelAndView memberProfileUpdate(HttpServletRequest request) {
+		PictureVO pvo=(PictureVO)request.getSession().getAttribute("pvo");
 		auctionBoardService.registerPicture(pvo);
+		AuctionBoardVO abvo=(AuctionBoardVO)request.getSession().getAttribute("abvo");
 		return new ModelAndView("redirect:auction_show_content.ymv?boardNo="+abvo.getBoardNo());
 	}
 
 	@RequestMapping("auction_update_currentPrice.ymv")
 	public ModelAndView updateCurrentPrice(AuctionBoardVO abvo) {
 		auctionBoardService.updateCurrentPrice(abvo);
-		return new ModelAndView("redirect:auction_showContent.ymv?boardNo="
+		return new ModelAndView("redirect:auction_show_content.ymv?boardNo="
 				+ abvo.getBoardNo());
 	}
 	

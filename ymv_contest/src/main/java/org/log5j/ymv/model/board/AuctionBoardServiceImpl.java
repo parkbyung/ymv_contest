@@ -93,6 +93,12 @@ public int updatePrice(AuctionBoardVO auvo) {
 	return NewPrice;
 }
 
+@Override
+public void updatePicture(PictureVO pvo) {
+	auctionBoardDAO.updatePicture(pvo);
+	
+}
+
 
 
 

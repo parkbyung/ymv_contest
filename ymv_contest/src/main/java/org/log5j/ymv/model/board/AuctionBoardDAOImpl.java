@@ -91,6 +91,11 @@ public void updatePrice(int boardNo) {
 	
 }
 
+@Override
+public void updatePicture(PictureVO pvo) {
+	sqlSessionTemplate.update("auctionBoard.updatePicture",pvo);
+}
+
 
 }
 
