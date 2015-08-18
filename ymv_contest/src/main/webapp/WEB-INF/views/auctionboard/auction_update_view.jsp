@@ -21,7 +21,7 @@ $(document).ready(function(){
 				return false;
 			}
 			else if ($("#fileName").val() == "") {
-				if (confirm("파일을 첨부하지 않으십니까?") == true) {
+				if (confirm("새로운 파일을 첨부하지 않으십니까?") == true) {
 					$("#hidden").val("2");
 					alert($("#hidden").val());
 					location.href = "auction_update.ymv";
