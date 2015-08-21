@@ -8,29 +8,28 @@
 	<table class="table table-striped table-hover">
 		<colgroup>
 			<col style="width: 10%;" />
+			<col style="width: 10%;" />
 			<col style="width: 40%;" />
-			<col style="width: 17%;" />
 			<col style="width: 17%;" />
 			<col style="width: 17%;" />
 		</colgroup>
 		<thead>
 			<tr>
 				<th scope="col">NO</th>
+				<th scope="col">경매상태</th>
 				<th scope="col">제목</th>
 				<th scope="col">등록시간</th>
 				<th scope="col">종료시간</th>
-				<th scope="col">조회수</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="auvo" items="${requestScope.auvo.list}">
 				<tr>
 					<td>${auvo.boardNo}</td>
-					<td><a
-						href="${initParam.root}auction_show_content.ymv?boardNo=${auvo.boardNo}">${auvo.title }</a></td>
+					<td><a href="${initParam.root}auction_show_content.ymv?boardNo=${auvo.boardNo}&gyeongmae=${auvo.gyeongmae}">${auvo.gyeongmae}</a></td>
+					<td><a href="${initParam.root}auction_show_content.ymv?boardNo=${auvo.boardNo}&gyeongmae=${auvo.gyeongmae}">${auvo.title }</a></td>
 					<td>${auvo.timePosted }</td>
 					<td>${auvo.endDate }</td>
-					<td>${auvo.hit }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

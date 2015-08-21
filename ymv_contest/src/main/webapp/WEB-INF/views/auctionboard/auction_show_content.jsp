@@ -6,6 +6,7 @@
 		
 		$("#auctionBtn").click(function(){
 			var auctionTable="";
+			var nameView = "";
 			if($("#auctionNewPrice").val()==null || $("#auctionNewPrice").val()=="" ){
 				alert("거래 금액을 입력해 주세요");
 				return;
@@ -19,14 +20,16 @@
 			$.ajax({
 				type:"get",
 				url:"auction_update_price.ymv",				
-				data:"boardNo=${requestScope.auvo.boardNo }&currentPrice="+$("#auctionNewPrice").val(),
+				data:"boardNo=${requestScope.auvo.boardNo }&bidder=${sessionScope.mvo.name}&currentPrice="+$("#auctionNewPrice").val(),
 				dataType:"json", 
 				success:function(data){
 					alert("거래에 참여하셨습니다.");
 					$("#auctionNewPrice").val("");
-					auctionTable="<p>현재가격 : " + data  + " </p>";
+					auctionTable+= "<p>현재가격 : " + data.currentPrice  + " </p>";
+					nameView += "낙찰예정자 : " + data.bidder ;
 					$("#priceView1").html(auctionTable);
 					$("#priceView2").html(auctionTable);
+					$("#name").html(nameView);
 				}//success
 			});//ajax
 		
@@ -58,18 +61,27 @@
          	<table class="col-sm-8" style="width: 700px;">
          		<tbody>
          			<tr>
-         				<td><p>NO : ${requestScope.auvo.boardNo }</p></td>
-         				<td><p>조회수 : ${requestScope.abvo.hit }</p></td>
+         				<td>NO : ${requestScope.auvo.boardNo }</td>
+         				<td>
+         					<c:choose>
+         					<c:when test="${requestScope.auvo.gyeongmae == '경매중'}">
+         						<div id="name">낙찰예정자 : ${requestScope.auvo.bidder }</div>
+         					</c:when>
+         					<c:otherwise>
+         						최종낙찰자 : ${requestScope.auvo.bidder }
+         					</c:otherwise>
+         					</c:choose>
+         				</td>
          			</tr>
          			<tr>
-         				<td colspan="2" style="font-weight: bold;"><p>제목 : ${requestScope.auvo.title }</p></td>
+         				<td colspan="2" style="font-weight: bold; font-size: 7;" >제목 : ${requestScope.auvo.title }</td>
          			</tr>
          			<tr>
-         				<td><p>시작일 : ${requestScope.auvo.timePosted} 
-         				&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 마감일 : ${requestScope.auvo.endDate}</p></td>
+         				<td>시작일 : ${requestScope.auvo.timePosted} 
+         				&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp; 마감일 : ${requestScope.auvo.endDate}</td>
          			</tr>
          			<tr>
-         				<td>물품명 : ${requestScope.auvo.article }</td>
+         				<td><p>물품명 : ${requestScope.auvo.article }</p></td>
          			</tr>
          			<tr>
                     <td colspan="15">
@@ -91,13 +103,31 @@
          					</c:otherwise>
          				</c:choose>
          			</tr>
-         			
          			<tr>
          				<td>
-	         				<p>금액 : <input type="text" id="auctionNewPrice">
-	         				<input type="button" class="btn btn-default btn-xs"  value="거래하기" id="auctionBtn">
-	         				<input type="reset"  class="btn btn-default btn-xs" id="auctionReset" value="취소"></p>
-                      		<!-- 마감날짜 되면 알아서 마감시키기 -->
+         					<c:choose>
+         					<c:when test="${requestScope.auvo.gyeongmae == '경매중'}">
+         					 	<font size="4" color="blue"><div id="sangtae"> 현재 경매 진행 중입니다.</div></font>
+         					 </c:when>
+         					 <c:otherwise>
+         					 	<font size="4" color="blue">
+         					 	경매가 완료되었습니다.</font>
+         					 </c:otherwise>
+         					 </c:choose>
+         				</td>
+         			</tr>
+         			<tr>
+         				<td>
+         				<c:choose>
+         					<c:when test="${requestScope.auvo.gyeongmae == '경매중'}">
+	         					<p><p>금액 : <input type="text" id="auctionNewPrice">
+	         					<input type="button" class="btn btn-default btn-xs"  value="거래하기" id="auctionBtn">
+	         					<input type="reset"  class="btn btn-default btn-xs" id="auctionReset" value="취소"></p></p>
+                      		</c:when>
+                      		<c:otherwise>
+                      		
+                      		</c:otherwise>
+                      	</c:choose>
          				</td>
          			</tr>
          			
