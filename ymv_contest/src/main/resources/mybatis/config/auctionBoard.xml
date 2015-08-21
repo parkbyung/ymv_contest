@@ -12,15 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <result property="currentPrice" column="current_price"/>
       <result property="endDate" column="end_date"/>
     </resultMap>
- 
-    <select id="findByAuctionNo" parameterType="int" resultType="abvo">
-       select * from Auction_board where board_no=#{value}
-    </select>
     
     <select id="findBoardList" resultMap="boardRM" parameterType="int">
- 		select board_no, title, content,article, to_char(time_posted,'YYYY-MM-DD') as time_posted,first_price,current_price,end_date, hit 
-       from(select board_no,title,content,article,time_posted,first_price,current_price,end_date,hit, CEIL(rownum/5) AS page 
-       from(select board_no, title, content,article, time_posted ,first_price ,current_price , end_date,hit from Auction_board order by board_no desc))
+ 		select board_no, title, content,article, to_char(time_posted,'YYYY-MM-DD') as time_posted,first_price,current_price,end_date, bidder 
+       from(select board_no,title,content,article,time_posted,first_price,current_price,end_date,bidder, CEIL(rownum/5) AS page 
+       from(select board_no, title, content,article, time_posted ,first_price ,current_price , end_date,bidder from Auction_board order by board_no desc))
        where page=#{value} 
      </select>
      
@@ -29,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      </select>
     
    <select id="findAuctionBoardByBoardNo" resultMap="boardRM" resultType="abvo">   
-      select board_no, title, content, article, to_char(time_posted,'YYYY-MM-DD') as time_posted, first_price, current_price, end_date, hit from auction_board where board_no=#{value}
+      select board_no, title, content, article, to_char(time_posted,'YYYY-MM-DD') as time_posted, first_price, current_price, end_date, bidder from auction_board where board_no=#{value}
    </select>
    
    
@@ -45,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       <selectKey keyProperty="boardNo" resultType="int" order="BEFORE">
          select ymv_seq.nextval from dual
       </selectKey>  
-        insert into Auction_board(board_no,title,content,article,time_posted,first_price,current_price,end_date) values(#{boardNo}, #{title}, #{content}, #{article}, sysdate, #{firstPrice}, 0, #{endDate})
+        insert into Auction_board(board_no,title,content,article,time_posted,first_price,current_price,end_date, bidder) values(#{boardNo}, #{title}, #{content}, #{article}, sysdate, #{firstPrice}, 0, #{endDate}, '현재 낙찰 예정자 없음')
    </insert>
    
    <insert id="registerPicture" parameterType="pvo">
@@ -61,19 +57,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <delete id="deletePicture" parameterType="int">
       delete from picture where picture_no=#{value}
    </delete>
-   
-    <update id="updateHit" parameterType="int">
-       update board set hit = hit+1 where board_no=#{value}
-    </update>
     
     <update id="updateCurrentPrice">
     	update auction_board set current_price=#{currentPrice} where board_no=#{boardNo}
     </update>
     
+    <update id="updateBidder">
+    	update auction_board set bidder=#{bidder} where board_no=#{boardNo}
+    </update>
+    
  </mapper>
- 
- 
- 
- 
- 
  
