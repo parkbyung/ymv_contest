@@ -410,7 +410,7 @@ create table Auction_board(
    first_price number not null,
    current_price number default 0,
    end_date varchar(50),
-   hit number default 0
+   bidder varchar2(30) not null
 )
 
 select * from Auction_board
