@@ -1,10 +1,7 @@
 package org.log5j.ymv.model.board;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +26,7 @@ public ListVO findBoardList(String pageNo) {
 }
 
 @Override
-public BoardVO findAuctionBoardByBoardNo(int boardNo) {
+public AuctionBoardVO findAuctionBoardByBoardNo(int boardNo) {
 	return auctionBoardDAO.findAuctionBoardByBoardNo(boardNo);
 }
 
@@ -96,6 +93,12 @@ public int updatePrice(AuctionBoardVO auvo) {
 @Override
 public void updatePicture(PictureVO pvo) {
 	auctionBoardDAO.updatePicture(pvo);
+	
+}
+
+@Override
+public void updateBidder(AuctionBoardVO abvo) {
+	auctionBoardDAO.updateBidder(abvo);
 	
 }
 

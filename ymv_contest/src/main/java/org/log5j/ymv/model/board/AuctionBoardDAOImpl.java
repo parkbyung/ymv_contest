@@ -31,14 +31,10 @@ public int totalContent(){
 }
 
 @Override
-public BoardVO findAuctionBoardByBoardNo(int boardNo){
+public AuctionBoardVO findAuctionBoardByBoardNo(int boardNo){
 	// TODO Auto-generated method stub
 	return sqlSessionTemplate.selectOne("auctionBoard.findAuctionBoardByBoardNo",boardNo);	
 }
-
-
-
-
 
 @Override
 public void auctionBoardUpdate(AuctionBoardVO vo) {
@@ -94,6 +90,12 @@ public void updatePrice(int boardNo) {
 @Override
 public void updatePicture(PictureVO pvo) {
 	sqlSessionTemplate.update("auctionBoard.updatePicture",pvo);
+}
+
+@Override
+public void updateBidder(AuctionBoardVO abvo) {
+	sqlSessionTemplate.update("auctionBoard.updateBidder",abvo);
+	
 }
 
 

@@ -1,5 +1,8 @@
 package org.log5j.ymv.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,10 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.log5j.ymv.model.board.AuctionBoardService;
 import org.log5j.ymv.model.board.AuctionBoardVO;
-import org.log5j.ymv.model.board.BoardVO;
 import org.log5j.ymv.model.board.ListVO;
 import org.log5j.ymv.model.board.PictureVO;
-import org.log5j.ymv.model.member.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,29 +26,50 @@ public class AuctionBoardController {
 
 	@RequestMapping("auction_board.ymv")
 	@NoLoginCheck
-	public ModelAndView auctionBoard(String pageNo) {	
+	public ModelAndView auctionBoard(String pageNo) {
+		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		ListVO auvo = auctionBoardService.findBoardList(pageNo);
-		System.out.println(auvo+"컨틀롤러");
+		for(int i = 0; i<auvo.getList().size(); i ++){
+			int compare = today.compareTo(((AuctionBoardVO) auvo.getList().get(i)).getEndDate());
+			if(compare > 0){
+				((AuctionBoardVO) auvo.getList().get(i)).setGyeongmae("경매완료");
+			}else if(compare < 0){
+				((AuctionBoardVO) auvo.getList().get(i)).setGyeongmae("경매중");
+			}else{
+				((AuctionBoardVO) auvo.getList().get(i)).setGyeongmae("경매중");
+			}
+		}
 		return new ModelAndView("auction_board","auvo",auvo);
 	}
 
 	@RequestMapping("auction_show_content.ymv")
 	@NoLoginCheck
 	 public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		ModelAndView mv=new ModelAndView("auction_show_content");
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 		System.out.println("auction_showContent boardNo: " + boardNo);
 		int pictureNo=boardNo;
-		BoardVO auvo=auctionBoardService.findAuctionBoardByBoardNo(boardNo);
+		AuctionBoardVO auvo=auctionBoardService.findAuctionBoardByBoardNo(boardNo);
 		PictureVO pvo=auctionBoardService.findPicture(pictureNo);
 		if(pvo!=null){
 			mv.addObject("pvo",pvo);
 	    }
 		System.out.println("showContent : "+auvo+" picture:"+pvo);
+			int compare = today.compareTo(auvo.getEndDate());
+			if(compare > 0){
+				auvo.setGyeongmae("경매완료");
+			}else if(compare < 0){
+				auvo.setGyeongmae("경매중");
+			}else{
+				auvo.setGyeongmae("경매중");
+			}
+		
 		 return mv.addObject("auvo", auvo);
 }	
 	
 	@RequestMapping("auction_update_view.ymv")
+	@NoLoginCheck
 	public ModelAndView auctionBoardUpdateView(int boardNo) {		
 		AuctionBoardVO abvo = (AuctionBoardVO) auctionBoardService.findAuctionBoardByBoardNo(boardNo);
 		/*abvo=auctionBoardService.setDate(abvo);*/
@@ -55,6 +77,7 @@ public class AuctionBoardController {
 	}
 
 	@RequestMapping("auction_board_update.ymv")
+	@NoLoginCheck
 	public String auctionBoardUpdate(AuctionBoardVO abvo, PictureVO pvo, HttpServletRequest request,String hidden){
 		auctionBoardService.updateAuctionBoard(abvo);
 		abvo = (AuctionBoardVO) auctionBoardService.findAuctionBoardByBoardNo(abvo.getBoardNo());
@@ -69,6 +92,7 @@ public class AuctionBoardController {
 		}
 		return "forward:upload_auction_path.ymv";
 	}
+	
 	@RequestMapping("auction_update_file.ymv")
 	public ModelAndView sponsorUpdate(HttpServletRequest request) {
 		PictureVO pvo = (PictureVO) request.getSession().getAttribute("pvo");
@@ -86,6 +110,7 @@ public class AuctionBoardController {
 	}
 	
 	@RequestMapping("auction_register_view.ymv")
+	@NoLoginCheck
 	public ModelAndView auctionRegisterView(){		
 		return new ModelAndView("auction_register_view");
 	}
@@ -99,6 +124,7 @@ public class AuctionBoardController {
 	 * @return
 	 */
 	@RequestMapping("auction_register.ymv")
+	@NoLoginCheck
 	public String auctionRegister(AuctionBoardVO abvo,PictureVO pvo,HttpServletRequest request){
 		System.out.println("등록할 정보 입니다. " + abvo +"pvo 입니다  " + pvo);
 		abvo.setEndDate(abvo.getEndDate());
@@ -126,6 +152,7 @@ public class AuctionBoardController {
 	}
 
 	@RequestMapping("auction_update_currentPrice.ymv")
+	@NoLoginCheck
 	public ModelAndView updateCurrentPrice(AuctionBoardVO abvo) {
 		auctionBoardService.updateCurrentPrice(abvo);
 		return new ModelAndView("redirect:auction_show_content.ymv?boardNo="
@@ -135,10 +162,15 @@ public class AuctionBoardController {
 	@RequestMapping("auction_update_price.ymv")
 	@ResponseBody
 	@NoLoginCheck
-	public int updatePrice(AuctionBoardVO auvo){
+	public AuctionBoardVO updatePrice(AuctionBoardVO auvo){
 		System.out.println("경매 시작 "+auvo);
-		int result = auctionBoardService.updatePrice(auvo);
-		return result;
+		int resultPrice = auctionBoardService.updatePrice(auvo);
+		auctionBoardService.updateBidder(auvo);
+		
+		AuctionBoardVO abvo = new  AuctionBoardVO();
+		abvo.setCurrentPrice(resultPrice);
+		abvo.setBidder(auvo.getBidder());
+		return abvo;
 	}
 
 }

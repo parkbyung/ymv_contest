@@ -4,7 +4,7 @@ package org.log5j.ymv.model.board;
 public interface AuctionBoardService {
 	AuctionBoardVO findByAuctionNO(AuctionBoardVO vo);
 	ListVO findBoardList(String pageNo);
-	BoardVO findAuctionBoardByBoardNo(int boardNo);
+	AuctionBoardVO findAuctionBoardByBoardNo(int boardNo);
 	void updateAuctionBoard(AuctionBoardVO vo);
 	void deleteAuctionBoard(String boardNo);
 	void registerAuctionBoard(AuctionBoardVO vo);
@@ -16,5 +16,6 @@ public interface AuctionBoardService {
 	AuctionBoardVO setDate(AuctionBoardVO abvo);
 	int updatePrice(AuctionBoardVO auvo);
 	void updatePicture(PictureVO pvo);
+	void updateBidder(AuctionBoardVO abvo);
 	
 }

@@ -9,7 +9,7 @@ public interface AuctionBoardDAO {
 
 	int totalContent();
 
-	BoardVO findAuctionBoardByBoardNo(int boardNo);
+	AuctionBoardVO findAuctionBoardByBoardNo(int boardNo);
 
 	void auctionBoardUpdate(AuctionBoardVO vo);
 
@@ -30,5 +30,7 @@ public interface AuctionBoardDAO {
 	void updatePrice(int boardNo);
 
 	void updatePicture(PictureVO pvo);
+
+	void updateBidder(AuctionBoardVO abvo);
 
 }
