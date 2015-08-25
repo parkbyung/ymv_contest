@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="org.log5j.ymv.model.voluntary.ConfirmPageVO" alias="confirmpvo"/>
 		<typeAlias type="org.log5j.ymv.model.sponsor.SponsorVO" alias="spvo"/>
 		<typeAlias type="org.log5j.ymv.model.board.AuctionBoardVO" alias="abvo" />
+		<typeAlias type="org.log5j.ymv.model.voluntary.MessageVO" alias="mgvo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/config/recruitboard.xml" />
@@ -41,5 +42,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/config/search.xml" />
 		<mapper resource="mybatis/config/sponsor.xml" />
 		<mapper resource="mybatis/config/auctionBoard.xml" />
+		<mapper resource="mybatis/config/message.xml" />
 	</mappers>
 </configuration>

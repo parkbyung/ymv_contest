@@ -49,19 +49,9 @@ public class VoluntaryServiceApplicateDAOImpl implements VoluntaryServiceApplica
 	 */
 	@Override
 	public List<ApplicantListVO> findApplicantList(int recruitNo) {
-		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectList("applicant.findApplicantList",recruitNo);
 	}
 
-	/**
-	 * 작성자 : 백지영
-	 * 내용 : 해당 글번호와 회원번호에 일치하는 회원을 신청자 리스트DB에서 삭제한다.
-	 * @param alvo : 글번호, 회원번호, 신청사유, id, 이름, 메일주소등을 같이 담기위해 사용
-	 */
-	@Override
-	public void deleteApplicant(ApplicantListVO alvo) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("applicant.deleteApplicant",alvo);
-	}
+
 
 }

@@ -40,6 +40,8 @@ create table board(
    hit number default 0
 )
 
+
+
 select * from board
 
 
@@ -239,7 +241,7 @@ select * from location
 
 -- LYH - sponsor
 
-drop table sponsor
+drop table message
 
 create table sponsor(
    board_no number primary key,
@@ -253,6 +255,16 @@ create table sponsor(
 
 select * from sponsor
 
+create table message(
+	message_no number primary key,
+	message_type varchar2(50) not null,
+	title varchar2(100) not null,
+	content clob not null,
+	receive_no not null constraint fk_member_no_6 references member(member_no),
+	receiver_name varchar2(50) not null,
+	time_posted date not null,
+	recruit_no not null constraint fk_recruit_no_3 references recruit(recruit_no)
+)
 
 -- LYH - select 
 

@@ -116,7 +116,6 @@ public class RecruitBoardDAOImpl implements RecruitBoardDAO {
 
 	@Override
 	public void registerApplicantOK(ApplicantListVO alvo) {
-		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("applicant.registerApplicantOK",alvo);
 	}
 
@@ -139,20 +138,7 @@ public class RecruitBoardDAOImpl implements RecruitBoardDAO {
 
 	@Override
 	public void registerConfirmBoard(ConfirmBoardVO confirmbvo) {
-		// TODO Auto-generated method stub
 		sqlSessionTemplate.insert("applicant.registerConfirmBoard",confirmbvo);
-	}
-
-	@Override
-	public void deleteVoluntaryApplicantOK(int recruitNo) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("applicant.deleteVoluntaryApplicantOK",recruitNo);
-	}
-
-	@Override
-	public void deleteVoluntaryServiceApplicateByRecruitNo(int recruitNo) {
-		// TODO Auto-generated method stub
-		sqlSessionTemplate.delete("applicant.deleteVoluntaryServiceApplicateByRecruitNo",recruitNo);
 	}
 
 	@Override

@@ -17,6 +17,22 @@ public class ConfirmBoardVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ConfirmBoardVO(int boardNo, String title, String field,
+			String location, String age, String startDate, String endDate,
+			String content, int memberNo) {
+		super();
+		this.boardNo = boardNo;
+		this.title = title;
+		this.field = field;
+		this.location = location;
+		this.age = age;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.content = content;
+		this.memberNo = memberNo;
+	}
+
 	@Override
 	public String toString() {
 		return "ConfirmBoardVO [boardNo=" + boardNo + ", title=" + title

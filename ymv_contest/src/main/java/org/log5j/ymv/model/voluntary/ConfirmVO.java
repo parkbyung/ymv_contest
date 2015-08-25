@@ -7,6 +7,13 @@ public class ConfirmVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ConfirmVO(int boardNo, int memberNo) {
+		super();
+		this.boardNo = boardNo;
+		this.memberNo = memberNo;
+	}
+
 	public int getBoardNo() {
 		return boardNo;
 	}
