@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="message">
+ 	<resultMap type="mgvo" id="messageRM">      
+      <result property="messageNo" column="message_no"/>         
+      <result property="messageType" column="message_type"/>
+      <result property="receiveNo" column="receive_no"/>
+      <result property="receiverName" column="receiver_name"/>
+      <result property="timePosted" column="time_posted"/>
+      <result property="recruitNo" column="recruit_no"/>         
+   </resultMap>
+ 
+	<insert id="sendMessageApplicate" parameterType="mgvo">
+		<selectKey keyProperty="messageNo" resultType="int" order="BEFORE">
+			select ymv_seq.nextval from dual
+		</selectKey>  
+  		insert into message(message_no, message_type, title, content, receive_no, receiver_name, time_posted, recruit_no)  values(#{messageNo}, #{messageType}, #{title}, #{content}, #{receiveNo}, #{receiverName}, sysdate, #{recruitNo})
+	</insert>
+
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
