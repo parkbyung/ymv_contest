@@ -25,7 +25,6 @@ public class AuctionBoardController {
 	private AuctionBoardService auctionBoardService;
 
 	@RequestMapping("auction_board.ymv")
-	@NoLoginCheck
 	public ModelAndView auctionBoard(String pageNo) {
 		String today = (new SimpleDateFormat("yyyy-MM-dd")).format( new Date() );
 		ListVO auvo = auctionBoardService.findBoardList(pageNo);
