@@ -59,10 +59,6 @@ public class RecruitBoardServiceImpl implements RecruitBoardService {
 	}
 	
 	@Override
-	public RecruitBoardVO findRecruitBoardByrecruitNo(int recruitNo) {
-		return recruitBoardDAO.findRecruitBoardByrecruitNo(recruitNo);
-	}
-	@Override
 	public void deleteRecruitVolunteer(int recruitNo) {
 		recruitBoardDAO.deleteRecruitVolunteer(recruitNo);
 	}
@@ -111,7 +107,6 @@ public class RecruitBoardServiceImpl implements RecruitBoardService {
 	}
 	@Override
 	public void registerApplicantOK(ApplicantListVO alvo) {
-		// TODO Auto-generated method stub
 		recruitBoardDAO.registerApplicantOK(alvo);
 	}
 	@Override
@@ -131,18 +126,7 @@ public class RecruitBoardServiceImpl implements RecruitBoardService {
 	}
 	@Override
 	public void registerConfirmBoard(ConfirmBoardVO confirmbvo) {
-		// TODO Auto-generated method stub
 		recruitBoardDAO.registerConfirmBoard(confirmbvo);
-	}
-	@Override
-	public void deleteVoluntaryApplicantOK(int recruitNo) {
-		// TODO Auto-generated method stub
-		recruitBoardDAO.deleteVoluntaryApplicantOK(recruitNo);
-	}
-	@Override
-	public void deleteVoluntaryServiceApplicateByRecruitNo(int recruitNo) {
-		// TODO Auto-generated method stub
-		recruitBoardDAO.deleteVoluntaryServiceApplicateByRecruitNo(recruitNo);
 	}
 	@Override
 	public ListVO findConfirmBoardListByMemberNo(ConfirmPageVO confirmPageVO) {

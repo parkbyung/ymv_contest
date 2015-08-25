@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			select * from member where id=#{id} and password=#{password}
  	</select>
   
+  <!-- 어플리컨트로 다 옮기기 -->
  	<insert id="registerVoluntaryApplicant" parameterType="vsavo">
 		insert into voluntary_service_applicate(recruit_no,member_no,motivate) values(#{recruitNo},#{memberNo},#{motivate})
 	</insert>
@@ -23,11 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkVolunteerApplicant" resultType="int" parameterType="map">
 		select count(*) from voluntary_service_applicate where recruit_no=#{recruitNo} and member_no=#{memberNo}
 	</select>
-	
+	<!-- 이건 뭐지?? -->
 	<delete id="deleteVoluntaryServiceApplicateNo" parameterType="int">
 		delete from voluntary_service_applicate where recruit_no=#{recruitNo}
 	</delete>
-	
+	<!-- 여기까지 -->
 	<select id="checkId" resultType="int">
 		select count(*) from member where id=#{value}
 	</select>

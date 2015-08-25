@@ -16,7 +16,6 @@ public interface RecruitBoardService {
 	public List<FieldVO> findFieldList();
 	public List<LocationVO> findLocationList();
 	public void registerVolunteer(RecruitBoardVO rbvo);
-	public RecruitBoardVO findRecruitBoardByrecruitNo(int recruitNo);
 	public void deleteRecruitVolunteer(int recruitNo);
 	public void deleteVoluntaryServiceApplicateNo(int recruitNo);
 	public ListVO findCompanyBoardList(CompanyVO cpvo);
@@ -27,8 +26,6 @@ public interface RecruitBoardService {
 	public MemberVO findMailAddressByMemberNo(int memberNo);
 	public void registerConfirm(ConfirmVO confirmvo);
 	public void registerConfirmBoard(ConfirmBoardVO confirmbvo);
-	public void deleteVoluntaryApplicantOK(int recruitNo);
-	public void deleteVoluntaryServiceApplicateByRecruitNo(int recruitNo);
 	public ListVO findConfirmBoardListByMemberNo(ConfirmPageVO confirmPageVO);
 	public ConfirmBoardVO findConfirmBoardByConfirm(ConfirmVO cvo);
 }

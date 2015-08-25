@@ -57,10 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    delete recruit where recruit_no=#{value}
    </delete>
 	
-	<select id="findRecruitBoardByrecruitNo" resultMap="boardRM">
- 		select * from recruit where recruit_no=#{value}
- 	</select>
-	
    <update id="updateBoard" parameterType="recruitbvo">
    update recruit set title=#{title},content=#{content},recruiting_start=#{recruitingStart},recruiting_end=#{recruitingEnd},field=#{field} ,location=#{location} ,age=#{age},volunteering_start_date=#{volunteeringStartDate},volunteering_end_date=#{volunteeringEndDate},volunteering_start_time=#{volunteeringStartTime},volunteering_end_time=#{volunteeringEndTime} 
    where recruit_no=#{recruitNo}

@@ -27,6 +27,8 @@ import org.log5j.ymv.model.voluntary.ApplicantListVO;
 import org.log5j.ymv.model.voluntary.ConfirmBoardVO;
 import org.log5j.ymv.model.voluntary.ConfirmPageVO;
 import org.log5j.ymv.model.voluntary.ConfirmVO;
+import org.log5j.ymv.model.voluntary.MessageService;
+import org.log5j.ymv.model.voluntary.MessageVO;
 import org.log5j.ymv.model.voluntary.VoluntaryServiceApplicateService;
 import org.log5j.ymv.model.voluntary.VoluntaryServiceApplicateVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +52,8 @@ public class RecruitBoardController {
 	private MemberService memberService;
 	@Resource
 	private CookieService cookieService;
-	@Autowired
-    private EmailSender emailSender;
+	@Resource
+	private MessageService messageService;
 	/**
 	 * 
 	 * 작성자 : 박병준, 백지영
@@ -323,24 +325,22 @@ public class RecruitBoardController {
 	@NoLoginCheck
 	@Transactional
 	public ModelAndView applicantOK(HttpServletRequest request,ApplicantListVO alvo) throws Exception{
-		Email email = new Email();
+		//신청자를 뽑았으니 선정되었다고 쪽지 보내주기
+		MessageVO mgvo = new MessageVO();
 		String memberList=request.getParameter("memberList");
 		String title=request.getParameter("title");
 		String member[]=memberList.split(",");
 		for(int i=0;i<member.length;i++){
-			alvo.setMemberNo(Integer.parseInt(member[i]));
+			alvo.setMemberNo(Integer.parseInt(member[i])); 
+			mgvo.setReceiveNo(Integer.parseInt(member[i]));
 			recruitBoardService.registerApplicantOK(alvo);
-			voluntaryServiceApplicateService.deleteApplicant(alvo);
+			//messageService.sendApplicant()
 			//선정된 인원에게 메일 발송 memberNo로 메일 뽑아오기
 			MemberVO mailList=recruitBoardService.findMailAddressByMemberNo(Integer.parseInt(member[i]));
 			String reciver = mailList.getMailAddress(); //받을사람의 이메일입니다.
 	        String subject = "안녕하세요. 너나봉 관리자입니다";
 	        String content = mailList.getName()+"님 봉사활동인원으로 선정되었습니다.\n"
 	        		+ "홈페이지에서 신청하신 ["+title+"] 봉사활동의 일시와 장소를 확인해주세요.";
-	        email.setReciver(reciver);
-	        email.setSubject(subject);
-	        email.setContent(content);
-	        emailSender.SendEmail(email);
 		}
 			List<ApplicantListVO> list=recruitBoardService.findApplicantOkList(alvo.getRecruitNo());
 		return new ModelAndView("voluntary_applicantOK","list",list);
@@ -370,33 +370,23 @@ public class RecruitBoardController {
 	@RequestMapping("voluntary_confirm.ymv")
 	public ModelAndView voluntary_confirm(HttpServletRequest request,ApplicantListVO alvo){
 		//선택된 인원들 새로운 디비에 저장(confirm)
+		//봉사활동 활동내역이 확인 되었다는 쪽지 보내기
 		String memberList=request.getParameter("memberList");
 		String member[]=memberList.split(",");
 		for(int i=0;i<member.length;i++){
 			alvo.setMemberNo(Integer.parseInt(member[i]));
-			ConfirmBoardVO confirmbvo=new ConfirmBoardVO();
 			RecruitBoardVO recruitbvo=recruitBoardService.findRecruitBoardByRecruitNo(alvo.getRecruitNo());
-			confirmbvo.setBoardNo(recruitbvo.getRecruitNo());
-			confirmbvo.setTitle(recruitbvo.getTitle());
-			confirmbvo.setField(recruitbvo.getField());
-			confirmbvo.setLocation(recruitbvo.getLocation());
-			confirmbvo.setAge(recruitbvo.getAge());
-			confirmbvo.setStartDate(recruitbvo.getRecruitingStart());
-			confirmbvo.setEndDate(recruitbvo.getRecruitingEnd());
-			confirmbvo.setContent(recruitbvo.getContent());
-			confirmbvo.setMemberNo(recruitbvo.getMemberNo());
+			ConfirmBoardVO confirmbvo = new ConfirmBoardVO(
+					recruitbvo.getRecruitNo(), recruitbvo.getTitle(),
+					recruitbvo.getField(), recruitbvo.getLocation(),
+					recruitbvo.getAge(), recruitbvo.getRecruitingStart(),
+					recruitbvo.getRecruitingEnd(), recruitbvo.getContent(),
+					recruitbvo.getMemberNo());
 			recruitBoardService.registerConfirmBoard(confirmbvo);
 			//글등록 먼저하고나서 컨펌등록
-			ConfirmVO confirmvo=new ConfirmVO();
-			confirmvo.setBoardNo(alvo.getRecruitNo());
-			confirmvo.setMemberNo(alvo.getMemberNo());
-			recruitBoardService.registerConfirm(confirmvo);
-			recruitBoardService.deleteVoluntaryApplicantOK(recruitbvo.getRecruitNo());
-			recruitBoardService.deleteVoluntaryServiceApplicateByRecruitNo(recruitbvo.getRecruitNo());
-			recruitBoardService.deleteRecruitVolunteer(recruitbvo.getRecruitNo());
-			
+			ConfirmVO confirmvo=new ConfirmVO(alvo.getRecruitNo(),alvo.getMemberNo());
+			recruitBoardService.registerConfirm(confirmvo);			
 		}
-		//해당 글 삭제.
 		return new ModelAndView("voluntary_confirm");
 	}
 	/**
@@ -470,6 +460,8 @@ public class RecruitBoardController {
 		boolean flag =  voluntaryServiceApplicateService.checkVolunteerApplicant(vsavo.getRecruitNo(), vsavo.getMemberNo());
 		if(flag==false){
 			voluntaryServiceApplicateService.registerVolunteerApplicant(vsavo);
+			messageService.sendMessageApplicate(vsavo);
+			// +쪽지보내기 기능 추가
 		}
 		return flag;
 	}
