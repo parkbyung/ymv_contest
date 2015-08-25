@@ -70,6 +70,10 @@ $(document).ready(function(){
         $("#memberList").val(memberNoList);
 		$("#checkForm").submit();
 	});
+	
+	$("#applicantOklist").click(function(){
+		location.href="voluntary_OKList.ymv?recruitNo=${requestScope.rvo.recruitNo}";
+	});
 });
 </script>
 <h3 align="center">봉사 상세 글보기</h3>
@@ -151,9 +155,10 @@ $(document).ready(function(){
 													id="applicantlist" class="btn btn-default btn-xs">신청자리스트보기</p></a>
 										</c:when>
 										<c:otherwise>
-											<a
-												href="voluntary_OKList.ymv?recruitNo=${requestScope.rvo.recruitNo }">선정된
-												인원 보기</a>
+										
+											<%-- <a href="voluntary_OKList.ymv?recruitNo=${requestScope.rvo.recruitNo }">선정된 인원 보기</a> --%>
+												<input type="button" value="선정된 인원 보기" id="applicantOklist" class="btn btn-default btn-xs">
+												
 										</c:otherwise>
 									</c:choose>
 								</c:when>
